@@ -20,6 +20,7 @@
     "@types/react-dom": "18.2.4",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
+    "@web3modal/wagmi": "^3.0.1",
     "autoprefixer": "10.4.14",
     "clsx": "^1.2.1",
     "cross-fetch": "^4.0.0",

@@ -4,12 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import {
-  APP_DEFAULT_TITLE,
-  APP_DESCRIPTION,
-  APP_NAME,
-  APP_TITLE_TEMPLATE,
-} from "@/lib/constants";
+import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 
 import { Client } from "./client";
 
@@ -17,18 +12,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
-  title: {
-    default: APP_DEFAULT_TITLE,
-    template: APP_TITLE_TEMPLATE,
-  },
+  title: APP_DEFAULT_TITLE,
   description: APP_DESCRIPTION,
   manifest: "/manifest.json",
-  themeColor: "#FFFFFF",
+  themeColor: "#FF0000",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: APP_DEFAULT_TITLE,
-    // startUpImage: [],
   },
   formatDetection: {
     telephone: false,
@@ -36,18 +27,12 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: APP_NAME,
-    title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
-    },
+    title: APP_DEFAULT_TITLE,
     description: APP_DESCRIPTION,
   },
   twitter: {
     card: "summary",
-    title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
-    },
+    title: APP_DEFAULT_TITLE,
     description: APP_DESCRIPTION,
   },
 };

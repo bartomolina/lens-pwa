@@ -1,6 +1,6 @@
 {
-  "name": "Lens PWA",
-  "short_name": "PWA",
+  "name": "Lens",
+  "short_name": "Lens",
   "description": "Lens PWA App",
   "icons": [
     {
@@ -24,8 +24,8 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#FFFFFF",
-  "background_color": "#0000FF",
+  "theme_color": "#FF0000",
+  "background_color": "#FF0000",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait"
