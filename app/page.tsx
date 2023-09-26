@@ -1,6 +1,7 @@
 "use client";
 
 import { Web3Button } from "@web3modal/react";
+import { Navbar, Page } from "konsta/react";
 import { useEffect } from "react";
 import { useAccount, useWalletClient } from "wagmi";
 
@@ -19,14 +20,15 @@ export default function Home() {
   }, [isConnected, isFetched, login]);
 
   return (
-    <>
-      {isConnected ? (
-        <div>
+    <Page>
+      <Navbar title="Login" />
+      <div className="mt-40 text-center">
+        {isConnected ? (
           <button onClick={() => logout()}>Logout</button>
-        </div>
-      ) : (
-        <Web3Button />
-      )}
-    </>
+        ) : (
+          <Web3Button />
+        )}
+      </div>
+    </Page>
   );
 }

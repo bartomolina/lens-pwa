@@ -11,3 +11,5 @@
 - public/manifest.json
 - https://www.simicart.com/manifest-generator.html/
 - wrap APP (next.config.js)
+
+## KonstaUI

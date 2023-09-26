@@ -3,6 +3,7 @@
 // eslint-disable-next-line import/named
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Web3Modal } from "@web3modal/react";
+import { App } from "konsta/react";
 import { ToastContainer } from "react-toastify";
 import { polygonMumbai } from "viem/chains";
 import { WagmiConfig } from "wagmi";
@@ -15,7 +16,9 @@ export function Client({ children }: { children: React.ReactNode }) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
+        <WagmiConfig config={wagmiConfig}>
+          <App theme="ios">{children}</App>
+        </WagmiConfig>
       </QueryClientProvider>
       <ToastContainer />
       <Web3Modal
