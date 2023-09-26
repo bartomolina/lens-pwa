@@ -7,4 +7,5 @@ module.exports = konstaConfig({
     hoverOnlyWhenSupported: true,
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  darkMode: "class",
 });
