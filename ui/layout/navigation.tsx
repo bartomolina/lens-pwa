@@ -15,7 +15,7 @@ export default function Navigation() {
   const router = useRouter();
 
   return (
-    <Tabbar className="fixed bottom-0 left-0">
+    <Tabbar className="fixed bottom-0 left-0 h-24 pt-6">
       <TabbarLink
         active={activeTab === "tab-feed"}
         onClick={() => {
