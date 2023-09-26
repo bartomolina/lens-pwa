@@ -8,7 +8,7 @@ export default function Feed() {
   return (
     <Page>
       <Navbar title="Feed" />
-      <Navigation />
+      <Navigation activeTab="feed" />
     </Page>
   );
 }

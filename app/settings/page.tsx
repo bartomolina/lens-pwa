@@ -15,7 +15,7 @@ export default function Settings() {
   return (
     <Page>
       <Navbar title="Settings" />
-      <Navigation />
+      <Navigation activeTab="settings" />
       <BlockTitle>Account</BlockTitle>
       <Block strong outlineIos className="space-y-2">
         <div className="w-24">

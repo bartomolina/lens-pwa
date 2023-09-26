@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: APP_DEFAULT_TITLE,
   description: APP_DESCRIPTION,
   manifest: "/manifest.json",
-  themeColor: "#FF0000",
+  themeColor: "#F5F5F7",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

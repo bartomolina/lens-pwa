@@ -1,13 +1,11 @@
-let authenticationToken: string | undefined;
 export const setAuthenticationToken = (token: string) => {
-  authenticationToken = token;
-  console.log("setAuthenticationToken: token", token);
+  localStorage.setItem("accessToken", token);
 };
 
 export const getAuthenticationToken = () => {
-  return authenticationToken;
+  return localStorage.getItem("accessToken");
 };
 
 export const clearAuthenticationToken = () => {
-  authenticationToken = undefined;
+  localStorage.clear();
 };

@@ -10,27 +10,20 @@ import { Icon, Tabbar, TabbarLink } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Navigation() {
-  const [activeTab, setActiveTab] = useState("tab-feed");
+export default function Navigation({ activeTab }: { activeTab: string }) {
   const router = useRouter();
 
   return (
     <Tabbar className="fixed bottom-0 left-0 h-24 pt-6">
       <TabbarLink
-        active={activeTab === "tab-feed"}
-        onClick={() => {
-          setActiveTab("tab-feed");
-          router.push("/feed");
-        }}
+        active={activeTab === "feed"}
+        onClick={() => router.push("/feed")}
         icon={<Icon ios={<Globe className="h-7 w-7" />} />}
         label={"Feed"}
       />
       <TabbarLink
-        active={activeTab === "tab-settings"}
-        onClick={() => {
-          setActiveTab("tab-settings");
-          router.push("/settings");
-        }}
+        active={activeTab === "settings"}
+        onClick={() => router.push("/settings")}
         icon={<Icon ios={<Person className="h-7 w-7" />} />}
         label={"Settings"}
       />
