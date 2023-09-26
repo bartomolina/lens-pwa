@@ -27,6 +27,7 @@
     "eslint": "^8.50.0",
     "eslint-config-next": "^13.5.3",
     "ethers": "^5.7.2",
+    "framework7-icons": "^5.0.5",
     "graphql": "^16.8.1",
     "konsta": "^3.1.0",
     "next": "^13.5.3",

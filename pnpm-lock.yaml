@@ -56,6 +56,9 @@ dependencies:
   ethers:
     specifier: ^5.7.2
     version: 5.7.2
+  framework7-icons:
+    specifier: ^5.0.5
+    version: 5.0.5
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
@@ -5765,6 +5768,11 @@ packages:
 
   /fraction.js@4.3.6:
     resolution: {integrity: sha512-n2aZ9tNfYDwaHhvFTkhFErqOMIb8uyzSQ+vGJBjZyanAKZVbGUQ1sngfk9FdkBw7G26O7AgNjLcecLffD1c7eg==}
+    dev: false
+
+  /framework7-icons@5.0.5:
+    resolution: {integrity: sha512-bvHMLyujV9TFuudehd3ORZ/EvNp19Ir3ckVzYAOf3MkLymHba/9oHLsgopCh0x5UsrYZUpkrE+fd7ggj5y4wRw==}
+    engines: {node: '>= 0.10.0'}
     dev: false
 
   /fs-extra@9.1.0:

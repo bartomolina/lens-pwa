@@ -3,7 +3,11 @@ import { useDisconnect } from "wagmi";
 
 import { clearAuthenticationToken } from "@/lib/state";
 
-export const useLogout = () => {
+interface LogoutOptions {
+  onSuccess?: () => void;
+}
+
+export const useLogout = ({ onSuccess }: LogoutOptions) => {
   const { disconnect } = useDisconnect();
 
   return useMutation({
@@ -12,5 +16,6 @@ export const useLogout = () => {
       disconnect();
       console.log("logout: logged out");
     },
+    onSuccess,
   });
 };

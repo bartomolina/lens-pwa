@@ -2,16 +2,19 @@
 
 import { Web3Button } from "@web3modal/react";
 import { Navbar, Page } from "konsta/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAccount, useWalletClient } from "wagmi";
 
-import { useLogin, useLogout } from "@/lib/lens";
+import { useLogin } from "@/lib/lens";
 
 export default function Home() {
+  const router = useRouter();
   const { isConnected } = useAccount();
   const { isFetched } = useWalletClient();
-  const { mutate: login } = useLogin();
-  const { mutate: logout } = useLogout();
+  const { mutate: login } = useLogin({
+    onSuccess: () => router.push("/feed"),
+  });
 
   useEffect(() => {
     if (isConnected && isFetched) {
@@ -23,11 +26,7 @@ export default function Home() {
     <Page>
       <Navbar title="Login" />
       <div className="mt-40 text-center">
-        {isConnected ? (
-          <button onClick={() => logout()}>Logout</button>
-        ) : (
-          <Web3Button />
-        )}
+        <Web3Button />
       </div>
     </Page>
   );

@@ -5,7 +5,11 @@ import { getAuthenticationToken, setAuthenticationToken } from "@/lib/state";
 
 import { authenticate, generateChallenge } from "./auth";
 
-export const useLogin = () => {
+interface LoginOptions {
+  onSuccess?: () => void;
+}
+
+export const useLogin = ({ onSuccess }: LoginOptions) => {
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
 
@@ -29,7 +33,8 @@ export const useLogin = () => {
       const authenticatedResult = await authenticate({ address, signature });
       setAuthenticationToken(authenticatedResult?.accessToken);
 
-      console.log("login:", authenticatedResult);
+      console.log("login: logged in");
     },
+    onSuccess,
   });
 };
