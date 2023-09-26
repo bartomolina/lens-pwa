@@ -4,14 +4,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { Client } from "./client";
-
 import {
-  APP_NAME,
   APP_DEFAULT_TITLE,
-  APP_TITLE_TEMPLATE,
   APP_DESCRIPTION,
+  APP_NAME,
+  APP_TITLE_TEMPLATE,
 } from "@/lib/constants";
+
+import { Client } from "./client";
 
 const inter = Inter({ subsets: ["latin"] });
 
