@@ -8,8 +8,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { useLogin } from "@/lib/lens/v2";
-import { useCreateProfile, useProfiles } from "@/lib/lens/v2";
+import { useCreateProfile, useLogin , useProfiles } from "@/lib/lens/v2";
 
 export function Login() {
   const router = useRouter();

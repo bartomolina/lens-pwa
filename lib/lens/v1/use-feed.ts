@@ -7,10 +7,9 @@ export const useFeed = () => {
   const { data: defaultProfile } = useDefaultProfile();
 
   return useQuery({
+    enabled: defaultProfile?.id != undefined,
     queryKey: ["feed", defaultProfile?.id],
     queryFn: async () => {
-      console.log("use feed: getting feed");
-      console.log("use feed: userid", defaultProfile?.id);
       let result;
       if (defaultProfile) {
         result = await getFeed({ profileId: defaultProfile?.id });
