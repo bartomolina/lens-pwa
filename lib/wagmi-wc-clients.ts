@@ -4,9 +4,12 @@ import {
   w3mProvider,
 } from "@web3modal/ethereum";
 import { configureChains, createConfig } from "wagmi";
-import { polygonMumbai } from "wagmi/chains";
+import { polygon, polygonMumbai } from "wagmi/chains";
 
-const chains = [polygonMumbai];
+import { NETWORK } from "./constants";
+
+export const defaultChain = NETWORK === "mainnet" ? polygon : polygonMumbai;
+const chains = [defaultChain];
 export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID as string;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);

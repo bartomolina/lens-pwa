@@ -33,7 +33,7 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
       const authenticatedResult = await authenticate({ address, signature });
       setAuthenticationToken(authenticatedResult?.accessToken);
 
-      console.log("login: logged in");
+      console.log("use login: logged in");
     },
     onSuccess,
   });

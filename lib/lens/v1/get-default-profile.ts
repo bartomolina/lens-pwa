@@ -1,7 +1,7 @@
 import {
   DefaultProfileDocument,
   DefaultProfileRequest,
-} from "@/graphql/generated/graphql";
+} from "@/graphql/v1/generated/graphql";
 import { apolloClient } from "@/lib/apollo-client";
 
 export const getDefaultProfile = async (request: DefaultProfileRequest) => {

@@ -5,10 +5,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Web3Modal } from "@web3modal/react";
 import { App } from "konsta/react";
 import { ToastContainer } from "react-toastify";
-import { polygonMumbai } from "viem/chains";
 import { WagmiConfig } from "wagmi";
 
-import { ethereumClient, projectId, wagmiConfig } from "@/lib/wagmi-wc-clients";
+import {
+  defaultChain,
+  ethereumClient,
+  projectId,
+  wagmiConfig,
+} from "@/lib/wagmi-wc-clients";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +29,7 @@ export function Client({ children }: { children: React.ReactNode }) {
         projectId={projectId}
         ethereumClient={ethereumClient}
         themeMode="light"
-        defaultChain={polygonMumbai}
+        defaultChain={defaultChain}
       />
     </>
   );

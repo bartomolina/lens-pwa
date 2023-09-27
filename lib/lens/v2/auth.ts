@@ -3,7 +3,7 @@ import {
   ChallengeDocument,
   ChallengeRequest,
   SignedAuthChallenge,
-} from "@/graphql/generated/graphql";
+} from "@/graphql/v2/generated/graphql";
 import { apolloClient } from "@/lib/apollo-client";
 
 export const generateChallenge = async (request: ChallengeRequest) => {

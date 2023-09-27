@@ -4,7 +4,7 @@ import { Block, BlockTitle, Button, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 
 import { useLogout } from "@/lib/lens";
-import Navigation from "@/ui/layout/navigation";
+import { Navigation } from "@/ui/layout/navigation";
 
 export default function Settings() {
   const router = useRouter();

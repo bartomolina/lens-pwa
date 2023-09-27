@@ -1,0 +1,11 @@
+query profiles($request: ProfilesRequest!) {
+  profiles(request: $request) {
+    items {
+      id
+      handle
+      metadata {
+        displayName
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+mutation createProfileWithHandle($request: CreateProfileWithHandleRequest!) {
+  createProfileWithHandle(request: $request) {
+    ... on RelaySuccess {
+      txHash
+    }
+    ... on CreateProfileWithHandleErrorResult {
+      reason
+    }
+    __typename
+  }
+}

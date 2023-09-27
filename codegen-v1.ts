@@ -3,11 +3,13 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 const config: CodegenConfig = {
   overwrite: true,
   schema: "https://api-mumbai.lens.dev",
-  documents: "./graphql/*.graphql",
+  documents: "./graphql/v1/*.graphql",
   generates: {
-    "./graphql/generated/": {
+    "./graphql/v1/generated/": {
       preset: "client",
-      plugins: [],
+      presetConfig: {
+        fragmentMasking: false,
+      },
     },
   },
 };

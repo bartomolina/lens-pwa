@@ -9,11 +9,8 @@ export const useDefaultProfile = () => {
   return useQuery({
     queryKey: ["profile", address],
     queryFn: async () => {
-      let result;
-      if (address) {
-        result = await getDefaultProfile({ ethereumAddress: address });
-        console.log("profile:", result);
-      }
+      const result = await getDefaultProfile({ ethereumAddress: address });
+      console.log("use profile:", result);
 
       return result;
     },

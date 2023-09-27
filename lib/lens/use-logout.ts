@@ -14,7 +14,7 @@ export const useLogout = ({ onSuccess }: LogoutOptions) => {
     mutationFn: async () => {
       clearAuthenticationToken();
       disconnect();
-      console.log("logout: logged out");
+      console.log("use logout: logged out");
     },
     onSuccess,
   });

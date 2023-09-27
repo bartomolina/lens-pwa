@@ -8,9 +8,8 @@ import {
 } from "framework7-icons/react";
 import { Icon, Tabbar, TabbarLink } from "konsta/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-export default function Navigation({ activeTab }: { activeTab: string }) {
+export function Navigation({ activeTab }: { activeTab: string }) {
   const router = useRouter();
 
   return (
