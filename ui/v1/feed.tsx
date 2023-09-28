@@ -1,27 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Plus } from "framework7-icons/react";
-import {
-  Card,
-  Fab,
-  Link,
-  List,
-  ListButton,
-  ListInput,
-  Navbar,
-  Page,
-  Popup,
-} from "konsta/react";
+import { Card, Fab, Popup } from "konsta/react";
 import { useState } from "react";
 
-import { useCreatePost,useFeed } from "@/lib/lens/v1";
+import { useFeed } from "@/lib/lens/v1";
+
+import { CreatePost } from "./create-post";
 
 export function Feed() {
   const [popupOpened, setPopupOpened] = useState(false);
   const { data: feed } = useFeed();
-  const { mutate: createPost } = useCreatePost({
-    onSuccess: () => alert("post created"),
-  });
 
   return (
     <div className="mb-28">
@@ -51,31 +40,7 @@ export function Feed() {
         </Card>
       ))}
       <Popup opened={popupOpened} onBackdropClick={() => setPopupOpened(false)}>
-        <Page>
-          <Navbar
-            title="New post"
-            right={
-              <Link navbar onClick={() => setPopupOpened(false)}>
-                Close
-              </Link>
-            }
-          />
-          <List strongIos insetIos>
-            <ListInput
-              label="Content"
-              type="textarea"
-              placeholder="What's happening?"
-              inputClassName="!h-80 resize-none"
-            />
-            <ListButton
-              onClick={() =>
-                createPost("ar://Xu37cbQd-fBiY8cykrp3-ShKNlk-AJqhkaoRL2F3n-w")
-              }
-            >
-              Post
-            </ListButton>
-          </List>
-        </Page>
+        <CreatePost setPopupOpened={setPopupOpened} />
       </Popup>
     </div>
   );

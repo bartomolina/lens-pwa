@@ -10,11 +10,8 @@ export const useFeed = () => {
     enabled: defaultProfile?.id != undefined,
     queryKey: ["feed", defaultProfile?.id],
     queryFn: async () => {
-      let result;
-      if (defaultProfile) {
-        result = await getFeed({ profileId: defaultProfile?.id });
-        console.log("use feed:", result);
-      }
+      const result = await getFeed({ profileId: defaultProfile?.id });
+      console.log("use feed:", result);
 
       return result;
     },
