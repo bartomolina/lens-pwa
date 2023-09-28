@@ -1,3 +1,5 @@
+import { Readable } from "node:stream";
+
 import { WebBundlr } from "@bundlr-network/client";
 import { getWalletClient, type WalletClient } from "@wagmi/core";
 import { providers } from "ethers";
@@ -16,12 +18,12 @@ export function walletClientToSigner(walletClient: WalletClient) {
   return signer;
 }
 
-export const upload = async <T>(data: T) => {
+export const upload = async (data: string | Buffer | Readable) => {
   const client = await getWalletClient({
     chainId: defaultChain.id,
   });
 
-  console.log(client);
+  console.log("upload: uploading content");
 
   if (client) {
     const signer = walletClientToSigner(client);
@@ -39,12 +41,8 @@ export const upload = async <T>(data: T) => {
       client
     );
     await bundlr.ready();
+    const response = await bundlr.upload(data);
 
-    const dataToUpload = "GM world.";
-    const response = await bundlr.upload(dataToUpload);
-
-    console.log(response);
+    return `https://arweave.net/${response.id}`;
   }
-
-  return data;
 };

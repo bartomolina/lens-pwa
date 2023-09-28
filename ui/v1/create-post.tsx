@@ -1,16 +1,37 @@
 import { Link, List, ListButton, ListInput, Navbar, Page } from "konsta/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
 
-import { useCreatePost } from "@/lib/lens/v1";
+import { PublicationMainFocus } from "@/graphql/v1/generated/graphql";
+import { APP_URL } from "@/lib/constants";
+import { useCreatePublication, useDefaultProfile } from "@/lib/lens/v1";
 
 interface CreatePostProps {
   setPopupOpened: Dispatch<SetStateAction<boolean>>;
 }
 
 export function CreatePost({ setPopupOpened }: CreatePostProps) {
-  const { mutate: createPost } = useCreatePost({
+  const [content, setContent] = useState("");
+  const { data: defaultProfile } = useDefaultProfile();
+  const { mutate: createPost } = useCreatePublication({
     onSuccess: () => console.log("post created"),
   });
+
+  const handleCreatePost = () => {
+    createPost({
+      version: "2.0.0",
+      metadata_id: uuidv4(),
+      content,
+      description: content,
+      external_url: APP_URL,
+      name: `Post by @${defaultProfile?.handle}}`,
+      mainContentFocus: PublicationMainFocus.TextOnly,
+      locale: "en-US",
+      attributes: [],
+    });
+  };
 
   return (
     <Page>
@@ -26,17 +47,13 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
         <ListInput
           label="Content"
           type="textarea"
+          value={content}
+          onChange={(event_) => setContent(event_.target.value)}
           placeholder="What's happening?"
           inputClassName="!h-80 resize-none"
         />
-        <ListInput label="Image" type="file" placeholder="aaaa" />
-        <ListButton
-          onClick={() =>
-            createPost("ar://Xu37cbQd-fBiY8cykrp3-ShKNlk-AJqhkaoRL2F3n-w")
-          }
-        >
-          Post
-        </ListButton>
+        <ListInput label="Image" type="file" />
+        <ListButton onClick={handleCreatePost}>Post</ListButton>
       </List>
     </Page>
   );

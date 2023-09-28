@@ -21,7 +21,9 @@ export function Login() {
   });
   const { data: profiles } = useProfiles();
 
-  const onNewProfileChange = (event_: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNewProfileChange = (
+    event_: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setNewProfile({ handle: event_.target.value, changed: true });
   };
 
@@ -35,7 +37,7 @@ export function Login() {
         <ListInput
           label="Handle"
           type="text"
-          placeholder="lenster"
+          placeholder="ethglobal"
           info="Lowercase, numbers, -, _. 5 to 31 characters"
           value={newProfile.handle}
           error={
@@ -43,7 +45,7 @@ export function Login() {
               ? "Lowercase, numbers, -, _. 5 to 31 characters"
               : ""
           }
-          onChange={onNewProfileChange}
+          onChange={handleNewProfileChange}
         />
         <ListButton onClick={() => createProfile(newProfile.handle)}>
           Create profile

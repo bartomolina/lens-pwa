@@ -1,6 +1,7 @@
 export const APP_NAME = "Lens";
 export const APP_DEFAULT_TITLE = "Lens";
 export const APP_DESCRIPTION = "This is a Lens PWA built for mobile access";
+export const APP_URL = "https://lens.pwas.io/";
 
 export const NETWORK = process.env.NEXT_PUBLIC_NETWORK ?? "testnet";
 
