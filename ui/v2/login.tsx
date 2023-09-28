@@ -8,12 +8,12 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { useCreateProfile, useLogin , useProfiles } from "@/lib/lens/v2";
+import { useCreateProfile, useLogin, useProfiles } from "@/lib/lens/v2";
 
 export function Login() {
   const router = useRouter();
   const [newProfile, setNewProfile] = useState({ handle: "", changed: false });
-  const { mutate: loginV2 } = useLogin({
+  const { mutate: login } = useLogin({
     onSuccess: () => router.push("/feed"),
   });
   const { mutate: createProfile } = useCreateProfile({
@@ -58,7 +58,7 @@ export function Login() {
           <ListItem
             key={profile.id}
             link
-            onClick={() => loginV2(profile.id)}
+            onClick={() => login(profile.id)}
             header={`${profile.id} (#${Number.parseInt(profile.id, 16)})`}
             title={profile.handle}
             after="Log in"

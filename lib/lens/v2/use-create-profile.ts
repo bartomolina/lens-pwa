@@ -15,15 +15,12 @@ export const useCreateProfile = ({ onSuccess }: LoginOptions) => {
       console.log("use create profile with handle:", handle);
 
       // create profile with handle
-      const createProfileresponse = createProfile({
+      const createProfileresponse = await createProfile({
         to,
         handle,
       });
 
-      console.log(
-        "use create profile with handle:",
-        await createProfileresponse
-      );
+      console.log("use create profile with handle:", createProfileresponse);
     },
     onSuccess,
   });

@@ -1,0 +1,14 @@
+mutation createDataAvailabilityPostViaDispatcher(
+  $request: CreateDataAvailabilityPostRequest!
+) {
+  createDataAvailabilityPostViaDispatcher(request: $request) {
+    ... on CreateDataAvailabilityPublicationResult {
+      id
+      proofs
+      dataAvailabilityId
+    }
+    ... on RelayError {
+      reason
+    }
+  }
+}

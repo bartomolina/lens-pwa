@@ -12,5 +12,5 @@ export const getFeed = async (request: FeedRequest) => {
     },
   });
 
-  return result.data.feed;
+  return result.data?.feed;
 };

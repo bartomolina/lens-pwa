@@ -1,6 +1,6 @@
 "use client";
 
-import { Block, BlockTitle, Button, Navbar, Page } from "konsta/react";
+import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 
 import { useLogout } from "@/lib/lens";
@@ -17,13 +17,9 @@ export default function Settings() {
       <Navbar title="Settings" />
       <Navigation activeTab="settings" />
       <BlockTitle>Account</BlockTitle>
-      <Block strong outlineIos className="space-y-2">
-        <div className="w-24">
-          <Button large onClick={() => logout()}>
-            Logout
-          </Button>
-        </div>
-      </Block>
+      <List strongIos insetIos>
+        <ListButton onClick={() => logout()}>Log out</ListButton>
+      </List>
     </Page>
   );
 }

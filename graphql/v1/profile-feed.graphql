@@ -1,4 +1,4 @@
-query ProfileFeed($request: FeedRequest!) {
+query profileFeed($request: FeedRequest!) {
   feed(request: $request) {
     items {
       root {
