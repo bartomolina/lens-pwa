@@ -1,8 +1,6 @@
-import { BlockTitle, List, ListButton } from "konsta/react";
-import { useSignMessage } from "wagmi";
-import { useDisconnect } from "wagmi";
-import { useSignTypedData } from "wagmi";
 import { signMessage, signTypedData } from "@wagmi/core";
+import { BlockTitle, List, ListButton } from "konsta/react";
+import { useDisconnect , useSignMessage , useSignTypedData } from "wagmi";
 
 export function WalletTest() {
   const { disconnect } = useDisconnect();

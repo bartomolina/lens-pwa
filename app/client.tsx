@@ -2,13 +2,13 @@
 
 // eslint-disable-next-line import/named
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Web3Modal } from "@web3modal/react";
+import { ConnectKitProvider } from "connectkit";
 import { App } from "konsta/react";
 import { ToastContainer } from "react-toastify";
 import { WagmiConfig } from "wagmi";
-import { Web3Modal } from "@web3modal/react";
 
 import { config } from "@/lib/wagmi-wc-clients";
-import { ConnectKitProvider } from "connectkit";
 
 const queryClient = new QueryClient();
 

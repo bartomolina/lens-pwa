@@ -1,7 +1,7 @@
 import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
-import { getWalletClient, signTypedData, signMessage } from "@wagmi/core";
+import { getWalletClient, signMessage,signTypedData } from "@wagmi/core";
 
 import { defaultChain } from "./wagmi-wc-clients";
 

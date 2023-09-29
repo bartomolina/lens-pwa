@@ -1,3 +1,4 @@
+import { EthereumProvider } from "@walletconnect/ethereum-provider";
 import {
   EthereumClient,
   w3mConnectors,
@@ -5,9 +6,9 @@ import {
 } from "@web3modal/ethereum";
 import { configureChains, createConfig } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
-import { NETWORK } from "./constants";
-import { EthereumProvider } from "@walletconnect/ethereum-provider";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+
+import { NETWORK } from "./constants";
 
 export const defaultChain = NETWORK === "mainnet" ? polygon : polygonMumbai;
 const chains = [defaultChain];

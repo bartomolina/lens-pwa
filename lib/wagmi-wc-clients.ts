@@ -1,12 +1,12 @@
-import { WagmiConfig, createConfig } from "wagmi";
 import {
-  ConnectKitProvider,
   ConnectKitButton,
+  ConnectKitProvider,
   getDefaultConfig,
 } from "connectkit";
+import { createConfig,WagmiConfig } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
-import { NETWORK } from "./constants";
-import { APP_DESCRIPTION, APP_NAME } from "./constants";
+
+import { APP_DESCRIPTION, APP_NAME,NETWORK  } from "./constants";
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID || "";
 const walletConnectProjectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
