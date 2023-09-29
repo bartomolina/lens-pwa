@@ -18,7 +18,10 @@ export function walletClientToSigner(walletClient: WalletClient) {
   return signer;
 }
 
-export const upload = async (data: string | Buffer | Readable) => {
+export const upload = async (
+  data: string | Buffer | Readable,
+  fileType?: string
+) => {
   const client = await getWalletClient({
     chainId: defaultChain.id,
   });
@@ -41,7 +44,12 @@ export const upload = async (data: string | Buffer | Readable) => {
       client
     );
     await bundlr.ready();
-    const response = await bundlr.upload(data);
+    const metadata = fileType
+      ? {
+          tags: [{ name: "Content-Type", value: fileType }],
+        }
+      : {};
+    const response = await bundlr.upload(data, metadata);
 
     return `https://arweave.net/${response.id}`;
   }
