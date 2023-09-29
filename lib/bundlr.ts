@@ -24,6 +24,7 @@ export const upload = async (
 
     //@ts-expect-error injected
     walletClient._signTypedData = async (domain, types, message) => {
+      alert("signing message");
       message["Transaction hash"] =
         "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -32,15 +33,20 @@ export const upload = async (
         domain,
         message,
         types,
-        account: bundlr.address! as `0x${string}`,
+        account: bundlr.address as `0x${string}`,
         primaryType: "Bundlr",
       });
     };
     //@ts-expect-error injected
-    walletClient.getSigner = () => walletClient;
+    walletClient.getSigner = () => {
+      alert("getting signer");
+      return walletClient;
+    };
     //@ts-expect-error injected
-    walletClient.getAddress = async () =>
-      walletClient.getAddresses().then((a) => a[0]);
+    walletClient.getAddress = async () => {
+      alert("getting address");
+      return walletClient.getAddresses().then((a) => a[0]);
+    };
 
     await bundlr.ready();
     const metadata = fileType
