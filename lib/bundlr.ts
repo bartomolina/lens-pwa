@@ -1,7 +1,7 @@
 import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
-import { getWalletClient, signMessage,signTypedData } from "@wagmi/core";
+import { getWalletClient, signMessage, signTypedData } from "@wagmi/core";
 
 import { defaultChain } from "./wagmi-wc-clients";
 
@@ -24,32 +24,25 @@ export const upload = async (
 
     //@ts-expect-error injected
     walletClient._signTypedData = async (domain, types, message) => {
-      if (domain && types && message) {
-        alert("signing message wagmi 7");
-        await signMessage({ message: "test4" });
-        console.log("done");
-        await signTypedData({
-          domain,
-          message,
-          types,
-          // account: bundlr.address as `0x${string}`,
-          primaryType: "Bundlr",
-        });
-        alert("done signing");
-        message["Transaction hash"] =
-          "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        return await signTypedData({
-          domain,
-          message,
-          types,
-          // account: bundlr.address as `0x${string}`,
-          primaryType: "Bundlr",
-        });
-      } else {
-        console.log("no message sent");
-      }
+      alert("signing message wagmi 3");
+      console.log("message:", message);
+
+      // signMessage
+      // const txHash = (message["Transaction hash"] =
+      //   "0x" + Buffer.from(message["Transaction hash"]).toString("hex"));
+      // // console.log(await signMessage({ message: txHash }));
+      // return await signMessage({ message: txHash });
+
+      // signTyedData
+      message["Transaction hash"] =
+        "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
+      return await signTypedData({
+        domain,
+        message,
+        types,
+        account: bundlr.address! as `0x${string}`,
+        primaryType: "Bundlr",
+      });
     };
     //@ts-expect-error injected
     walletClient.getSigner = () => walletClient;

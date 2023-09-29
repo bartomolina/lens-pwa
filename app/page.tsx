@@ -1,7 +1,6 @@
 "use client";
 
 import { Web3Button } from "@web3modal/react";
-import { ConnectKitButton } from "connectkit";
 import { Navbar, Page } from "konsta/react";
 import { useAccount } from "wagmi";
 
@@ -18,8 +17,7 @@ export default function Home() {
       <div className="m-4 flex justify-center">
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
-        {/* <Web3Button /> */}
-        <ConnectKitButton />
+        <Web3Button />
       </div>
       {isConnected ? (
         NETWORK === "mainnet" ? (
