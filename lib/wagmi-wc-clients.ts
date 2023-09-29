@@ -1,26 +1,26 @@
-import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
+import { WagmiConfig, createConfig } from "wagmi";
+import {
+  ConnectKitProvider,
+  ConnectKitButton,
+  getDefaultConfig,
+} from "connectkit";
 import { polygon, polygonMumbai } from "wagmi/chains";
-
 import { NETWORK } from "./constants";
+import { APP_DESCRIPTION, APP_NAME } from "./constants";
 
-const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
-
-const metadata = {
-  name: "Progressive",
-  description: "Progressive Web App",
-  url: "https://web3modal.com",
-  icons: ["https://avatars.githubusercontent.com/u/37784886"],
-};
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID || "";
+const walletConnectProjectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
 
 export const defaultChain = NETWORK === "mainnet" ? polygon : polygonMumbai;
-const chains = [defaultChain];
 
-export const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
-
-createWeb3Modal({
-  wagmiConfig,
-  projectId,
-  chains,
-  defaultChain,
-  themeMode: "light",
-});
+export const config = createConfig(
+  getDefaultConfig({
+    alchemyId,
+    walletConnectProjectId,
+    chains: [defaultChain],
+    appName: APP_NAME,
+    appDescription: APP_DESCRIPTION,
+    appUrl: "https://family.co",
+    appIcon: "https://family.co/logo.png",
+  })
+);

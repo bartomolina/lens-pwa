@@ -1,7 +1,7 @@
 import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
-import { getWalletClient, signTypedData } from "@wagmi/core";
+import { getWalletClient, signTypedData, signMessage } from "@wagmi/core";
 
 import { defaultChain } from "./wagmi-wc-clients";
 
@@ -24,29 +24,38 @@ export const upload = async (
 
     //@ts-expect-error injected
     walletClient._signTypedData = async (domain, types, message) => {
-      alert("signing message wagmi");
-      message["Transaction hash"] =
-        "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      return await signTypedData({
-        domain,
-        message,
-        types,
-        // account: bundlr.address as `0x${string}`,
-        primaryType: "Bundlr",
-      });
+      if (domain && types && message) {
+        alert("signing message wagmi 7");
+        await signMessage({ message: "test4" });
+        console.log("done");
+        await signTypedData({
+          domain,
+          message,
+          types,
+          // account: bundlr.address as `0x${string}`,
+          primaryType: "Bundlr",
+        });
+        alert("done signing");
+        message["Transaction hash"] =
+          "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        return await signTypedData({
+          domain,
+          message,
+          types,
+          // account: bundlr.address as `0x${string}`,
+          primaryType: "Bundlr",
+        });
+      } else {
+        console.log("no message sent");
+      }
     };
     //@ts-expect-error injected
-    walletClient.getSigner = () => {
-      alert("getting signer");
-      return walletClient;
-    };
+    walletClient.getSigner = () => walletClient;
     //@ts-expect-error injected
-    walletClient.getAddress = async () => {
-      alert("getting address");
-      return walletClient.getAddresses().then((a) => a[0]);
-    };
+    walletClient.getAddress = async () =>
+      walletClient.getAddresses().then((a) => a[0]);
 
     await bundlr.ready();
     const metadata = fileType

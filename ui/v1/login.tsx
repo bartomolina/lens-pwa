@@ -1,10 +1,12 @@
 import { BlockTitle, List, ListButton } from "konsta/react";
 import { useRouter } from "next/navigation";
+import { useDisconnect } from "wagmi";
 
 import { useLogin } from "@/lib/lens/v1";
 
 export function Login() {
   const router = useRouter();
+  const { disconnect } = useDisconnect();
   const { mutate: login } = useLogin({
     onSuccess: () => router.push("/feed"),
   });
@@ -12,11 +14,15 @@ export function Login() {
   return (
     <>
       <BlockTitle>
-        Default profile{" "}
+        Default profile
         <div className="text-right text-xs font-light">Mainnnet - Lens V1</div>
       </BlockTitle>
       <List strongIos insetIos>
         <ListButton onClick={() => login()}>Log in</ListButton>
+      </List>
+      <BlockTitle>Log out</BlockTitle>
+      <List strongIos insetIos>
+        <ListButton onClick={() => disconnect()}>Disconnect</ListButton>
       </List>
     </>
   );
