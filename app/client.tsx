@@ -17,7 +17,11 @@ export function Client({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <WagmiConfig config={wagmiConfig}>
           <App theme="ios">{children}</App>
-          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+          <Web3Modal
+            projectId={projectId}
+            ethereumClient={ethereumClient}
+            themeMode="light"
+          />
         </WagmiConfig>
       </QueryClientProvider>
       <ToastContainer />

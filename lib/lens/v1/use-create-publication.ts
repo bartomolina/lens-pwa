@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { PublicationMetadataV2Input } from "@/graphql/v1/generated/graphql";
-import { upload } from "@/lib/bundlr";
+import { upload } from "@/utils/bundlr";
 
 import { createPublication } from "./create-publication";
 import { useDefaultProfile } from "./use-default-profile";

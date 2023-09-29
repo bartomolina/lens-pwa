@@ -7,7 +7,6 @@ import { useAccount } from "wagmi";
 import { NETWORK } from "@/lib/constants";
 import { Login as LoginV1 } from "@/ui/v1/login";
 import { Login as LoginV2 } from "@/ui/v2/login";
-import { WalletTest } from "@/ui/wallet-test";
 
 export default function Home() {
   const { isConnected } = useAccount();
@@ -23,7 +22,6 @@ export default function Home() {
         NETWORK === "mainnet" ? (
           <LoginV1 />
         ) : (
-          // <WalletTest />
           <LoginV2 />
         )
       ) : undefined}

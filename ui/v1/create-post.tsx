@@ -5,9 +5,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
 
 import { PublicationMainFocus } from "@/graphql/v1/generated/graphql";
-import { upload } from "@/lib/bundlr";
 import { APP_URL } from "@/lib/constants";
 import { useCreatePublication, useDefaultProfile } from "@/lib/lens/v1";
+import { upload } from "@/utils/bundlr";
 
 function toBuffer(arrayBuffer: ArrayBuffer) {
   const buffer = Buffer.alloc(arrayBuffer.byteLength);
@@ -89,7 +89,7 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
             value={content}
             onChange={(event_) => setContent(event_.target.value)}
             placeholder="What's happening?"
-            inputClassName="!h-80 resize-none"
+            inputClassName="!h-80 resize-none text-2xl"
           />
           <ListInput
             label="Image"
