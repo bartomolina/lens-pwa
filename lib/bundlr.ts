@@ -25,6 +25,8 @@ export const upload = async (
   const client = await getWalletClient({
     chainId: defaultChain.id,
   });
+  alert(`upload chain id: ${client?.chain.id}`);
+  console.log("upload client:", client);
 
   console.log("upload: uploading content");
 

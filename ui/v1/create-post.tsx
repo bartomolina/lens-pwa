@@ -33,16 +33,10 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
   const handleCreatePost = async (event_: React.FormEvent<HTMLFormElement>) => {
     event_.preventDefault();
 
-    console.log(file);
-    console.log(content);
-
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       if (arrayBuffer instanceof ArrayBuffer) {
         const imageURI = await upload(toBuffer(arrayBuffer), file.type);
-        console.log(imageURI);
-        console.log(file);
-
         createPost({
           version: "2.0.0",
           metadata_id: uuidv4(),
