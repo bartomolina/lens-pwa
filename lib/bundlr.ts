@@ -1,7 +1,7 @@
 import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
-import { getWalletClient } from "@wagmi/core";
+import { getWalletClient, signTypedData } from "@wagmi/core";
 
 import { defaultChain } from "./wagmi-wc-clients";
 
@@ -24,16 +24,16 @@ export const upload = async (
 
     //@ts-expect-error injected
     walletClient._signTypedData = async (domain, types, message) => {
-      alert("signing message");
+      alert("signing message wagmi");
       message["Transaction hash"] =
         "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
-      return await walletClient.signTypedData({
+      return await signTypedData({
         domain,
         message,
         types,
-        account: bundlr.address as `0x${string}`,
+        // account: bundlr.address as `0x${string}`,
         primaryType: "Bundlr",
       });
     };
