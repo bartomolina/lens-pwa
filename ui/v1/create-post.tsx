@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/named
+import { appId } from "@lens-protocol/react-web";
 import { Link, List, ListButton, ListInput, Navbar, Page } from "konsta/react";
 import { Dispatch, SetStateAction, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -67,7 +69,7 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
         mainContentFocus: PublicationMainFocus.TextOnly,
         locale: "en-US",
         attributes: [],
-        appId: APP_NAME,
+        appId: appId(APP_NAME),
       });
     }
   };

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   themeColor: "#F5F5F7",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: APP_DEFAULT_TITLE,
   },
   formatDetection: {

@@ -14,8 +14,6 @@ export const upload = async (
     chainId: defaultChain.id,
   });
 
-  console.log("upload: uploading content");
-
   if (walletClient) {
     const bundlr = new WebBundlr(
       "https://node2.bundlr.network",
@@ -25,16 +23,6 @@ export const upload = async (
 
     //@ts-expect-error injected
     walletClient._signTypedData = async (domain, types, message) => {
-      alert("signing message wagmi 3");
-      console.log("message:", message);
-
-      // signMessage
-      // const txHash = (message["Transaction hash"] =
-      //   "0x" + Buffer.from(message["Transaction hash"]).toString("hex"));
-      // // console.log(await signMessage({ message: txHash }));
-      // return await signMessage({ message: txHash });
-
-      // signTyedData
       message["Transaction hash"] =
         "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
       return await signTypedData({
@@ -57,9 +45,7 @@ export const upload = async (
           tags: [{ name: "Content-Type", value: fileType }],
         }
       : {};
-    alert("upload: uploading");
     const response = await bundlr.upload(data, metadata);
-    alert("upload: uploaded");
 
     return `${ARWEAVE_GATEWAY}${response.id}`;
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Gear,
   Globe,
   Person,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -21,9 +22,15 @@ export function Navigation({ activeTab }: { activeTab: string }) {
         label={"Feed"}
       />
       <TabbarLink
+        active={activeTab === "me"}
+        onClick={() => router.push("/me")}
+        icon={<Icon ios={<Person className="h-7 w-7" />} />}
+        label={"Me"}
+      />
+      <TabbarLink
         active={activeTab === "settings"}
         onClick={() => router.push("/settings")}
-        icon={<Icon ios={<Person className="h-7 w-7" />} />}
+        icon={<Icon ios={<Gear className="h-7 w-7" />} />}
         label={"Settings"}
       />
     </Tabbar>

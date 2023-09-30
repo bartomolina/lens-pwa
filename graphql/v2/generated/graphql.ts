@@ -2217,7 +2217,7 @@ export type MultirecipientFeeCollectModuleInput = {
   amount: AmountInput;
   collectLimit?: InputMaybe<Scalars['String']['input']>;
   endsAt?: InputMaybe<Scalars['DateTime']['input']>;
-  followerOnly?: InputMaybe<Scalars['Boolean']['input']>;
+  followerOnly: Scalars['Boolean']['input'];
   recipients: Array<RecipientDataInput>;
   referralFee?: InputMaybe<Scalars['Float']['input']>;
 };
@@ -3270,7 +3270,7 @@ export type Profile = {
   interests: Array<Scalars['String']['output']>;
   invitedBy?: Maybe<Profile>;
   /** The number of invites left */
-  invitesLeft?: Maybe<Scalars['Int']['output']>;
+  invitesLeft: Scalars['Int']['output'];
   /** If the profile has got the lens manager enabled - supports signless experience */
   lensManager: Scalars['Boolean']['output'];
   /** The profile metadata. You can optionally query profile metadata by app id.  */
@@ -4578,7 +4578,7 @@ export type SimpleCollectOpenActionModuleInput = {
   amount?: InputMaybe<AmountInput>;
   collectLimit?: InputMaybe<Scalars['String']['input']>;
   endsAt?: InputMaybe<Scalars['DateTime']['input']>;
-  followerOnly?: InputMaybe<Scalars['Boolean']['input']>;
+  followerOnly: Scalars['Boolean']['input'];
   recipient?: InputMaybe<Scalars['EvmAddress']['input']>;
   referralFee?: InputMaybe<Scalars['Float']['input']>;
 };
