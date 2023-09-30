@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
 
 import { PublicationMainFocus } from "@/graphql/v1/generated/graphql";
-import { APP_URL } from "@/lib/constants";
+import { APP_NAME, APP_URL } from "@/lib/constants";
 import { useCreatePublication, useDefaultProfile } from "@/lib/lens/v1";
 import { upload } from "@/utils/bundlr";
 
@@ -67,6 +67,7 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
         mainContentFocus: PublicationMainFocus.TextOnly,
         locale: "en-US",
         attributes: [],
+        appId: APP_NAME,
       });
     }
   };

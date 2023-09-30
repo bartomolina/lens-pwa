@@ -1,6 +1,6 @@
 export const NETWORK = process.env.NEXT_PUBLIC_NETWORK ?? "testnet";
 
-export const APP_NAME = NETWORK === "mainnet" ? "Lens V1" : "Lens";
+export const APP_NAME = NETWORK === "mainnet" ? "LensV1" : "Lens";
 export const APP_DEFAULT_TITLE = NETWORK === "mainnet" ? "Lens V1" : "Lens";
 export const APP_DESCRIPTION = "This is a Lens PWA built for mobile access";
 export const APP_URL = "https://lens.pwas.io/";
