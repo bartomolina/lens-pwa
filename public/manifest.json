@@ -27,6 +27,6 @@
   "theme_color": "#F5F5F7",
   "background_color": "#F5F5F7",
   "start_url": "/",
-  "display": "apple-mobile-web-app-status-bar-style",
+  "display": "standalone",
   "orientation": "portrait"
 }
