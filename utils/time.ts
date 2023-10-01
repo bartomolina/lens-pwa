@@ -14,7 +14,6 @@ export const getTimeAgo = (timestamp: number) => {
 
   for (const { unit, secondsInUnit } of units) {
     if (secondsElapsed >= secondsInUnit || unit === "second") {
-      console.log((secondsElapsed / secondsInUnit) * -1);
       return rtf.format(Math.floor(secondsElapsed / secondsInUnit) * -1, unit);
     }
   }

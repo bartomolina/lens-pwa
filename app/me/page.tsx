@@ -10,7 +10,7 @@ export default function Me() {
   return (
     <Page>
       <Navbar title="Feed" />
-      <Navigation activeTab="feed" />
+      <Navigation activeTab="me" />
       {NETWORK === "mainnet" ? <OwnPublicationsV1 /> : undefined}
     </Page>
   );
