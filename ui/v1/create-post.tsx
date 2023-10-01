@@ -1,7 +1,26 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // eslint-disable-next-line import/named
 import { appId } from "@lens-protocol/react-web";
-import { Link, List, ListButton, ListInput, Navbar, Page } from "konsta/react";
-import { Dispatch, SetStateAction, useState } from "react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { PhotoFill } from "framework7-icons/react";
+import {
+  Icon,
+  Link,
+  List,
+  ListButton,
+  ListInput,
+  Navbar,
+  Page,
+} from "konsta/react";
+import Image from "next/image";
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
@@ -27,49 +46,61 @@ interface CreatePostProps {
 export function CreatePost({ setPopupOpened }: CreatePostProps) {
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File>();
+  const [preview, setPreview] = useState<string>();
   const { data: defaultProfile } = useDefaultProfile();
   const { mutate: createPost } = useCreatePublication({
     onSuccess: () => console.log("post created"),
   });
+  const ref = useRef() as MutableRefObject<HTMLInputElement>;
+
+  const openFileUpload = () => {
+    ref.current.click();
+  };
+
+  const onSelectFile = (event_: React.ChangeEvent<HTMLInputElement>) => {
+    const _file = event_.target.files?.[0];
+    setFile(_file);
+    if (_file) {
+      const objectUrl = URL.createObjectURL(_file);
+      setPreview(objectUrl);
+    }
+  };
 
   const handleCreatePost = async (event_: React.FormEvent<HTMLFormElement>) => {
     event_.preventDefault();
+
+    const metadata = {
+      version: "2.0.0",
+      metadata_id: uuidv4(),
+      name: `Post by @${defaultProfile?.handle}}`,
+      description: content,
+      content,
+      locale: "en-US",
+      external_url: APP_URL,
+      attributes: [],
+      appId: appId(APP_NAME),
+    };
 
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       if (arrayBuffer instanceof ArrayBuffer) {
         const imageURI = await upload(toBuffer(arrayBuffer), file.type);
         createPost({
-          version: "2.0.0",
-          metadata_id: uuidv4(),
-          content,
-          description: content,
-          external_url: APP_URL,
-          image: `ipfs://${imageURI}`,
-          name: `Post by @${defaultProfile?.handle}}`,
+          ...metadata,
           mainContentFocus: PublicationMainFocus.Image,
+          image: `ipfs://${imageURI}`,
           media: [
             {
               item: `ipfs://${imageURI}`,
               type: file.type,
             },
           ],
-          locale: "en-US",
-          attributes: [],
         });
       }
     } else {
       createPost({
-        version: "2.0.0",
-        metadata_id: uuidv4(),
-        content,
-        description: content,
-        external_url: APP_URL,
-        name: `Post by @${defaultProfile?.handle}}`,
+        ...metadata,
         mainContentFocus: PublicationMainFocus.TextOnly,
-        locale: "en-US",
-        attributes: [],
-        appId: appId(APP_NAME),
       });
     }
   };
@@ -94,11 +125,25 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
             placeholder="What's happening?"
             inputClassName="!h-80 resize-none text-2xl"
           />
-          <ListInput
-            label="Image"
+          <div className="flex gap-4 p-5">
+            <Icon
+              ios={
+                <PhotoFill
+                  className="h-15 w-15 text-primary"
+                  onClick={openFileUpload}
+                />
+              }
+            />
+            {preview && (
+              <Image alt="Upload image" className="h-15" src={preview} />
+            )}
+          </div>
+          <input
             type="file"
             accept="image/*"
-            onChange={(event_) => setFile(event_.target.files?.[0])}
+            className="hidden"
+            onChange={onSelectFile}
+            ref={ref}
           />
           <ListButton type="submit">Post</ListButton>
         </form>

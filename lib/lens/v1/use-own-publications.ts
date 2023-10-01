@@ -10,7 +10,7 @@ export const useOwnPublications = () => {
 
   return useQuery({
     enabled: defaultProfile?.id != undefined,
-    queryKey: ["feed", defaultProfile?.id],
+    queryKey: ["publications", defaultProfile?.id],
     queryFn: async () => {
       const result = await getPublications({
         profileId: defaultProfile?.id,
