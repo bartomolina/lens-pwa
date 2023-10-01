@@ -12,7 +12,6 @@ export const generateChallenge = async (request: ChallengeRequest) => {
     variables: {
       request,
     },
-    context: { clientName: "mainnet" },
   });
 
   return result.data.challenge;
@@ -24,7 +23,6 @@ export const authenticate = async (request: SignedAuthChallenge) => {
     variables: {
       request,
     },
-    context: { clientName: "mainnet" },
   });
 
   return result.data?.authenticate;

@@ -3,7 +3,7 @@
 import { appId } from "@lens-protocol/react-web";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { PhotoFill } from "framework7-icons/react";
+import { Photo } from "framework7-icons/react";
 import {
   Icon,
   Link,
@@ -12,6 +12,7 @@ import {
   ListInput,
   Navbar,
   Page,
+  Preloader,
 } from "konsta/react";
 import Image from "next/image";
 import {
@@ -48,7 +49,7 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
   const { data: defaultProfile } = useDefaultProfile();
-  const { mutate: createPost } = useCreatePublication({
+  const { mutate: createPost, isLoading } = useCreatePublication({
     onSuccess: () => console.log("post created"),
   });
   const ref = useRef() as MutableRefObject<HTMLInputElement>;
@@ -123,19 +124,19 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
             value={content}
             onChange={(event_) => setContent(event_.target.value)}
             placeholder="What's happening?"
-            inputClassName="!h-80 resize-none text-2xl"
+            inputClassName="!h-80 resize-none !text-2xl"
           />
           <div className="flex gap-4 p-5">
             <Icon
               ios={
-                <PhotoFill
-                  className="h-15 w-15 text-primary"
+                <Photo
+                  className="h-10 w-10 text-primary"
                   onClick={openFileUpload}
                 />
               }
             />
             {preview && (
-              <Image alt="Upload image" className="h-15" src={preview} />
+              <Image alt="Upload image" className="h-10" src={preview} />
             )}
           </div>
           <input
@@ -145,7 +146,13 @@ export function CreatePost({ setPopupOpened }: CreatePostProps) {
             onChange={onSelectFile}
             ref={ref}
           />
-          <ListButton type="submit">Post</ListButton>
+          {isLoading ? (
+            <div className="flex">
+              <Preloader size="w-10 h-10 p-2" className="mx-auto" />
+            </div>
+          ) : (
+            <ListButton type="submit">Post</ListButton>
+          )}
         </form>
       </List>
     </Page>

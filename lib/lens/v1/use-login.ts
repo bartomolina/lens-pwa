@@ -1,7 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAccount, useWalletClient } from "wagmi";
 
-import { getAuthenticationToken, setAuthenticationToken } from "@/lib/state";
+import {
+  getAuthenticationToken,
+  setAuthenticationToken,
+  setRefreshToken,
+} from "@/lib/state";
 
 import { authenticate, generateChallenge } from "./auth";
 
@@ -32,6 +36,7 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
 
       const authenticatedResult = await authenticate({ address, signature });
       setAuthenticationToken(authenticatedResult?.accessToken);
+      setRefreshToken(authenticatedResult?.refreshToken);
 
       console.log("use login: logged in");
     },

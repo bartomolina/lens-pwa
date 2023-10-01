@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
+import { Profile } from "@/graphql/v1/generated/graphql";
+
 import { getDefaultProfile } from "./get-default-profile";
 
 export const useDefaultProfile = () => {
@@ -12,7 +14,7 @@ export const useDefaultProfile = () => {
       const result = await getDefaultProfile({ ethereumAddress: address });
       console.log("use profile:", result);
 
-      return result;
+      return result as Profile;
     },
   });
 };

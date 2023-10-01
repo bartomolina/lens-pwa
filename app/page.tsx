@@ -18,13 +18,7 @@ export default function Home() {
         {/* @ts-ignore */}
         <Web3Button />
       </div>
-      {isConnected ? (
-        NETWORK === "mainnet" ? (
-          <LoginV1 />
-        ) : (
-          <LoginV2 />
-        )
-      ) : undefined}
+      {isConnected && (NETWORK === "mainnet" ? <LoginV1 /> : <LoginV2 />)}
     </Page>
   );
 }

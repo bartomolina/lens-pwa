@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useDisconnect } from "wagmi";
 
 import { useLogin } from "@/lib/lens/v1";
+import { clearAuthenticationToken } from "@/lib/state";
 
 export function Login() {
   const router = useRouter();
@@ -22,7 +23,14 @@ export function Login() {
       </List>
       <BlockTitle>Log out</BlockTitle>
       <List strongIos insetIos>
-        <ListButton onClick={() => disconnect()}>Disconnect</ListButton>
+        <ListButton
+          onClick={() => {
+            clearAuthenticationToken();
+            disconnect();
+          }}
+        >
+          Disconnect
+        </ListButton>
       </List>
     </>
   );

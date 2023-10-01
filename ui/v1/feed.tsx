@@ -1,15 +1,33 @@
+import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
-import { useFeed } from "@/lib/lens/v1";
+import {
+  Profile,
+  ProfileFeedDocument,
+  Query,
+} from "@/graphql/v1/generated/graphql";
+import { ErrorMessage } from "@/ui/error-message";
+import { Loading } from "@/ui/loading";
 import { Publications } from "@/ui/publications";
+import { CreatePost } from "@/ui/v1/create-post";
 
-import { CreatePost } from "./create-post";
-
-export function Feed() {
-  const { data: feed } = useFeed();
+interface FeedProps {
+  profile: Profile;
+}
+export function Feed({ profile }: FeedProps) {
+  const { data, loading, error } = useQuery<Query>(ProfileFeedDocument, {
+    variables: {
+      request: {
+        profileId: profile.id,
+      },
+    },
+  });
   const [popupOpened, setPopupOpened] = useState(false);
 
-  const publications = feed?.items.map((item) => item.root);
+  const publications = data?.feed.items.map((item) => item.root);
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorMessage message={error.message} />;
 
   return (
     <>

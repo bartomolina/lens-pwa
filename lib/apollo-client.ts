@@ -5,9 +5,8 @@ import {
   from,
   HttpLink,
   InMemoryCache,
-} from "@apollo/client/core";
+} from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import fetch from "cross-fetch";
 
 import { LENS_API } from "./constants";
 import { getAuthenticationToken } from "./state";
