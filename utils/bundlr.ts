@@ -47,6 +47,8 @@ export const upload = async (
       : {};
     const response = await bundlr.upload(data, metadata);
 
+    alert("file uploaded");
+
     return response;
   }
 };
