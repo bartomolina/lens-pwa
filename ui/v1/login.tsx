@@ -6,7 +6,7 @@ import { useLogin } from "@/lib/lens/v1";
 export function Login() {
   const router = useRouter();
   const { mutate: login } = useLogin({
-    onSuccess: () => router.push("/feed"),
+    // onSuccess: () => router.push("/feed"),
   });
 
   return (
