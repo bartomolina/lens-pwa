@@ -10,20 +10,18 @@ export const upload = async (
   data: string | Buffer | Readable,
   fileType?: string
 ) => {
-  // const walletClient = await getWalletClient({
-  //   chainId: defaultChain.id,
-  // });
-  const walletClient = {};
+  const client = {};
 
-  if (walletClient) {
+  if (client) {
     const bundlr = new WebBundlr(
       "https://node2.bundlr.network",
       "matic",
-      walletClient
+      client
     );
 
     //@ts-expect-error injected
-    walletClient._signTypedData = async (domain, types, message) => {
+    client._signTypedData = async (domain, types, message) => {
+      alert("signing");
       message["Transaction hash"] =
         "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
       return await signTypedData({
@@ -35,13 +33,13 @@ export const upload = async (
       });
     };
     //@ts-expect-error injected
-    walletClient.getSigner = () => walletClient;
+    client.getSigner = () => client;
     //@ts-expect-error injected
-    walletClient.getAddress = async () =>
-      // walletClient.getAddresses().then((a) => a[0]);
-      address;
+    client.getAddress = async () => address;
 
+    alert("getting ready");
     await bundlr.ready();
+    alert("is ready");
     const metadata = fileType
       ? {
           tags: [{ name: "Content-Type", value: fileType }],
