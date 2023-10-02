@@ -6,7 +6,7 @@ import { useLogin } from "@/lib/lens/v1";
 export function Login() {
   const router = useRouter();
   const { mutate: login } = useLogin({
-    // onSuccess: () => router.push("/feed"),
+    onSuccess: () => router.push("/feed"),
   });
 
   return (
@@ -16,7 +16,7 @@ export function Login() {
         <div className="text-right text-xs font-light">Mainnnet - Lens V1</div>
       </BlockTitle>
       <List strongIos insetIos>
-        {/* <ListButton onClick={() => login()}>Log in</ListButton> */}
+        <ListButton onClick={() => login()}>Log in</ListButton>
       </List>
     </>
   );
