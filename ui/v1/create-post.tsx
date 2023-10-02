@@ -68,12 +68,16 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     ref.current.click();
   };
 
-  const onSelectFile = (event_: React.ChangeEvent<HTMLInputElement>) => {
+  const onSelectFile = async (event_: React.ChangeEvent<HTMLInputElement>) => {
     const _file = event_.target.files?.[0];
     setFile(_file);
     if (_file) {
       const objectUrl = URL.createObjectURL(_file);
       setPreview(objectUrl);
+      const arrayBuffer = await _file.arrayBuffer();
+      if (arrayBuffer instanceof ArrayBuffer) {
+        const image = await upload(toBuffer(arrayBuffer), _file.type);
+      }
     }
   };
 
@@ -97,7 +101,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
       if (arrayBuffer instanceof ArrayBuffer) {
         const image = await upload(toBuffer(arrayBuffer), file.type);
         const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
-        createPost({
+        await createPost({
           ...metadata,
           mainContentFocus: PublicationMainFocus.Image,
           image: imageURI,
