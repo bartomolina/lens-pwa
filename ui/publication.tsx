@@ -33,7 +33,7 @@ export function Publication({ publication }: PublicationsProps) {
           {getTimeAgo(new Date(publication.createdAt).getTime())}
         </div>
       </div>
-      <div className="prose-sm prose my-2 break-words text-base-content">
+      <div className="prose my-2 break-words">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {publication.metadata.content}
         </ReactMarkdown>

@@ -18,14 +18,17 @@ interface OwnPublicationsProps {
 }
 
 export function OwnPublications({ profile }: OwnPublicationsProps) {
-  const { data, loading, error } = useQuery<Query>(PublicationsDocument, {
-    variables: {
-      request: {
-        profileId: profile.id,
-        publicationTypes: [PublicationTypes.Post],
+  const { data, refetch, loading, error } = useQuery<Query>(
+    PublicationsDocument,
+    {
+      variables: {
+        request: {
+          profileId: profile.id,
+          publicationTypes: [PublicationTypes.Post],
+        },
       },
-    },
-  });
+    }
+  );
   const [popupOpened, setPopupOpened] = useState(false);
 
   const ownPublications = data?.publications;
@@ -41,7 +44,7 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
           setPopupOpened={setPopupOpened}
           popupOpened={popupOpened}
         >
-          <CreatePost setPopupOpened={setPopupOpened} />
+          <CreatePost setPopupOpened={setPopupOpened} refetch={refetch} />
         </Publications>
       )}
     </>

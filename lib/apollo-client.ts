@@ -66,18 +66,13 @@ const authLink = new ApolloLink((operation, forward) => {
     return forward(operation);
   }
 
-  console.log("Expiring soon", accessToken);
-
   return fromPromise(
     refresh().then((data) => {
-      console.log("refreshing");
       const accessToken = data?.accessToken;
       const refreshToken = data?.refreshToken;
       operation.setContext({
         headers: { "x-access-token": `Bearer ${accessToken}` },
       });
-
-      console.log("Setting new token", data);
 
       setAuthenticationToken(accessToken);
       setRefreshToken(refreshToken);

@@ -15,13 +15,16 @@ interface FeedProps {
   profile: Profile;
 }
 export function Feed({ profile }: FeedProps) {
-  const { data, loading, error } = useQuery<Query>(ProfileFeedDocument, {
-    variables: {
-      request: {
-        profileId: profile.id,
+  const { data, refetch, loading, error } = useQuery<Query>(
+    ProfileFeedDocument,
+    {
+      variables: {
+        request: {
+          profileId: profile.id,
+        },
       },
-    },
-  });
+    }
+  );
   const [popupOpened, setPopupOpened] = useState(false);
 
   const publications = data?.feed.items.map((item) => item.root);
@@ -37,7 +40,7 @@ export function Feed({ profile }: FeedProps) {
           setPopupOpened={setPopupOpened}
           popupOpened={popupOpened}
         >
-          <CreatePost setPopupOpened={setPopupOpened} />
+          <CreatePost setPopupOpened={setPopupOpened} refetch={refetch} />
         </Publications>
       )}
     </>

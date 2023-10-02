@@ -1,5 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // eslint-disable-next-line import/named
+import { ApolloQueryResult, OperationVariables } from "@apollo/client";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line import/named
 import { appId } from "@lens-protocol/react-web";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -26,7 +29,7 @@ import {
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
 
-import { PublicationMainFocus } from "@/graphql/v1/generated/graphql";
+import { PublicationMainFocus, Query } from "@/graphql/v1/generated/graphql";
 import { APP_NAME, APP_URL } from "@/lib/constants";
 import { useCreatePublication, useDefaultProfile } from "@/lib/lens/v1";
 import { upload } from "@/utils/bundlr";
@@ -42,15 +45,22 @@ function toBuffer(arrayBuffer: ArrayBuffer) {
 
 interface CreatePostProps {
   setPopupOpened: Dispatch<SetStateAction<boolean>>;
+  refetch: (
+    variables?: Partial<OperationVariables> | undefined
+  ) => Promise<ApolloQueryResult<Query>>;
 }
 
-export function CreatePost({ setPopupOpened }: CreatePostProps) {
+export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
   const { data: defaultProfile } = useDefaultProfile();
   const { mutate: createPost, isLoading } = useCreatePublication({
-    onSuccess: () => console.log("post created"),
+    onSuccess: async () => {
+      await refetch();
+      console.log("create post: post created");
+      setPopupOpened(false);
+    },
   });
   const ref = useRef() as MutableRefObject<HTMLInputElement>;
 
