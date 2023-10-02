@@ -3,13 +3,21 @@ import {
   ApolloLink,
   type DefaultOptions,
   from,
+  fromPromise,
   HttpLink,
   InMemoryCache,
+  toPromise,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import jwt_decode from "jwt-decode";
 
 import { LENS_API } from "./constants";
-import { getAuthenticationToken } from "./state";
+import { JWT, refresh } from "./lens/v1/auth";
+import {
+  getAuthenticationToken,
+  setAuthenticationToken,
+  setRefreshToken,
+} from "./state";
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -39,19 +47,44 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-// example how you can pass in the x-access-token into requests using `ApolloLink`
 const authLink = new ApolloLink((operation, forward) => {
-  const token = getAuthenticationToken();
+  const accessToken = getAuthenticationToken();
 
-  // Use the setContext method to set the HTTP headers.
-  operation.setContext({
-    headers: {
-      "x-access-token": token ? `Bearer ${token}` : "",
-    },
-  });
+  if (!accessToken) {
+    return forward(operation);
+  }
 
-  // Call the next link in the middleware chain.
-  return forward(operation);
+  const expiringSoon = Date.now() >= jwt_decode<JWT>(accessToken)?.exp * 1000;
+
+  if (!expiringSoon) {
+    operation.setContext({
+      headers: {
+        "x-access-token": accessToken ? `Bearer ${accessToken}` : "",
+      },
+    });
+
+    return forward(operation);
+  }
+
+  console.log("Expiring soon", accessToken);
+
+  return fromPromise(
+    refresh().then((data) => {
+      console.log("refreshing");
+      const accessToken = data?.accessToken;
+      const refreshToken = data?.refreshToken;
+      operation.setContext({
+        headers: { "x-access-token": `Bearer ${accessToken}` },
+      });
+
+      console.log("Setting new token", data);
+
+      setAuthenticationToken(accessToken);
+      setRefreshToken(refreshToken);
+
+      return toPromise(forward(operation));
+    })
+  );
 });
 
 export const apolloClient = new ApolloClient({
