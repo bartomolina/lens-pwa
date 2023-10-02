@@ -97,7 +97,9 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       if (address && arrayBuffer instanceof ArrayBuffer) {
+        alert("uploading image");
         const image = await upload(address, toBuffer(arrayBuffer), file.type);
+        alert("uploading image done");
         const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
         await createPost({
           ...metadata,
