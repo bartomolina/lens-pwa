@@ -1,7 +1,7 @@
 import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
-import { getWalletClient, signMessage, signTypedData } from "@wagmi/core";
+import { getWalletClient, signTypedData } from "@wagmi/core";
 
 import { defaultChain } from "@/lib/wagmi-wc-client";
 
@@ -14,6 +14,7 @@ export const upload = async (
   });
 
   if (walletClient) {
+    alert("walletClient");
     const bundlr = new WebBundlr(
       "https://node2.bundlr.network",
       "matic",
@@ -22,6 +23,7 @@ export const upload = async (
 
     //@ts-expect-error injected
     walletClient._signTypedData = async (domain, types, message) => {
+      alert("signing");
       message["Transaction hash"] =
         "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
       return await signTypedData({
@@ -38,7 +40,9 @@ export const upload = async (
     walletClient.getAddress = async () =>
       walletClient.getAddresses().then((a) => a[0]);
 
+    alert("getting ready");
     await bundlr.ready();
+    alert("ready");
     const metadata = fileType
       ? {
           tags: [{ name: "Content-Type", value: fileType }],

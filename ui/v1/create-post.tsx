@@ -74,10 +74,6 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     if (_file) {
       const objectUrl = URL.createObjectURL(_file);
       setPreview(objectUrl);
-      const arrayBuffer = await _file.arrayBuffer();
-      if (arrayBuffer instanceof ArrayBuffer) {
-        // const image = await upload(toBuffer(arrayBuffer), _file.type);
-      }
     }
   };
 
@@ -99,23 +95,24 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       if (arrayBuffer instanceof ArrayBuffer) {
-        alert("uploading image");
+        alert(`uploading image:${file.type}`);
         const image = await upload(toBuffer(arrayBuffer), file.type);
         alert("image uploaded. storing URI");
         const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
         alert("creating post");
-        await createPost({
-          ...metadata,
-          mainContentFocus: PublicationMainFocus.Image,
-          image: imageURI,
-          media: [
-            {
-              item: imageURI,
-              type: file.type,
-            },
-          ],
-        });
-        alert("done posting");
+        return;
+        // await createPost({
+        //   ...metadata,
+        //   mainContentFocus: PublicationMainFocus.Image,
+        //   image: imageURI,
+        //   media: [
+        //     {
+        //       item: imageURI,
+        //       type: file.type,
+        //     },
+        //   ],
+        // });
+        // alert("done posting");
       }
     } else {
       createPost({
