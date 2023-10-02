@@ -15,7 +15,7 @@ interface LoginOptions {
 
 export const useLogin = ({ onSuccess }: LoginOptions) => {
   const { address } = useAccount();
-  const { data: walletClient } = useWalletClient();
+  // const { data: walletClient } = useWalletClient();
 
   return useMutation({
     mutationFn: async () => {
@@ -31,13 +31,13 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
       const challengeResponse = await generateChallenge({ address });
 
       // sign challenge and authenticate
-      const signature = await walletClient?.signMessage({
-        message: challengeResponse.text,
-      });
+      // const signature = await walletClient?.signMessage({
+      //   message: challengeResponse.text,
+      // });
 
-      const authenticatedResult = await authenticate({ address, signature });
-      setAuthenticationToken(authenticatedResult?.accessToken);
-      setRefreshToken(authenticatedResult?.refreshToken);
+      // const authenticatedResult = await authenticate({ address, signature });
+      // setAuthenticationToken(authenticatedResult?.accessToken);
+      // setRefreshToken(authenticatedResult?.refreshToken);
 
       console.log("use login: logged in");
     },
