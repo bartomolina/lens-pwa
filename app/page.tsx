@@ -25,7 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     if (NETWORK === "mainnet" && defaultProfile && isAuthenticated()) {
-      router.push("/");
+      // router.push("/");
     }
   }, [defaultProfile, router]);
 
