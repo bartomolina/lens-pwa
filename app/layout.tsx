@@ -55,9 +55,7 @@ export default function RootLayout({
         ></link>
       </head>
       <body className={inter.className}>
-        <div className="touch-none">
-          <Client>{children}</Client>
-        </div>
+        <Client>{children}</Client>
       </body>
     </html>
   );
