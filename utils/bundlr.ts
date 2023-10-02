@@ -3,7 +3,7 @@ import { Readable } from "node:stream";
 import { WebBundlr } from "@bundlr-network/client";
 import { getWalletClient, signMessage, signTypedData } from "@wagmi/core";
 
-import { defaultChain } from "../lib/wagmi-wc-clients";
+import { defaultChain } from "@/lib/wagmi-wc-client";
 
 export const upload = async (
   data: string | Buffer | Readable,

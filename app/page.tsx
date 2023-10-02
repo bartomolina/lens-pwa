@@ -1,6 +1,5 @@
 "use client";
 
-import { Web3Button } from "@web3modal/react";
 import { Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +23,7 @@ export default function Home() {
     if (NETWORK === "mainnet" && defaultProfile && isAuthenticated()) {
       router.push("/feed");
     }
-  }, [defaultProfile]);
+  }, [defaultProfile, router]);
 
   if (!mounted || isFetching) {
     // eslint-disable-next-line unicorn/no-null
@@ -37,9 +36,7 @@ export default function Home() {
         <>
           <Navbar title="Login" />
           <div className="m-4 flex justify-center">
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore */}
-            <Web3Button />
+            <w3m-button />
           </div>
           {isConnected && (NETWORK === "mainnet" ? <LoginV1 /> : <LoginV2 />)}
         </>
