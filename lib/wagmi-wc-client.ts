@@ -15,4 +15,12 @@ const metadata = {
 };
 export const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
-createWeb3Modal({ wagmiConfig, projectId, chains, themeMode: "light" });
+createWeb3Modal({
+  wagmiConfig,
+  projectId,
+  chains,
+  themeMode: "light",
+  featuredWalletIds: [
+    "138f51c8d00ac7b9ac9d8dc75344d096a7dfe370a568aa167eabc0a21830ed98",
+  ],
+});

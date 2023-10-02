@@ -13,7 +13,7 @@ export const useLogout = ({ onSuccess }: LogoutOptions) => {
   return useMutation({
     mutationFn: async () => {
       clearAuthenticationToken();
-      disconnect();
+      await disconnect();
       console.log("use logout: logged out");
     },
     onSuccess,
