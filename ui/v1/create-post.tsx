@@ -76,7 +76,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
       setPreview(objectUrl);
       const arrayBuffer = await _file.arrayBuffer();
       if (arrayBuffer instanceof ArrayBuffer) {
-        const image = await upload(toBuffer(arrayBuffer), _file.type);
+        // const image = await upload(toBuffer(arrayBuffer), _file.type);
       }
     }
   };
@@ -101,6 +101,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
       if (arrayBuffer instanceof ArrayBuffer) {
         const image = await upload(toBuffer(arrayBuffer), file.type);
         const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
+        alert("image uploaded");
         await createPost({
           ...metadata,
           mainContentFocus: PublicationMainFocus.Image,
@@ -112,6 +113,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
             },
           ],
         });
+        alert("done posting");
       }
     } else {
       createPost({
