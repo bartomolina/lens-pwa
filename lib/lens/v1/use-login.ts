@@ -19,6 +19,7 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
 
   return useMutation({
     mutationFn: async () => {
+      alert("testing");
       if (getAuthenticationToken()) {
         console.log("login: already logged in");
         return;
