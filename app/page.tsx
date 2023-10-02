@@ -55,7 +55,7 @@ export default function Home() {
               </ListButton>
             )}
           </List>
-          {isConnected && (NETWORK === "mainnet" ? <LoginV1 /> : <LoginV2 />)}
+          {/* {isConnected && (NETWORK === "mainnet" ? <LoginV1 /> : <LoginV2 />)} */}
         </>
       )}
     </Page>
