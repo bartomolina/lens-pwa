@@ -21,16 +21,20 @@ export const upload = async (
 
     //@ts-expect-error injected
     client._signTypedData = async (domain, types, message) => {
-      alert("signing");
+      alert("signing 1");
       message["Transaction hash"] =
         "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
-      return await signTypedData({
+      const result = await signTypedData({
         domain,
         message,
         types,
         account: bundlr.address! as `0x${string}`,
         primaryType: "Bundlr",
       });
+
+      alert(result);
+
+      return result;
     };
     //@ts-expect-error injected
     client.getSigner = () => client;
