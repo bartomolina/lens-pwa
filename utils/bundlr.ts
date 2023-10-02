@@ -2,6 +2,7 @@ import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
 import { signTypedData } from "@wagmi/core";
+import Error from "next/error";
 
 // import { defaultChain } from "@/lib/wagmi-wc-client";
 
@@ -37,9 +38,9 @@ export const upload = async (
       return result;
     };
     //@ts-expect-error injected
-    client.getSigner = () => client;
-    //@ts-expect-error injected
     client.getAddress = async () => address;
+    //@ts-expect-error injected
+    client.getSigner = () => client;
 
     alert("getting ready");
     await bundlr.ready();
@@ -49,10 +50,17 @@ export const upload = async (
           tags: [{ name: "Content-Type", value: fileType }],
         }
       : {};
-    const response = await bundlr.upload(data, metadata);
-
-    alert("file uploaded");
-
-    return response;
+    alert(fileType);
+    try {
+      const response = await bundlr.upload(data, metadata);
+      alert("file uploaded");
+      return response;
+    } catch (error) {
+      alert("error");
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      alert(error.message);
+      // alert(error.message);
+    }
   }
 };
