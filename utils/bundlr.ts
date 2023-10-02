@@ -4,7 +4,6 @@ import { WebBundlr } from "@bundlr-network/client";
 import { getWalletClient, signMessage, signTypedData } from "@wagmi/core";
 
 import { defaultChain } from "../lib/wagmi-wc-clients";
-import { ARWEAVE_GATEWAY } from "@/lib/constants";
 
 export const upload = async (
   data: string | Buffer | Readable,
@@ -47,6 +46,6 @@ export const upload = async (
       : {};
     const response = await bundlr.upload(data, metadata);
 
-    return `${ARWEAVE_GATEWAY}${response.id}`;
+    return response;
   }
 };

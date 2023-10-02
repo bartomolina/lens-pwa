@@ -12,7 +12,7 @@ export default function Me() {
 
   return (
     <Page>
-      <Navbar title="Feed" />
+      <Navbar title="Me" />
       <Navigation activeTab="me" />
       {profile && NETWORK === "mainnet" && (
         <OwnPublicationsV1 profile={profile} />

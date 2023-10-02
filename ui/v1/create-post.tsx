@@ -30,7 +30,7 @@ import {
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
 
 import { PublicationMainFocus, Query } from "@/graphql/v1/generated/graphql";
-import { APP_NAME, APP_URL } from "@/lib/constants";
+import { APP_NAME, APP_URL, ARWEAVE_GATEWAY } from "@/lib/constants";
 import { useCreatePublication, useDefaultProfile } from "@/lib/lens/v1";
 import { upload } from "@/utils/bundlr";
 
@@ -95,14 +95,15 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       if (arrayBuffer instanceof ArrayBuffer) {
-        const imageURI = await upload(toBuffer(arrayBuffer), file.type);
+        const image = await upload(toBuffer(arrayBuffer), file.type);
+        const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
         createPost({
           ...metadata,
           mainContentFocus: PublicationMainFocus.Image,
-          image: `ipfs://${imageURI}`,
+          image: imageURI,
           media: [
             {
-              item: `ipfs://${imageURI}`,
+              item: imageURI,
               type: file.type,
             },
           ],
@@ -146,7 +147,9 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
               }
             />
             {preview && (
-              <Image alt="Upload image" className="h-10" src={preview} />
+              <div className="relative h-10 w-10">
+                <Image alt="Upload image" src={preview} fill />
+              </div>
             )}
           </div>
           <input

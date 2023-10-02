@@ -15,5 +15,6 @@ export const getRefreshToken = () => {
 };
 
 export const clearAuthenticationToken = () => {
-  localStorage.clear();
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
 };

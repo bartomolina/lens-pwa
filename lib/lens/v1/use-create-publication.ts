@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { PublicationMetadataV2Input } from "@/graphql/v1/generated/graphql";
+import { ARWEAVE_GATEWAY } from "@/lib/constants";
 import { upload } from "@/utils/bundlr";
 
 import { createPublication } from "./create-publication";
@@ -17,7 +18,8 @@ export const useCreatePublication = ({
   return useMutation({
     mutationFn: async (metadata: PublicationMetadataV2Input) => {
       if (defaultProfile) {
-        const contentURI = await upload(JSON.stringify(metadata));
+        const content = await upload(JSON.stringify(metadata));
+        const contentURI = content ? `${ARWEAVE_GATEWAY}${content.id}` : "";
 
         // create publication
         const createPublicationresponse = await createPublication({

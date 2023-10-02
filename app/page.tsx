@@ -8,31 +8,32 @@ import { useAccount } from "wagmi";
 
 import { NETWORK } from "@/lib/constants";
 import { useDefaultProfile } from "@/lib/lens/v1";
+import { isAuthenticated } from "@/lib/lens/v1/auth";
 import { Login as LoginV1 } from "@/ui/v1/login";
 import { Login as LoginV2 } from "@/ui/v2/login";
 
 export default function Home() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const { data: defaultProfile, isLoading } = useDefaultProfile();
+  const { data: defaultProfile, isFetching } = useDefaultProfile();
   const { isConnected } = useAccount();
 
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (NETWORK === "mainnet" && defaultProfile) {
+    if (NETWORK === "mainnet" && defaultProfile && isAuthenticated()) {
       router.push("/feed");
     }
   }, [defaultProfile]);
 
-  if (!mounted || isLoading) {
+  if (!mounted || isFetching) {
     // eslint-disable-next-line unicorn/no-null
     return null;
   }
 
   return (
     <Page>
-      {!defaultProfile && (
+      {!isAuthenticated() && (
         <>
           <Navbar title="Login" />
           <div className="m-4 flex justify-center">

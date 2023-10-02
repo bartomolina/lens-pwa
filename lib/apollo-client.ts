@@ -14,7 +14,9 @@ import jwt_decode from "jwt-decode";
 import { LENS_API } from "./constants";
 import { JWT, refresh } from "./lens/v1/auth";
 import {
+  clearAuthenticationToken,
   getAuthenticationToken,
+  getRefreshToken,
   setAuthenticationToken,
   setRefreshToken,
 } from "./state";
@@ -49,12 +51,20 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const authLink = new ApolloLink((operation, forward) => {
   const accessToken = getAuthenticationToken();
+  const refreshToken = getRefreshToken();
 
-  if (!accessToken) {
+  if (!accessToken || !refreshToken) {
     return forward(operation);
   }
 
   const expiringSoon = Date.now() >= jwt_decode<JWT>(accessToken)?.exp * 1000;
+  const refreshExpired =
+    Date.now() >= jwt_decode<JWT>(refreshToken)?.exp * 1000;
+
+  if (refreshExpired) {
+    clearAuthenticationToken();
+    return forward(operation);
+  }
 
   if (!expiringSoon) {
     operation.setContext({
