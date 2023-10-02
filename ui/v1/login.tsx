@@ -1,13 +1,13 @@
 import { BlockTitle, List, ListButton } from "konsta/react";
 import { useRouter } from "next/navigation";
 
-// import { useLogin } from "@/lib/lens/v1";
+import { useLogin } from "@/lib/lens/v1";
 
 export function Login() {
   const router = useRouter();
-  // const { mutate: login } = useLogin({
-  //   onSuccess: () => router.push("/feed"),
-  // });
+  const { mutate: login } = useLogin({
+    onSuccess: () => router.push("/feed"),
+  });
 
   return (
     <>
