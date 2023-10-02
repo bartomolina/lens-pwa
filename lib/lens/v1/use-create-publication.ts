@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import { useAccount } from "wagmi";
 
 import { PublicationMetadataV2Input } from "@/graphql/v1/generated/graphql";
 import { ARWEAVE_GATEWAY } from "@/lib/constants";
@@ -14,11 +15,13 @@ interface CreatePublicationOptions {
 export const useCreatePublication = ({
   onSuccess,
 }: CreatePublicationOptions) => {
+  const { address } = useAccount();
   const { data: defaultProfile } = useDefaultProfile();
+
   return useMutation({
     mutationFn: async (metadata: PublicationMetadataV2Input) => {
-      if (defaultProfile) {
-        const content = await upload(JSON.stringify(metadata));
+      if (address && defaultProfile) {
+        const content = await upload(address, JSON.stringify(metadata));
         const contentURI = content ? `${ARWEAVE_GATEWAY}${content.id}` : "";
 
         // create publication

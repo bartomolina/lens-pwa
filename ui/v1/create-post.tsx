@@ -28,6 +28,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
+import { useAccount } from "wagmi";
 
 import { PublicationMainFocus, Query } from "@/graphql/v1/generated/graphql";
 import { APP_NAME, APP_URL, ARWEAVE_GATEWAY } from "@/lib/constants";
@@ -51,6 +52,7 @@ interface CreatePostProps {
 }
 
 export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
+  const { address } = useAccount();
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
@@ -94,25 +96,20 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
 
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
-      if (arrayBuffer instanceof ArrayBuffer) {
-        alert(`uploading image:${file.type}`);
-        const image = await upload(toBuffer(arrayBuffer), file.type);
-        alert("image uploaded. storing URI");
+      if (address && arrayBuffer instanceof ArrayBuffer) {
+        const image = await upload(address, toBuffer(arrayBuffer), file.type);
         const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
-        alert("creating post");
-        return;
-        // await createPost({
-        //   ...metadata,
-        //   mainContentFocus: PublicationMainFocus.Image,
-        //   image: imageURI,
-        //   media: [
-        //     {
-        //       item: imageURI,
-        //       type: file.type,
-        //     },
-        //   ],
-        // });
-        // alert("done posting");
+        await createPost({
+          ...metadata,
+          mainContentFocus: PublicationMainFocus.Image,
+          image: imageURI,
+          media: [
+            {
+              item: imageURI,
+              type: file.type,
+            },
+          ],
+        });
       }
     } else {
       createPost({
