@@ -26,10 +26,8 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
 
       console.log("login:", address);
 
-      // generate challenge
       const challengeResponse = await generateChallenge({ address });
 
-      // sign challenge and authenticate
       const signature = await signMessage({
         message: challengeResponse.text,
       });

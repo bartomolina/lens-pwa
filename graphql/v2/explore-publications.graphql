@@ -1,0 +1,20 @@
+query explorePublications($request: ExplorePublicationRequest!) {
+  explorePublications(request: $request) {
+    items {
+      ... on Post {
+        id
+        createdAt
+        by {
+          ...ProfileFields
+        }
+        metadata {
+          ...AnyPublicationMetadataFields
+        }
+      }
+    }
+    pageInfo {
+      prev
+      next
+    }
+  }
+}

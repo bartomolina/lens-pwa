@@ -12,7 +12,7 @@ import { onError } from "@apollo/client/link/error";
 import jwt_decode from "jwt-decode";
 
 import { LENS_API } from "./constants";
-import { JWT, refresh } from "./lens/v1/auth";
+import { JWT, refresh } from "./lens/v2/auth";
 import {
   clearAuthenticationToken,
   getAuthenticationToken,

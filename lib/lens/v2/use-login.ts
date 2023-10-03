@@ -1,7 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { useAccount, useWalletClient } from "wagmi";
+import { signMessage } from "@wagmi/core";
+import { useAccount } from "wagmi";
 
-import { getAuthenticationToken, setAuthenticationToken } from "@/lib/state";
+import {
+  getAuthenticationToken,
+  getProfileId,
+  setAuthenticationToken,
+  setProfileId,
+  setRefreshToken,
+} from "@/lib/state";
 
 import { authenticate, generateChallenge } from "./auth";
 
@@ -11,25 +18,22 @@ interface LoginOptions {
 
 export const useLogin = ({ onSuccess }: LoginOptions) => {
   const { address: signedBy } = useAccount();
-  const { data: walletClient } = useWalletClient();
 
   return useMutation({
     mutationFn: async (profileId: string) => {
-      if (getAuthenticationToken()) {
+      if (getAuthenticationToken() && getProfileId()) {
         console.log("login: already logged in");
         return;
       }
 
       console.log("login:", profileId);
 
-      // generate challenge
       const challengeResponse = await generateChallenge({
         for: profileId,
         signedBy,
       });
 
-      // sign challenge and authenticate
-      const signature = await walletClient?.signMessage({
+      const signature = await signMessage({
         message: challengeResponse.text,
       });
 
@@ -37,7 +41,10 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
         id: challengeResponse.id,
         signature,
       });
+
       setAuthenticationToken(authenticatedResult?.accessToken);
+      setRefreshToken(authenticatedResult?.refreshToken);
+      setProfileId(profileId);
 
       console.log("use login: logged in");
     },

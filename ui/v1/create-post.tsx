@@ -4,7 +4,6 @@ import { ApolloQueryResult, OperationVariables } from "@apollo/client";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // eslint-disable-next-line import/named
 import { appId } from "@lens-protocol/react-web";
-import Compressor from "compressorjs";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Photo } from "framework7-icons/react";
@@ -29,21 +28,20 @@ import {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
-import { useAccount } from "wagmi";
 
+// import { useAccount } from "wagmi";
 import { PublicationMainFocus, Query } from "@/graphql/v1/generated/graphql";
-import { APP_NAME, APP_URL, ARWEAVE_GATEWAY } from "@/lib/constants";
+import { APP_NAME, APP_URL } from "@/lib/constants";
 import { useCreatePublication, useDefaultProfile } from "@/lib/lens/v1";
-import { upload } from "@/utils/bundlr";
 
-function toBuffer(arrayBuffer: ArrayBuffer) {
-  const buffer = Buffer.alloc(arrayBuffer.byteLength);
-  const view = new Uint8Array(arrayBuffer);
-  for (let i = 0; i < buffer.length; ++i) {
-    buffer[i] = view[i];
-  }
-  return buffer;
-}
+// function toBuffer(arrayBuffer: ArrayBuffer) {
+//   const buffer = Buffer.alloc(arrayBuffer.byteLength);
+//   const view = new Uint8Array(arrayBuffer);
+//   for (let i = 0; i < buffer.length; ++i) {
+//     buffer[i] = view[i];
+//   }
+//   return buffer;
+// }
 
 interface CreatePostProps {
   setPopupOpened: Dispatch<SetStateAction<boolean>>;
@@ -53,9 +51,9 @@ interface CreatePostProps {
 }
 
 export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  // const [file, setFile] = useState<File>();
   const [content, setContent] = useState("");
-  const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
   const { data: defaultProfile } = useDefaultProfile();
   const { mutate: createPost, isLoading } = useCreatePublication({
@@ -67,6 +65,13 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
   });
   const ref = useRef() as MutableRefObject<HTMLInputElement>;
 
+  const clearForm = () => {
+    setContent("");
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    // setFile(undefined);
+    setPreview("");
+  };
+
   const openFileUpload = () => {
     ref.current.click();
   };
@@ -74,16 +79,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
   const onSelectFile = async (event_: React.ChangeEvent<HTMLInputElement>) => {
     const _file = event_.target.files?.[0];
     if (_file) {
-      new Compressor(_file, {
-        quality: 0,
-        success(result: File) {
-          console.log(result);
-          setFile(result);
-        },
-        error(err) {
-          console.log(err.message);
-        },
-      });
+      // setFile(_file);
       const objectUrl = URL.createObjectURL(_file);
       setPreview(objectUrl);
     }
@@ -104,29 +100,31 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
       appId: appId(APP_NAME),
     };
 
-    if (file) {
-      const arrayBuffer = await file.arrayBuffer();
-      if (address && arrayBuffer instanceof ArrayBuffer) {
-        const image = await upload(address, toBuffer(arrayBuffer), file.type);
-        const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
-        await createPost({
-          ...metadata,
-          mainContentFocus: PublicationMainFocus.Image,
-          image: imageURI,
-          media: [
-            {
-              item: imageURI,
-              type: file.type,
-            },
-          ],
-        });
-      }
-    } else {
-      createPost({
-        ...metadata,
-        mainContentFocus: PublicationMainFocus.TextOnly,
-      });
-    }
+    // if (file) {
+    //   const arrayBuffer = await file.arrayBuffer();
+    //   if (address && arrayBuffer instanceof ArrayBuffer) {
+    //     const image = await upload(address, toBuffer(arrayBuffer), file.type);
+    //     const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
+    //     await createPost({
+    //       ...metadata,
+    //       mainContentFocus: PublicationMainFocus.Image,
+    //       image: imageURI,
+    //       media: [
+    //         {
+    //           item: imageURI,
+    //           type: file.type,
+    //         },
+    //       ],
+    //     });
+    //   }
+    //   clearForm();
+    // } else {
+    createPost({
+      ...metadata,
+      mainContentFocus: PublicationMainFocus.TextOnly,
+    });
+    clearForm();
+    // }
   };
 
   return (
@@ -171,13 +169,10 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
             onChange={onSelectFile}
             ref={ref}
           />
-          {isLoading ? (
-            <div className="flex">
-              <Preloader size="w-10 h-10 p-2" className="mx-auto" />
-            </div>
-          ) : (
-            <ListButton type="submit">Post</ListButton>
-          )}
+          <ListButton type="submit" className="flex gap-2">
+            {isLoading && <Preloader size="w-10 h-10 p-2" />}
+            <span>{isLoading ? "Posting" : "Post"}</span>
+          </ListButton>
         </form>
       </List>
     </Page>

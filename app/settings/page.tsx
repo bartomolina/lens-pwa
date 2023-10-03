@@ -1,25 +1,19 @@
 "use client";
 
-import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
-import { useRouter } from "next/navigation";
+import { Navbar, Page } from "konsta/react";
 
-import { useLogout } from "@/lib/lens";
+import { NETWORK } from "@/lib/constants";
 import { Navigation } from "@/ui/layout/navigation";
 
-export default function Settings() {
-  const router = useRouter();
-  const { mutate: logout } = useLogout({
-    onSuccess: () => router.push("/"),
-  });
+import { V1 } from "./v1";
+import { V2 } from "./v2";
 
+export default function Settings() {
   return (
     <Page>
       <Navbar title="Settings" />
+      {NETWORK === "mainnet" ? <V1 /> : <V2 />}
       <Navigation activeTab="settings" />
-      <BlockTitle>Account</BlockTitle>
-      <List strongIos insetIos>
-        <ListButton onClick={() => logout()}>Log out</ListButton>
-      </List>
     </Page>
   );
 }

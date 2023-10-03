@@ -1,0 +1,16 @@
+query explorePublications($request: ExplorePublicationRequest!) {
+  explorePublications(request: $request) {
+    items {
+      ... on Post {
+        ...PostFields
+      }
+      ... on Quote {
+        ...QuoteFields
+      }
+    }
+    pageInfo {
+      prev
+      next
+    }
+  }
+}

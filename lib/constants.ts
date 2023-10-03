@@ -13,3 +13,10 @@ export const LENS_MEDIA_SNAPSHOT_URL =
   "https://ik.imagekit.io/lens/media-snapshot";
 export const IPFS_GATEWAY = "https://ipfs.io/ipfs/";
 export const ARWEAVE_GATEWAY = "https://arweave.net/";
+export const BUNDLR_NETWORK =
+  NETWORK === "mainnet"
+    ? "https://node2.bundlr.network"
+    : "https://devnet.bundlr.network";
+
+export const LENS_HUB =
+  "0xC1E77eE73403B8a7478884915aA599932A677870" as `0x${string}`;

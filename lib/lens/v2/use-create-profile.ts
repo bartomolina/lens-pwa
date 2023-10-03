@@ -7,7 +7,7 @@ interface LoginOptions {
   onSuccess?: () => void;
 }
 
-export const useCreateProfile = ({ onSuccess }: LoginOptions) => {
+export const useCreateProfile = ({ onSuccess }: LoginOptions = {}) => {
   const { address: to } = useAccount();
 
   return useMutation({

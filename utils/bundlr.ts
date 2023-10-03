@@ -2,6 +2,7 @@ import { Readable } from "node:stream";
 
 import { WebBundlr } from "@bundlr-network/client";
 import { signTypedData } from "@wagmi/core";
+import { BUNDLR_NETWORK } from "@/lib/constants";
 
 export const upload = async (
   address: `0x${string}`,
@@ -11,11 +12,7 @@ export const upload = async (
   const client = {};
 
   if (client) {
-    const bundlr = new WebBundlr(
-      "https://node2.bundlr.network",
-      "matic",
-      client
-    );
+    const bundlr = new WebBundlr(BUNDLR_NETWORK, "matic", client);
 
     //@ts-expect-error injected
     client._signTypedData = async (domain, types, message) => {
@@ -37,6 +34,7 @@ export const upload = async (
     client.getSigner = () => client;
 
     await bundlr.ready();
+
     const metadata = fileType
       ? {
           tags: [{ name: "Content-Type", value: fileType }],

@@ -3,7 +3,7 @@ import { polygon, polygonMumbai } from "wagmi/chains";
 
 import { APP_DESCRIPTION, APP_NAME, APP_URL, NETWORK } from "./constants";
 
-export const defaultChain = NETWORK === "mainnet" ? polygon : polygonMumbai;
+const defaultChain = NETWORK === "mainnet" ? polygon : polygonMumbai;
 const chains = [defaultChain, defaultChain];
 export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
 
@@ -20,6 +20,7 @@ createWeb3Modal({
   projectId,
   chains,
   themeMode: "light",
+  defaultChain: defaultChain,
   featuredWalletIds: [
     "138f51c8d00ac7b9ac9d8dc75344d096a7dfe370a568aa167eabc0a21830ed98",
   ],

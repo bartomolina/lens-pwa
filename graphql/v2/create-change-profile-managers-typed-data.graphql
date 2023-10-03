@@ -1,0 +1,32 @@
+mutation createChangeProfileManagersTypedData(
+  $request: ChangeProfileManagersRequest!
+  $options: TypedDataOptions
+) {
+  createChangeProfileManagersTypedData(request: $request, options: $options) {
+    id
+    expiresAt
+    typedData {
+      types {
+        ChangeDelegatedExecutorsConfig {
+          name
+          type
+        }
+      }
+      domain {
+        name
+        chainId
+        version
+        verifyingContract
+      }
+      value {
+        nonce
+        deadline
+        delegatorProfileId
+        delegatedExecutors
+        approvals
+        configNumber
+        switchToGivenConfig
+      }
+    }
+  }
+}

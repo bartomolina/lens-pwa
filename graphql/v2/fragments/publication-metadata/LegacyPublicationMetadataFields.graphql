@@ -1,0 +1,15 @@
+fragment LegacyPublicationMetadataFields on LegacyPublicationMetadata {
+  content
+  media {
+    ...MediaFields
+  }
+  locale
+  tags
+  contentWarning
+  mainContentFocus
+  appId
+  rawURI
+  marketplace {
+    ...MarketplaceMetadataFields
+  }
+}

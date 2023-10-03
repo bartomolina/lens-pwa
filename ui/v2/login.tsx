@@ -7,21 +7,17 @@ import {
 } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDisconnect } from "wagmi";
 
 import { useCreateProfile, useLogin, useProfiles } from "@/lib/lens/v2";
 
 export function Login() {
   const router = useRouter();
-  const { disconnect } = useDisconnect();
   const [newProfile, setNewProfile] = useState({ handle: "", changed: false });
+  const { data: profiles } = useProfiles();
   const { mutate: login } = useLogin({
     onSuccess: () => router.push("/feed"),
   });
-  const { mutate: createProfile } = useCreateProfile({
-    onSuccess: () => alert("profile created"),
-  });
-  const { data: profiles } = useProfiles();
+  const { mutate: createProfile } = useCreateProfile();
 
   const handleNewProfileChange = (
     event_: React.ChangeEvent<HTMLInputElement>
@@ -68,10 +64,6 @@ export function Login() {
             after="Log in"
           />
         ))}
-      </List>
-      <BlockTitle>Log out</BlockTitle>
-      <List strongIos insetIos>
-        <ListButton onClick={() => disconnect()}>Disconnect</ListButton>
       </List>
     </>
   );

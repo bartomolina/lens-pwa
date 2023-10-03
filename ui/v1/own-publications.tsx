@@ -9,7 +9,7 @@ import {
 } from "@/graphql/v1/generated/graphql";
 import { ErrorMessage } from "@/ui/error-message";
 import { Loading } from "@/ui/loading";
-import { Publications } from "@/ui/publications";
+import { Publications } from "@/ui/v1/publications";
 
 import { CreatePost } from "./create-post";
 
