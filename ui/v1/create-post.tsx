@@ -4,6 +4,7 @@ import { ApolloQueryResult, OperationVariables } from "@apollo/client";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // eslint-disable-next-line import/named
 import { appId } from "@lens-protocol/react-web";
+import Compressor from "compressorjs";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Photo } from "framework7-icons/react";
@@ -72,8 +73,17 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
 
   const onSelectFile = async (event_: React.ChangeEvent<HTMLInputElement>) => {
     const _file = event_.target.files?.[0];
-    setFile(_file);
     if (_file) {
+      new Compressor(_file, {
+        quality: 0,
+        success(result: File) {
+          console.log(result);
+          setFile(result);
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
       const objectUrl = URL.createObjectURL(_file);
       setPreview(objectUrl);
     }
@@ -97,9 +107,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     if (file) {
       const arrayBuffer = await file.arrayBuffer();
       if (address && arrayBuffer instanceof ArrayBuffer) {
-        alert("uploading image");
         const image = await upload(address, toBuffer(arrayBuffer), file.type);
-        alert("uploading image done");
         const imageURI = image ? `${ARWEAVE_GATEWAY}${image.id}` : "";
         await createPost({
           ...metadata,
