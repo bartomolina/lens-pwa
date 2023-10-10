@@ -1,22 +1,13 @@
-export const NETWORK = process.env.NEXT_PUBLIC_NETWORK ?? "testnet";
-
-export const APP_NAME = NETWORK === "mainnet" ? "LensV1" : "Lens";
-export const APP_DEFAULT_TITLE = NETWORK === "mainnet" ? "Lens V1" : "Lens";
+export const APP_NAME = "Lens";
+export const APP_DEFAULT_TITLE = "Lens";
 export const APP_DESCRIPTION = "This is a Lens PWA built for mobile access";
 export const APP_URL = "https://lens-pwa-zeta.vercel.app/";
 
-export const LENS_API =
-  NETWORK === "mainnet"
-    ? "https://api.lens.dev/"
-    : "https://api-v2-mumbai.lens.dev/";
+export const LENS_API = "https://api-v2-mumbai.lens.dev/";
 export const LENS_MEDIA_SNAPSHOT_URL =
   "https://ik.imagekit.io/lens/media-snapshot";
 export const IPFS_GATEWAY = "https://ipfs.io/ipfs/";
 export const ARWEAVE_GATEWAY = "https://arweave.net/";
-export const BUNDLR_NETWORK =
-  NETWORK === "mainnet"
-    ? "https://node2.bundlr.network"
-    : "https://devnet.bundlr.network";
+export const IRYS_NETWORK = "https://devnet.irys.xyz";
 
-export const LENS_HUB =
-  "0xC1E77eE73403B8a7478884915aA599932A677870" as `0x${string}`;
+export const JWT_TOKEN = "lens.development.credentials";

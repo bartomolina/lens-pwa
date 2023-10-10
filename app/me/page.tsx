@@ -2,17 +2,17 @@
 
 import { Navbar, Page } from "konsta/react";
 
-import { NETWORK } from "@/lib/constants";
+import { useProfile } from "@/hooks";
 import { Navigation } from "@/ui/layout/navigation";
-
-import { V1 } from "./v1";
-import { V2 } from "./v2";
+import { OwnPublications } from "@/ui/own-publications";
 
 export default function Me() {
+  const { data: profileId } = useProfile();
+
   return (
     <Page>
       <Navbar title="Me" />
-      {NETWORK === "mainnet" ? <V1 /> : <V2 />}
+      {profileId && <OwnPublications profileId={profileId} />}
       <Navigation activeTab="me" />
     </Page>
   );

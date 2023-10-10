@@ -1,9 +1,9 @@
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
-import { polygon, polygonMumbai } from "wagmi/chains";
+import { polygonMumbai } from "wagmi/chains";
 
-import { APP_DESCRIPTION, APP_NAME, APP_URL, NETWORK } from "./constants";
+import { APP_DESCRIPTION, APP_NAME, APP_URL } from "@/lib/constants";
 
-const defaultChain = NETWORK === "mainnet" ? polygon : polygonMumbai;
+const defaultChain = polygonMumbai;
 const chains = [defaultChain, defaultChain];
 export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
 

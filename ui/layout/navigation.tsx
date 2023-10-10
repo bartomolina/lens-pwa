@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Gear,
-  Globe,
-  Person,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-} from "framework7-icons/react";
+import { Gear, Globe, User } from "@phosphor-icons/react";
 import { Icon, Tabbar, TabbarLink } from "konsta/react";
 import { useRouter } from "next/navigation";
 
@@ -16,21 +10,21 @@ export function Navigation({ activeTab }: { activeTab: string }) {
   return (
     <Tabbar className="fixed bottom-0 left-0 h-24 pt-6">
       <TabbarLink
-        active={activeTab === "feed"}
-        onClick={() => router.push("/feed")}
-        icon={<Icon ios={<Globe className="h-7 w-7" />} />}
-        label={"Feed"}
+        active={activeTab === "explore"}
+        onClick={() => router.push("/explore")}
+        icon={<Icon ios={<Globe size={28} />} />}
+        label={"Explore"}
       />
       <TabbarLink
         active={activeTab === "me"}
         onClick={() => router.push("/me")}
-        icon={<Icon ios={<Person className="h-7 w-7" />} />}
+        icon={<Icon ios={<User size={28} />} />}
         label={"Me"}
       />
       <TabbarLink
         active={activeTab === "settings"}
         onClick={() => router.push("/settings")}
-        icon={<Icon ios={<Gear className="h-7 w-7" />} />}
+        icon={<Icon ios={<Gear size={28} />} />}
         label={"Settings"}
       />
     </Tabbar>

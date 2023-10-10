@@ -1,16 +1,20 @@
 import "@/styles/globals.css";
-import "react-toastify/dist/ReactToastify.css";
 
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
-
-import { Client } from "./client";
+import { Client } from "@/app/client";
+import {
+  APP_DEFAULT_TITLE,
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_URL,
+} from "@/lib/constants";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(APP_URL),
   applicationName: APP_NAME,
   title: APP_DEFAULT_TITLE,
   description: APP_DESCRIPTION,

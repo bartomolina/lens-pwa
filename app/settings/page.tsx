@@ -1,18 +1,37 @@
 "use client";
 
-import { Navbar, Page } from "konsta/react";
+import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
+import { useRouter } from "next/navigation";
 
-import { NETWORK } from "@/lib/constants";
+import { lensClient, logout } from "@/lib/lens-client";
 import { Navigation } from "@/ui/layout/navigation";
 
-import { V1 } from "./v1";
-import { V2 } from "./v2";
-
 export default function Settings() {
+  const router = useRouter();
+
   return (
     <Page>
       <Navbar title="Settings" />
-      {NETWORK === "mainnet" ? <V1 /> : <V2 />}
+      <BlockTitle>Profile</BlockTitle>
+      <List strongIos insetIos>
+        <ListButton
+          onClick={() => {
+            logout();
+            router.push("/");
+          }}
+        >
+          Log out
+        </ListButton>
+        <ListButton
+          onClick={() => {
+            lensClient.profile.createChangeProfileManagersTypedData({
+              approveLensManager: true,
+            });
+          }}
+        >
+          Enable profile manager
+        </ListButton>
+      </List>
       <Navigation activeTab="settings" />
     </Page>
   );
