@@ -1,6 +1,7 @@
-import { lensClient } from "@/lib/lens-client";
 import { ExplorePublicationsOrderByType } from "@lens-protocol/client";
 import { useQuery } from "@tanstack/react-query";
+
+import { lensClient } from "@/lib/lens-client";
 
 export const useExplorePublications = () => {
   return useQuery({

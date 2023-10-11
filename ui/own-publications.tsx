@@ -1,24 +1,22 @@
-import { PostFragment } from "@lens-protocol/client";
+import { PostFragment, ProfileFragment } from "@lens-protocol/client";
 import { useState } from "react";
 
 import { useProfilePublications } from "@/hooks/use-profile-publications";
-import { ErrorMessage } from "@/ui/error-message";
-import { Loading } from "@/ui/loading";
+import { ErrorMessage, Loading } from "@/ui/common";
+import { CreatePost } from "@/ui/create-post";
 import { Publications } from "@/ui/publications";
 
-import { CreatePost } from "@/ui/create-post";
-
 interface OwnPublicationsProps {
-  profileId: string;
+  profile: ProfileFragment;
 }
 
-export function OwnPublications({ profileId }: OwnPublicationsProps) {
+export function OwnPublications({ profile }: OwnPublicationsProps) {
   const {
     data: publications,
     refetch,
     isLoading,
     error,
-  } = useProfilePublications({ profileId });
+  } = useProfilePublications({ profile });
   const [popupOpened, setPopupOpened] = useState(false);
 
   if (isLoading) return <Loading />;

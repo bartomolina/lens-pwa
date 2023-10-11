@@ -11,6 +11,7 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "unicorn/text-encoding-identifier-case": "off",
-    "unicorn/prevent-abbreviations": "off"
+    "unicorn/prevent-abbreviations": "off",
+    "import/named": "off"
   }
 }

@@ -7,12 +7,12 @@ import { Navigation } from "@/ui/layout/navigation";
 import { OwnPublications } from "@/ui/own-publications";
 
 export default function Me() {
-  const { data: profileId } = useProfile();
+  const { data: profile } = useProfile();
 
   return (
     <Page>
       <Navbar title="Me" />
-      {profileId && <OwnPublications profileId={profileId} />}
+      {profile && <OwnPublications profile={profile} />}
       <Navigation activeTab="me" />
     </Page>
   );

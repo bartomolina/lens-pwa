@@ -4,10 +4,9 @@ import { Navbar, Page } from "konsta/react";
 import { useState } from "react";
 
 import { useExplorePublications } from "@/hooks";
+import { ErrorMessage, Loading } from "@/ui/common";
 import { CreatePost } from "@/ui/create-post";
-import { ErrorMessage } from "@/ui/error-message";
 import { Navigation } from "@/ui/layout/navigation";
-import { Loading } from "@/ui/loading";
 import { Publications } from "@/ui/publications";
 
 export default function ExplorePage() {

@@ -1,14 +1,20 @@
-import { lensClient } from "@/lib/lens-client";
 import { useQuery } from "@tanstack/react-query";
+
+import { lensClient } from "@/lib/lens-client";
 
 export const useProfile = () => {
   return useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const profile = await lensClient.authentication.getProfileId();
-      console.log("use profile:", profile);
+      const forProfileId = await lensClient.authentication.getProfileId();
 
-      return profile;
+      if (forProfileId) {
+        const profile = await lensClient.profile.fetch({ forProfileId });
+        console.log("use profile:", profile);
+        return profile;
+      } else if (forProfileId === null) {
+        return forProfileId;
+      }
     },
   });
 };

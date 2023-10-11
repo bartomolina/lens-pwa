@@ -1,20 +1,21 @@
-import { lensClient } from "@/lib/lens-client";
-import { PublicationType } from "@lens-protocol/client";
+import { ProfileFragment, PublicationType } from "@lens-protocol/client";
 import { useQuery } from "@tanstack/react-query";
 
+import { lensClient } from "@/lib/lens-client";
+
 interface ProfilePublicationsOptions {
-  profileId: string;
+  profile: ProfileFragment;
 }
 
 export const useProfilePublications = ({
-  profileId,
+  profile,
 }: ProfilePublicationsOptions) => {
   return useQuery({
-    queryKey: ["publications", profileId],
+    queryKey: ["publications", profile.id],
     queryFn: async () => {
       const publications = await lensClient.publication.fetchAll({
         where: {
-          from: [profileId],
+          from: [profile.id],
           publicationTypes: [PublicationType.Post],
         },
       });

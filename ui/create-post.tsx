@@ -1,15 +1,14 @@
 import { textOnly } from "@lens-protocol/metadata";
+import { CameraPlus, Plus } from "@phosphor-icons/react";
 import {
   Fab,
   Icon,
   Link,
   List,
-  ListButton,
   ListInput,
   Navbar,
   Page,
   Popup,
-  Preloader,
 } from "konsta/react";
 import Image from "next/image";
 import {
@@ -21,7 +20,8 @@ import {
 } from "react";
 
 import { useCreatePublication } from "@/hooks/use-create-publication";
-import { CameraPlus, Plus } from "@phosphor-icons/react";
+
+import { Button } from "./common";
 
 interface CreatePostProps {
   setPopupOpened: Dispatch<SetStateAction<boolean>>;
@@ -123,10 +123,12 @@ export function CreatePost({
                 onChange={onSelectFile}
                 ref={ref}
               />
-              <ListButton type="submit" className="flex gap-2">
-                {isLoading && <Preloader size="w-10 h-10 p-2" />}
-                <span>{isLoading ? "Posting" : "Post"}</span>
-              </ListButton>
+              <Button
+                text="Post"
+                textLoading="Posting"
+                type="submit"
+                isLoading={isLoading}
+              />
             </form>
           </List>
         </Page>

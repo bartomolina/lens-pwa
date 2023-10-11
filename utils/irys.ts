@@ -2,6 +2,7 @@ import { Readable } from "node:stream";
 
 import { WebIrys } from "@irys/sdk";
 import { signTypedData } from "@wagmi/core";
+
 import { IRYS_NETWORK } from "@/lib/constants";
 
 export const upload = async (
@@ -13,9 +14,6 @@ export const upload = async (
 
   // @ts-expect-error injected
   client._signTypedData = async (domain, types, message) => {
-    console.log("test:domain", domain);
-    console.log("test:types", types);
-    console.log("test:message", message);
     message["Transaction hash"] =
       "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
     const result = await signTypedData({
@@ -39,9 +37,7 @@ export const upload = async (
     wallet: { name: "ethersv5", provider: client },
   });
 
-  console.log("test:irys1");
   await irys.ready();
-  console.log("test:irys2");
 
   const metadata = fileType
     ? {

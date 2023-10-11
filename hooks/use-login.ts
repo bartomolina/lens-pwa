@@ -3,14 +3,14 @@ import { signMessage } from "@wagmi/core";
 import { useAccount } from "wagmi";
 
 import { useProfile } from "@/hooks";
-
 import { lensClient } from "@/lib/lens-client";
 
 interface LoginOptions {
   onSuccess?: () => void;
+  onError?: () => void;
 }
 
-export const useLogin = ({ onSuccess }: LoginOptions) => {
+export const useLogin = ({ onSuccess, onError }: LoginOptions) => {
   const { data: currentProfile } = useProfile();
   const { address: signedBy }: { address: string | undefined } = useAccount();
 
@@ -37,5 +37,6 @@ export const useLogin = ({ onSuccess }: LoginOptions) => {
       }
     },
     onSuccess,
+    onError,
   });
 };

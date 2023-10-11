@@ -1,6 +1,7 @@
-import { lensClient } from "@/lib/lens-client";
 import { useQuery } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
+
+import { lensClient } from "@/lib/lens-client";
 
 export const useProfiles = () => {
   const { address } = useAccount();

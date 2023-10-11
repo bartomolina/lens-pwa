@@ -16,12 +16,13 @@ export function Publication({ publication }: PublicationsProps) {
       ? publication.metadata.asset ?? publication.metadata.asset
       : undefined;
 
-  const cover =
-    asset && "image" in asset
-      ? asset.image.raw.uri
-      : asset && "audio" in asset
-      ? asset.cover?.raw.uri
-      : undefined;
+  let cover;
+  if (asset && "image" in asset) {
+    cover = asset.image.raw.uri;
+  }
+  if (asset && "audio" in asset) {
+    cover = asset.cover?.raw.uri;
+  }
 
   return (
     <Card key={publication.id} outline>
@@ -39,7 +40,7 @@ export function Publication({ publication }: PublicationsProps) {
           {getTimeAgo(new Date(publication.createdAt).getTime())}
         </div>
       </div>
-      <div className="prose dark:text-white my-2 break-words">
+      <div className="prose my-2 break-words dark:text-white">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {"content" in publication.metadata
             ? publication.metadata.content

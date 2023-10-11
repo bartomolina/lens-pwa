@@ -1,35 +1,43 @@
-import {
-  BlockTitle,
-  List,
-  ListButton,
-  ListInput,
-  ListItem,
-  Preloader,
-} from "konsta/react";
+import { BlockTitle, List, ListInput, ListItem, Preloader } from "konsta/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { useCreateProfile, useLogin, useProfiles } from "@/hooks";
+import { Button, NotificationContext } from "@/ui/common";
+
+interface CreateProfileForm {
+  handle: string;
+}
 
 export function Login() {
   const router = useRouter();
-  const [newProfile, setNewProfile] = useState({ handle: "", changed: false });
+  const notification = useContext(NotificationContext);
+  const [loadingProfile, setLoadingProfile] = useState("");
   const { data: profiles, refetch } = useProfiles();
   const { mutate: login } = useLogin({
     onSuccess: () => router.push("/explore"),
+    onError: () => {
+      setLoadingProfile("");
+    },
   });
   const { mutate: createProfile, isLoading } = useCreateProfile({
     onSuccess: () => {
-      alert("profile created");
+      notification.show("Profile created");
       refetch();
     },
+    onError: (error) => {
+      notification.show(`Error creating profile: ${error.message}`);
+    },
   });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateProfileForm>();
 
-  const handleNewProfileChange = (
-    event_: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewProfile({ handle: event_.target.value, changed: true });
-  };
+  const handleCreateProfile: SubmitHandler<CreateProfileForm> = (data) =>
+    createProfile(data.handle);
 
   return (
     <>
@@ -38,23 +46,38 @@ export function Login() {
         <div className="text-right text-xs font-light">Mumbai - Lens V2</div>
       </BlockTitle>
       <List strongIos insetIos>
-        <ListInput
-          label="Handle"
-          type="text"
-          placeholder="letsraave"
-          info="Lowercase, numbers, -, _. 5 to 31 characters"
-          value={newProfile.handle}
-          error={
-            newProfile.changed && !newProfile.handle.trim()
-              ? "Lowercase, numbers, -, _. 5 to 31 characters"
-              : ""
-          }
-          onChange={handleNewProfileChange}
-        />
-        <ListButton onClick={() => createProfile(newProfile.handle)}>
-          {isLoading && <Preloader size="w-10 h-10 p-2" />}
-          <span>{isLoading ? "Creating profile" : "Create profile"}</span>
-        </ListButton>
+        <form onSubmit={handleSubmit(handleCreateProfile)}>
+          <Controller
+            control={control}
+            defaultValue=""
+            rules={{
+              pattern: /^[\d_a-z-]{5,31}$/,
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ListInput
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                label="Handle"
+                type="text"
+                placeholder="letsraave"
+                info="Lowercase, numbers, -, _. 5 to 31 characters"
+                error={
+                  errors.handle &&
+                  "Lowercase, numbers, -, _. 5 to 31 characters"
+                }
+              />
+            )}
+            name="handle"
+          />
+          <Button
+            text="Create profile"
+            textLoading="Creating profile"
+            type="submit"
+            isLoading={isLoading}
+          />
+        </form>
       </List>
       <BlockTitle>
         Profile login
@@ -65,10 +88,19 @@ export function Login() {
           <ListItem
             key={profile.id}
             link
-            onClick={() => login(profile.id)}
+            onClick={() => {
+              setLoadingProfile(profile.id);
+              login(profile.id);
+            }}
             header={`${profile.id} (#${Number.parseInt(profile.id, 16)})`}
             title={profile.handle}
-            after="Log in"
+            after={
+              loadingProfile === profile.id ? (
+                <Preloader size="w-7 h-7" />
+              ) : (
+                "Log in"
+              )
+            }
           />
         ))}
       </List>

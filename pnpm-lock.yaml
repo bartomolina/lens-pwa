@@ -27,8 +27,8 @@ dependencies:
     specifier: ^1.4.2
     version: 1.4.2(@types/react@18.2.6)(react@18.2.0)(typescript@5.2.2)(viem@1.7.0)(zod@3.22.3)
   '@web3modal/wagmi':
-    specifier: ^3.0.2
-    version: 3.0.2(@types/react@18.2.6)(@wagmi/core@1.4.2)(viem@1.7.0)
+    specifier: 3.1.0-598ec14
+    version: 3.1.0-598ec14(@types/react@18.2.6)(@wagmi/core@1.4.2)(viem@1.7.0)
   konsta:
     specifier: ^3.1.0
     version: 3.1.0
@@ -41,6 +41,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
+  react-hook-form:
+    specifier: ^7.47.0
+    version: 7.47.0(react@18.2.0)
   react-markdown:
     specifier: ^9.0.0
     version: 9.0.0(@types/react@18.2.6)(react@18.2.0)
@@ -2256,8 +2259,8 @@ packages:
       - ethers
     dev: false
 
-  /@lit-labs/ssr-dom-shim@1.1.1:
-    resolution: {integrity: sha512-kXOeFbfCm4fFf2A3WwVEeQj55tMZa8c8/f9AKHMobQMkzNUfUj+antR3fRPaZJawsa1aZiP/Da3ndpZrwEe4rQ==}
+  /@lit-labs/ssr-dom-shim@1.1.2:
+    resolution: {integrity: sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==}
     dev: false
 
   /@lit-protocol/access-control-conditions@2.1.62:
@@ -2434,7 +2437,13 @@ packages:
   /@lit/reactive-element@1.6.3:
     resolution: {integrity: sha512-QuTgnG52Poic7uM1AN5yJ09QMe0O28e10XzSvWDz02TJiiKee4stsiownEIadWm8nYzyDAyT+gKzUoZmiWQtsQ==}
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.1.1
+      '@lit-labs/ssr-dom-shim': 1.1.2
+    dev: false
+
+  /@lit/reactive-element@2.0.0:
+    resolution: {integrity: sha512-wn+2+uDcs62ROBmVAwssO4x5xue/uKD3MGGZOXL2sMxReTRIT0JXKyMXeu7gh0aJ4IJNEIG/3aOnUaQvM7BMzQ==}
+    dependencies:
+      '@lit-labs/ssr-dom-shim': 1.1.2
     dev: false
 
   /@metamask/safe-event-emitter@2.0.0:
@@ -3991,8 +4000,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@web3modal/core@3.0.2(@types/react@18.2.6)(react@18.2.0):
-    resolution: {integrity: sha512-Dr7ikLOgUPz3W66mCqu48Ca/GIn26Dj1CaRxIbKJzcHfMiumGGYgZRIElxAkGh9qaEMW+EylC3fIE8sPHFA1cg==}
+  /@web3modal/core@3.1.0-598ec14(@types/react@18.2.6)(react@18.2.0):
+    resolution: {integrity: sha512-3PO2ZXyNDhvwV14l0chFYjD3C/rReVk/gtC1cxOFN+nsKS6GPgeDtcDcVP1vEsI2SZJmVwiniYSONHNQqC6a+g==}
     dependencies:
       valtio: 1.11.2(@types/react@18.2.6)(react@18.2.0)
     transitivePeerDependencies:
@@ -4000,32 +4009,32 @@ packages:
       - react
     dev: false
 
-  /@web3modal/polyfills@3.0.2:
-    resolution: {integrity: sha512-Br1TfkqYPLdscwJx8ZBQUMZPJ1twdNygtJrdGwU5pcrjExxN80fIrBtfMuAu0yBB/4nlNVG8tw91FZJXUKK8ew==}
+  /@web3modal/polyfills@3.1.0-598ec14:
+    resolution: {integrity: sha512-NGi1zvSIaxzrRD5HMezmqOtA3IXmXpVX8xzxE7OId5/2ux9B9+jJWrcpzzQYopJIwR9KYRvAF0MMWQ+XpRHC2Q==}
     dependencies:
       buffer: 6.0.3
     dev: false
 
-  /@web3modal/scaffold@3.0.2(@types/react@18.2.6)(react@18.2.0):
-    resolution: {integrity: sha512-pJwm5aooVGf5CEEgypuveTicbs+a7FNwm0ru98KiJ7XUivprr2Ufu0ZXVX/n3/NQcu7SDx9UnuPUTK1HeQQnrw==}
+  /@web3modal/scaffold@3.1.0-598ec14(@types/react@18.2.6)(react@18.2.0):
+    resolution: {integrity: sha512-Wc7ldMk2R9SM+0iKAma+0WfnAnutc+MiBf21gaPaC3Hek3i3bt2Zx6VAf5ridwjNSf2krLJgy/PUG+VQO6ZGqQ==}
     dependencies:
-      '@web3modal/core': 3.0.2(@types/react@18.2.6)(react@18.2.0)
-      '@web3modal/ui': 3.0.2
-      lit: 2.8.0
+      '@web3modal/core': 3.1.0-598ec14(@types/react@18.2.6)(react@18.2.0)
+      '@web3modal/ui': 3.1.0-598ec14
+      lit: 3.0.0
     transitivePeerDependencies:
       - '@types/react'
       - react
     dev: false
 
-  /@web3modal/ui@3.0.2:
-    resolution: {integrity: sha512-xGzbYdmzy6az6FmiJ507Hh1nBjD1llaudPlpA6Gipm/4XikSCNe3wOdH0+gQaKRqvGTFaoVrtej1Vgnoil64Og==}
+  /@web3modal/ui@3.1.0-598ec14:
+    resolution: {integrity: sha512-EFWBuOVTvJB4t0B/4nXt/L81dLHopshlMf1wkTJwYqHcilXAN95/Z3Anf0CP1czVryH+dgVwCL2J/QPVc3lFeA==}
     dependencies:
-      lit: 2.8.0
+      lit: 3.0.0
       qrcode: 1.5.3
     dev: false
 
-  /@web3modal/wagmi@3.0.2(@types/react@18.2.6)(@wagmi/core@1.4.2)(viem@1.7.0):
-    resolution: {integrity: sha512-hYpfbAbnt/dZkjOyJLBMyk0NKip3qW8Yj8suSDm6mf01+GBYWVw2BDYBtx5C0biQxSoxR7kWu4BGzA0qAQNPJQ==}
+  /@web3modal/wagmi@3.1.0-598ec14(@types/react@18.2.6)(@wagmi/core@1.4.2)(viem@1.7.0):
+    resolution: {integrity: sha512-YeYe0cC+uxBm64sBiUHxEbX453ggQghcL+z283L9nBHHLfTQPnOlLTjr5h4Gw63UcCjio1LxeXKzCoTEh2ZLzA==}
     peerDependencies:
       '@wagmi/core': '>=1'
       viem: '>=1'
@@ -4038,8 +4047,8 @@ packages:
         optional: true
     dependencies:
       '@wagmi/core': 1.4.2(@types/react@18.2.6)(react@18.2.0)(typescript@5.2.2)(viem@1.7.0)(zod@3.22.3)
-      '@web3modal/polyfills': 3.0.2
-      '@web3modal/scaffold': 3.0.2(@types/react@18.2.6)(react@18.2.0)
+      '@web3modal/polyfills': 3.1.0-598ec14
+      '@web3modal/scaffold': 3.1.0-598ec14(@types/react@18.2.6)(react@18.2.0)
       viem: 1.7.0(typescript@5.2.2)(zod@3.22.3)
     optionalDependencies:
       react: 18.2.0
@@ -6971,13 +6980,27 @@ packages:
   /lit-element@3.3.3:
     resolution: {integrity: sha512-XbeRxmTHubXENkV4h8RIPyr8lXc+Ff28rkcQzw3G6up2xg5E8Zu1IgOWIwBLEQsu3cOVFqdYwiVi0hv0SlpqUA==}
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.1.1
+      '@lit-labs/ssr-dom-shim': 1.1.2
       '@lit/reactive-element': 1.6.3
       lit-html: 2.8.0
     dev: false
 
+  /lit-element@4.0.0:
+    resolution: {integrity: sha512-N6+f7XgusURHl69DUZU6sTBGlIN+9Ixfs3ykkNDfgfTkDYGGOWwHAYBhDqVswnFGyWgQYR2KiSpu4J76Kccs/A==}
+    dependencies:
+      '@lit-labs/ssr-dom-shim': 1.1.2
+      '@lit/reactive-element': 2.0.0
+      lit-html: 3.0.0
+    dev: false
+
   /lit-html@2.8.0:
     resolution: {integrity: sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==}
+    dependencies:
+      '@types/trusted-types': 2.0.4
+    dev: false
+
+  /lit-html@3.0.0:
+    resolution: {integrity: sha512-DNJIE8dNY0dQF2Gs0sdMNUppMQT2/CvV4OVnSdg7BXAsGqkVwsE5bqQ04POfkYH5dBIuGnJYdFz5fYYyNnOxiA==}
     dependencies:
       '@types/trusted-types': 2.0.4
     dev: false
@@ -7005,6 +7028,14 @@ packages:
       '@lit/reactive-element': 1.6.3
       lit-element: 3.3.3
       lit-html: 2.8.0
+    dev: false
+
+  /lit@3.0.0:
+    resolution: {integrity: sha512-nQ0teRzU1Kdj++VdmttS2WvIen8M79wChJ6guRKIIym2M3Ansg3Adj9O6yuQh2IpjxiUXlNuS81WKlQ4iL3BmA==}
+    dependencies:
+      '@lit/reactive-element': 2.0.0
+      lit-element: 4.0.0
+      lit-html: 3.0.0
     dev: false
 
   /loader-runner@4.3.0:
@@ -8200,6 +8231,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form@7.47.0(react@18.2.0):
+    resolution: {integrity: sha512-F/TroLjTICipmHeFlMrLtNLceO2xr1jU3CyiNla5zdwsGUGu2UOxxR4UyJgLlhMwLW/Wzp4cpJ7CPfgJIeKdSg==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:

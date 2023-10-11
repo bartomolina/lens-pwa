@@ -1,20 +1,15 @@
-import { lensClient } from "@/lib/lens-client";
-import { CreateProfileWithHandleErrorResultFragment } from "@lens-protocol/client";
 import { useMutation } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
-function isCreateProfileWithHandleErrorResultFragment(
-  variable: any
-): variable is CreateProfileWithHandleErrorResultFragment {
-  return "reason" in variable;
-}
+import { lensClient } from "@/lib/lens-client";
 
 interface LoginOptions {
   onSuccess?: () => void;
+  onError?: (error: Error) => void;
 }
 
-export const useCreateProfile = ({ onSuccess }: LoginOptions = {}) => {
-  const { address: to }: { address: string | undefined } = useAccount();
+export const useCreateProfile = ({ onSuccess, onError }: LoginOptions = {}) => {
+  const { address: to } = useAccount();
 
   return useMutation({
     mutationFn: async (handle: string) => {
@@ -30,7 +25,7 @@ export const useCreateProfile = ({ onSuccess }: LoginOptions = {}) => {
           "reason" in createProfileResult &&
           typeof createProfileResult.reason === "string"
         ) {
-          throw Error(createProfileResult.reason);
+          throw new Error(createProfileResult.reason);
         }
 
         if (
@@ -46,5 +41,6 @@ export const useCreateProfile = ({ onSuccess }: LoginOptions = {}) => {
       }
     },
     onSuccess,
+    onError,
   });
 };

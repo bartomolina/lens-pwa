@@ -11,16 +11,16 @@ import { useProfile } from "@/hooks";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profileId, isLoading, isFetching } = useProfile();
+  const { data: profile, isLoading, isFetching } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
 
   useEffect(() => {
-    if (profileId && !isFetching) {
+    if (profile && !isFetching) {
       router.push("/explore");
     }
-  }, [router, profileId, isFetching]);
+  }, [router, profile, isFetching]);
 
   return (
     !isLoading && (

@@ -3,9 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
 import { ARWEAVE_GATEWAY } from "@/lib/constants";
-import { upload } from "@/utils/irys";
-
 import { lensClient } from "@/lib/lens-client";
+import { upload } from "@/utils/irys";
 
 interface CreatePublicationOptions {
   onSuccess?: () => void;
@@ -27,7 +26,7 @@ export const useCreatePublication = ({
         });
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
-          throw Error(postResult.reason);
+          throw new Error(postResult.reason);
         }
 
         if ("txId" in postResult && typeof postResult.txId === "string") {
