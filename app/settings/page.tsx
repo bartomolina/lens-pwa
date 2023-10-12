@@ -3,6 +3,7 @@
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import { useWalletClient } from "wagmi";
 
 import { useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
@@ -11,6 +12,7 @@ import { Navigation } from "@/ui/layout/navigation";
 
 export default function Settings() {
   const router = useRouter();
+  const { data: walletClient } = useWalletClient();
   const { data: profile, refetch } = useProfile();
   const notification = useContext(NotificationContext);
   const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
@@ -49,9 +51,16 @@ export default function Settings() {
           }
           isLoading={isLoading}
           onClick={() => {
-            profile?.lensManager
-              ? enableProfileManager(false)
-              : enableProfileManager(true);
+            walletClient &&
+              (profile?.lensManager
+                ? enableProfileManager({
+                    walletClient: walletClient,
+                    enabled: false,
+                  })
+                : enableProfileManager({
+                    walletClient: walletClient,
+                    enabled: true,
+                  }));
           }}
         />
       </List>
