@@ -96,7 +96,7 @@ export function Login() {
             title={profile.handle}
             after={
               loadingProfile === profile.id ? (
-                <Preloader size="w-7 h-7" />
+                <Preloader size="w-5 h-5" />
               ) : (
                 "Log in"
               )

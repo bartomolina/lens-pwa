@@ -13,6 +13,8 @@ export async function POST(req: Request) {
   data.append("file", file);
   data.append("pinataMetadata", JSON.stringify(options));
 
+  console.log("test:uploading...");
+
   const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
     method: "POST",
     headers: {
@@ -21,5 +23,6 @@ export async function POST(req: Request) {
     body: data,
   });
   const resData = await res.json();
+  console.log("test:uploaded:", resData);
   return Response.json(resData);
 }
