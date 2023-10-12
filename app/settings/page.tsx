@@ -53,14 +53,8 @@ export default function Settings() {
           onClick={() => {
             walletClient &&
               (profile?.lensManager
-                ? enableProfileManager({
-                    walletClient: walletClient,
-                    enabled: false,
-                  })
-                : enableProfileManager({
-                    walletClient: walletClient,
-                    enabled: true,
-                  }));
+                ? enableProfileManager(false)
+                : enableProfileManager(true));
           }}
         />
       </List>
