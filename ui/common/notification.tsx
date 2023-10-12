@@ -1,3 +1,4 @@
+import { Bell } from "@phosphor-icons/react";
 import { Notification as KonstaNotification } from "konsta/react";
 import { useContext } from "react";
 
@@ -8,7 +9,9 @@ export function Notification() {
   return (
     <KonstaNotification
       opened={notification.open}
-      text={notification.message}
+      icon={<Bell size={28} className="text-primary" />}
+      title={notification.message}
+      titleRightText="now"
     />
   );
 }

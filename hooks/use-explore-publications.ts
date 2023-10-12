@@ -1,7 +1,6 @@
 import {
   ExplorePublicationsOrderByType,
   ExplorePublicationType,
-  PublicationMetadataMainFocusType,
 } from "@lens-protocol/client";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,12 +13,6 @@ export const useExplorePublications = () => {
       const publications = await lensClient.explore.publications({
         where: {
           publicationTypes: [ExplorePublicationType.Post],
-          metadata: {
-            mainContentFocus: [
-              PublicationMetadataMainFocusType.Image,
-              PublicationMetadataMainFocusType.Article,
-            ],
-          },
         },
         orderBy: ExplorePublicationsOrderByType.Latest,
       });

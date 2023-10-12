@@ -18,7 +18,7 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <ListButton onClick={isLoading ? undefined : onClick} type={type}>
-      {isLoading && <Preloader size="w-10 h-10 p-2" />}
+      {isLoading && <Preloader size="w-5 h-5" className="mr-0.5" />}
       <span>{isLoading ? textLoading : text}</span>
     </ListButton>
   );

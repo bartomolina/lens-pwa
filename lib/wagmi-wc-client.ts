@@ -4,6 +4,7 @@ import { polygonMumbai } from "wagmi/chains";
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from "@/lib/constants";
 
 const defaultChain = polygonMumbai;
+// https://github.com/orgs/WalletConnect/discussions/3725
 const chains = [defaultChain, defaultChain];
 export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
 

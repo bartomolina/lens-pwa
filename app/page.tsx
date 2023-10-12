@@ -23,26 +23,28 @@ export default function Home() {
   }, [router, profile, isConnected, isFetching]);
 
   return (
-    !isLoading && (
-      <Page>
-        <Navbar title="Login" />
-        <BlockTitle>Wallet</BlockTitle>
-        <List strongIos insetIos>
-          <ListButton onClick={() => open()}>
-            {isConnected ? "Account" : "Connect"}
-          </ListButton>
-          {isConnected && (
-            <ListButton
-              onClick={() => {
-                disconnect();
-              }}
-            >
-              Disconnect
+    <Page>
+      {!isLoading && (!profile || !isConnected) && (
+        <>
+          <Navbar title="Login" />
+          <BlockTitle>Wallet</BlockTitle>
+          <List strongIos insetIos>
+            <ListButton onClick={() => open()}>
+              {isConnected ? "Account" : "Connect"}
             </ListButton>
-          )}
-        </List>
-        {isConnected && <Login />}
-      </Page>
-    )
+            {isConnected && (
+              <ListButton
+                onClick={() => {
+                  disconnect();
+                }}
+              >
+                Disconnect
+              </ListButton>
+            )}
+          </List>
+          {isConnected && <Login />}
+        </>
+      )}
+    </Page>
   );
 }

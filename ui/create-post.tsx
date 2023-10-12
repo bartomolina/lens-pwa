@@ -61,6 +61,7 @@ export function CreatePost({
       setFile(_file);
       const objectUrl = URL.createObjectURL(_file);
       setPreview(objectUrl);
+      e.target.value = "";
     }
   };
 
@@ -90,7 +91,6 @@ export function CreatePost({
           <List strongIos insetIos>
             <form onSubmit={handleCreatePost}>
               <ListInput
-                label="Content"
                 type="textarea"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}

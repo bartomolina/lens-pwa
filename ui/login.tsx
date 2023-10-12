@@ -79,31 +79,37 @@ export function Login() {
           />
         </form>
       </List>
-      <BlockTitle>
-        Profile login
-        <div className="text-right text-xs font-light">Mumbai - Lens V2</div>
-      </BlockTitle>
-      <List strongIos insetIos>
-        {profiles?.items.map((profile) => (
-          <ListItem
-            key={profile.id}
-            link
-            onClick={() => {
-              setLoadingProfile(profile.id);
-              login(profile.id);
-            }}
-            header={`${profile.id} (#${Number.parseInt(profile.id, 16)})`}
-            title={profile.handle}
-            after={
-              loadingProfile === profile.id ? (
-                <Preloader size="w-6 h-6" />
-              ) : (
-                "Log in"
-              )
-            }
-          />
-        ))}
-      </List>
+      {profiles?.items && profiles?.items.length > 0 && (
+        <>
+          <BlockTitle>
+            Profile login
+            <div className="text-right text-xs font-light">
+              Mumbai - Lens V2
+            </div>
+          </BlockTitle>
+          <List strongIos insetIos>
+            {profiles.items.map((profile) => (
+              <ListItem
+                key={profile.id}
+                link
+                onClick={() => {
+                  setLoadingProfile(profile.id);
+                  login(profile.id);
+                }}
+                header={`${profile.id} (#${Number.parseInt(profile.id, 16)})`}
+                title={profile.handle}
+                after={
+                  loadingProfile === profile.id ? (
+                    <Preloader size="w-5 h-5" />
+                  ) : (
+                    "Log in"
+                  )
+                }
+              />
+            ))}
+          </List>
+        </>
+      )}
     </>
   );
 }
