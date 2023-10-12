@@ -1,4 +1,4 @@
-import { TextOnlyMetadata } from "@lens-protocol/metadata";
+import { ImageMetadata, TextOnlyMetadata } from "@lens-protocol/metadata";
 import { useMutation } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
@@ -16,7 +16,7 @@ export const useCreatePublication = ({
   const { address } = useAccount();
 
   return useMutation({
-    mutationFn: async (metadata: TextOnlyMetadata) => {
+    mutationFn: async (metadata: TextOnlyMetadata | ImageMetadata) => {
       if (address) {
         const content = await upload(address, JSON.stringify(metadata));
         const contentURI = content ? `${ARWEAVE_GATEWAY}${content.id}` : "";
@@ -24,6 +24,8 @@ export const useCreatePublication = ({
         const postResult = await lensClient.publication.postOnMomoka({
           contentURI,
         });
+
+        console.log(postResult);
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
           throw new Error(postResult.reason);

@@ -1,4 +1,4 @@
-import { textOnly } from "@lens-protocol/metadata";
+import { textOnly, image, MediaImageMimeType } from "@lens-protocol/metadata";
 import { CameraPlus, Plus } from "@phosphor-icons/react";
 import {
   Fab,
@@ -35,6 +35,7 @@ export function CreatePost({
   refetch,
 }: CreatePostProps) {
   const [content, setContent] = useState("");
+  const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
   const { mutate: createPost, isLoading } = useCreatePublication({
     onSuccess: async () => {
@@ -55,20 +56,42 @@ export function CreatePost({
     ref.current.click();
   };
 
-  const onSelectFile = async (event_: React.ChangeEvent<HTMLInputElement>) => {
-    const _file = event_.target.files?.[0];
+  const onSelectFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const _file = e.target.files?.[0];
     if (_file) {
+      setFile(_file);
       const objectUrl = URL.createObjectURL(_file);
       setPreview(objectUrl);
     }
   };
 
-  const handleCreatePost = async (event_: React.FormEvent<HTMLFormElement>) => {
-    event_.preventDefault();
+  const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    const metadata = textOnly({
-      content,
-    });
+    let metadata;
+    if (file) {
+      const formData = new FormData();
+
+      formData.append("file", file);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const resData = await res.json();
+
+      metadata = image({
+        image: {
+          item: `ipfs://${resData.IpfsHash}`,
+          type: file.type as MediaImageMimeType,
+        },
+      });
+    } else {
+      metadata = textOnly({
+        content,
+      });
+    }
 
     await createPost(metadata);
   };
@@ -96,7 +119,7 @@ export function CreatePost({
                 label="Content"
                 type="textarea"
                 value={content}
-                onChange={(event_) => setContent(event_.target.value)}
+                onChange={(e) => setContent(e.target.value)}
                 placeholder="What's happening?"
                 inputClassName="!h-80 resize-none !text-2xl"
               />
