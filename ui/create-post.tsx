@@ -1,4 +1,4 @@
-import { textOnly, image, MediaImageMimeType } from "@lens-protocol/metadata";
+import { image, MediaImageMimeType,textOnly } from "@lens-protocol/metadata";
 import { CameraPlus, Plus } from "@phosphor-icons/react";
 import {
   Fab,

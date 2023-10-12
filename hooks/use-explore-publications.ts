@@ -1,7 +1,6 @@
 import {
-  ExplorePublicationType,
   ExplorePublicationsOrderByType,
-  LimitType,
+  ExplorePublicationType,
   PublicationMetadataMainFocusType,
 } from "@lens-protocol/client";
 import { useQuery } from "@tanstack/react-query";
