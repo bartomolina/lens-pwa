@@ -29,7 +29,6 @@ export const useUpdateProfileManager = ({
       }
 
       const { id, typedData } = updateProfileManagerResult.unwrap();
-      alert("test:signing");
       const signature = await signTypedData({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -38,15 +37,12 @@ export const useUpdateProfileManager = ({
         message: typedData.value,
         primaryType: "ChangeDelegatedExecutorsConfig",
       });
-      alert(`test:signed:${signature}`);
 
       const broadcastOnchainResult =
         await lensClient.transaction.broadcastOnchain({
           id,
           signature,
         });
-
-      alert("test:broadcasted");
 
       const onchainRelayResult = broadcastOnchainResult.unwrap();
 
@@ -61,11 +57,9 @@ export const useUpdateProfileManager = ({
         "txHash" in onchainRelayResult &&
         typeof onchainRelayResult.txHash === "string"
       ) {
-        alert("test:waiting");
         await lensClient.transaction.waitUntilComplete({
           forTxHash: onchainRelayResult.txHash,
         });
-        alert("test:done");
       }
 
       console.log("use update profile manager:", onchainRelayResult);

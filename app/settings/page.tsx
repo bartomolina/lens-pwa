@@ -3,7 +3,6 @@
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { useWalletClient } from "wagmi";
 
 import { useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
