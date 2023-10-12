@@ -20,7 +20,6 @@ export const upload = async (
       domain,
       message,
       types,
-      account: irys.address! as `0x${string}`,
       primaryType: "Bundlr",
     });
 

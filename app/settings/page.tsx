@@ -11,7 +11,6 @@ import { Navigation } from "@/ui/layout/navigation";
 
 export default function Settings() {
   const router = useRouter();
-  const { data: walletClient } = useWalletClient();
   const { data: profile, refetch } = useProfile();
   const notification = useContext(NotificationContext);
   const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
@@ -50,10 +49,9 @@ export default function Settings() {
           }
           isLoading={isLoading}
           onClick={() => {
-            walletClient &&
-              (profile?.lensManager
-                ? enableProfileManager(false)
-                : enableProfileManager(true));
+            profile?.lensManager
+              ? enableProfileManager(false)
+              : enableProfileManager(true);
           }}
         />
       </List>
