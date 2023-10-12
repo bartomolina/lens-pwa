@@ -24,4 +24,14 @@ createWeb3Modal({
   featuredWalletIds: [
     "138f51c8d00ac7b9ac9d8dc75344d096a7dfe370a568aa167eabc0a21830ed98",
   ],
+  customWallets: [
+    {
+      id: "family",
+      name: "Family",
+      homepage: "https://family.co/",
+      image_url: "https://family.co/favicon.png",
+      mobile_link: "familywallet://",
+      webapp_link: "https://family.co/",
+    },
+  ],
 });
