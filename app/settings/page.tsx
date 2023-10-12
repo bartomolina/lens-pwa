@@ -2,7 +2,8 @@
 
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useAccount } from "wagmi";
 
 import { useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
@@ -11,6 +12,7 @@ import { Navigation } from "@/ui/layout/navigation";
 
 export default function Settings() {
   const router = useRouter();
+  const { isConnected, isConnecting } = useAccount();
   const { data: profile, refetch } = useProfile();
   const notification = useContext(NotificationContext);
   const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
@@ -23,39 +25,49 @@ export default function Settings() {
     },
   });
 
+  useEffect(() => {
+    if (!isConnecting && !isConnected) {
+      router.push("/");
+    }
+  }, [router, isConnecting, isConnected]);
+
   return (
     <Page>
-      <Navbar title="Settings" />
-      <BlockTitle>Profile</BlockTitle>
-      <List strongIos insetIos>
-        <ListButton
-          onClick={() => {
-            logout();
-            router.push("/");
-          }}
-        >
-          Log out
-        </ListButton>
-        <Button
-          text={
-            profile?.lensManager
-              ? "Disable profile manager"
-              : "Enable profile manager"
-          }
-          textLoading={
-            profile?.lensManager
-              ? "Disabling profile manager"
-              : "Enabling profile manager"
-          }
-          isLoading={isLoading}
-          onClick={() => {
-            profile?.lensManager
-              ? enableProfileManager(false)
-              : enableProfileManager(true);
-          }}
-        />
-      </List>
-      <Navigation activeTab="settings" />
+      {isConnected && (
+        <>
+          <Navbar title="Settings" />
+          <BlockTitle>Profile</BlockTitle>
+          <List strongIos insetIos>
+            <ListButton
+              onClick={() => {
+                logout();
+                router.push("/");
+              }}
+            >
+              Log out
+            </ListButton>
+            <Button
+              text={
+                profile?.lensManager
+                  ? "Disable profile manager"
+                  : "Enable profile manager"
+              }
+              textLoading={
+                profile?.lensManager
+                  ? "Disabling profile manager"
+                  : "Enabling profile manager"
+              }
+              isLoading={isLoading}
+              onClick={() => {
+                profile?.lensManager
+                  ? enableProfileManager(false)
+                  : enableProfileManager(true);
+              }}
+            />
+          </List>
+          <Navigation activeTab="settings" />
+        </>
+      )}
     </Page>
   );
 }

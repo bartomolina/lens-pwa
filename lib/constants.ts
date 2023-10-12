@@ -6,9 +6,7 @@ export const APP_URL = "https://lens-pwa-zeta.vercel.app/";
 export const LENS_API = "https://api-v2-mumbai.lens.dev/";
 export const LENS_MEDIA_SNAPSHOT_URL =
   "https://ik.imagekit.io/lens/media-snapshot";
-export const IPFS_GATEWAY = process.env.NEXT_PUBLIC_PINATA_GATEWAY
-  ? `${process.env.NEXT_PUBLIC_PINATA_GATEWAY}ipfs/`
-  : "https://ipfs.io/ipfs/";
+export const IPFS_GATEWAY = "https://gateway.pinata.cloud/ipfs/";
 export const ARWEAVE_GATEWAY = "https://arweave.net/";
 export const IRYS_NETWORK = "https://devnet.irys.xyz";
 

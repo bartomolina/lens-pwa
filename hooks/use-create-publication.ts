@@ -1,4 +1,4 @@
-import { ImageMetadata, TextOnlyMetadata } from "@lens-protocol/metadata";
+import { image, MediaImageMimeType, textOnly } from "@lens-protocol/metadata";
 import { useMutation } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
@@ -16,10 +16,39 @@ export const useCreatePublication = ({
   const { address } = useAccount();
 
   return useMutation({
-    mutationFn: async (metadata: TextOnlyMetadata | ImageMetadata) => {
+    mutationFn: async ({ content, file }: { content: string; file?: File }) => {
       if (address) {
-        const content = await upload(address, JSON.stringify(metadata));
-        const contentURI = content ? `${ARWEAVE_GATEWAY}${content.id}` : "";
+        let metadata;
+        if (file) {
+          const formData = new FormData();
+
+          formData.append("file", file);
+
+          const res = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          const resData = await res.json();
+
+          metadata = image({
+            image: {
+              item: `ipfs://${resData.IpfsHash}`,
+              type: file.type as MediaImageMimeType,
+            },
+            content,
+          });
+        } else {
+          metadata = textOnly({
+            content,
+          });
+        }
+
+        const metadataFile = await upload(address, JSON.stringify(metadata));
+
+        const contentURI = metadataFile
+          ? `${ARWEAVE_GATEWAY}${metadataFile.id}`
+          : "";
 
         const postResult = await lensClient.publication.postOnMomoka({
           contentURI,

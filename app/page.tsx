@@ -17,10 +17,10 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (profile && !isFetching) {
+    if (profile && isConnected && !isFetching) {
       router.push("/explore");
     }
-  }, [router, profile, isFetching]);
+  }, [router, profile, isConnected, isFetching]);
 
   return (
     !isLoading && (

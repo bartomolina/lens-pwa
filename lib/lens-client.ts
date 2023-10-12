@@ -1,8 +1,12 @@
-import { development, LensClient } from "@lens-protocol/client";
+import {
+  development,
+  IStorageProvider,
+  LensClient,
+} from "@lens-protocol/client";
 
 import { JWT_TOKEN } from "@/lib/constants";
 
-class LocalStorageProvider {
+class LocalStorageProvider implements IStorageProvider {
   getItem(key: string) {
     return window.localStorage.getItem(key);
   }

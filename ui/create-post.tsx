@@ -1,4 +1,3 @@
-import { image, MediaImageMimeType, textOnly } from "@lens-protocol/metadata";
 import { CameraPlus, Plus } from "@phosphor-icons/react";
 import {
   Fab,
@@ -68,33 +67,7 @@ export function CreatePost({
   const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let metadata;
-    if (file) {
-      const formData = new FormData();
-
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const resData = await res.json();
-
-      metadata = image({
-        image: {
-          item: `ipfs://${resData.IpfsHash}`,
-          type: file.type as MediaImageMimeType,
-        },
-        content,
-      });
-    } else {
-      metadata = textOnly({
-        content,
-      });
-    }
-
-    await createPost(metadata);
+    await createPost({ content, file });
   };
 
   return (

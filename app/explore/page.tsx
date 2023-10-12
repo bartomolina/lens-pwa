@@ -1,7 +1,9 @@
 "use client";
 
 import { Navbar, Page } from "konsta/react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 import { useExplorePublications } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
@@ -10,6 +12,8 @@ import { Navigation } from "@/ui/layout/navigation";
 import { Publications } from "@/ui/publications";
 
 export default function ExplorePage() {
+  const router = useRouter();
+  const { isConnected, isConnecting } = useAccount();
   const {
     data: publications,
     refetch,
@@ -18,29 +22,39 @@ export default function ExplorePage() {
   } = useExplorePublications();
   const [popupOpened, setPopupOpened] = useState(false);
 
+  useEffect(() => {
+    if (!isConnecting && !isConnected) {
+      router.push("/");
+    }
+  }, [router, isConnecting, isConnected]);
+
   return (
     <Page>
-      <Navbar title="Explore" />
-      {error instanceof Error && <ErrorMessage message={error.message} />}
-      {isLoading ? (
-        <Loading />
-      ) : (
+      {isConnected && (
         <>
-          {publications && (
-            <Publications
-              publications={publications.items}
-              setPopupOpened={setPopupOpened}
-              popupOpened={popupOpened}
-            />
+          <Navbar title="Explore" />
+          {error instanceof Error && <ErrorMessage message={error.message} />}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              {publications && (
+                <Publications
+                  publications={publications.items}
+                  setPopupOpened={setPopupOpened}
+                  popupOpened={popupOpened}
+                />
+              )}
+              <CreatePost
+                setPopupOpened={setPopupOpened}
+                popupOpened={popupOpened}
+                refetch={refetch}
+              />
+            </>
           )}
-          <CreatePost
-            setPopupOpened={setPopupOpened}
-            popupOpened={popupOpened}
-            refetch={refetch}
-          />
+          <Navigation activeTab="explore" />
         </>
       )}
-      <Navigation activeTab="explore" />
     </Page>
   );
 }
