@@ -12,20 +12,20 @@ import { useProfile } from "@/hooks";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profile, isLoading } = useProfile();
+  const { data: profile, isInitialLoading } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
 
   useEffect(() => {
-    if (profile && isConnected && !isLoading) {
+    if (profile && isConnected && !isInitialLoading) {
       router.push("/explore");
     }
   }, [router, profile, isConnected]);
 
   return (
     <Page>
-      {!isLoading && (!profile || !isConnected) ? (
+      {!isInitialLoading && (!profile || !isConnected) ? (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
