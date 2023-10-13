@@ -53,52 +53,52 @@ export default function RootLayout({
         content="viewport-fit=cover, width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
       />
       <link
-        href="splashcreens/iphone5_splash.png"
+        href="splashscreens/iphone5_splash.png"
         media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/iphone6_splash.png"
+        href="splashscreens/iphone6_splash.png"
         media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/iphoneplus_splash.png"
+        href="splashscreens/iphoneplus_splash.png"
         media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/iphonex_splash.png"
+        href="splashscreens/iphonex_splash.png"
         media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/iphonexr_splash.png"
+        href="splashscreens/iphonexr_splash.png"
         media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/iphonexsmax_splash.png"
+        href="splashscreens/iphonexsmax_splash.png"
         media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/ipad_splash.png"
+        href="splashscreens/ipad_splash.png"
         media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/ipadpro1_splash.png"
+        href="splashscreens/ipadpro1_splash.png"
         media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/ipadpro3_splash.png"
+        href="splashscreens/ipadpro3_splash.png"
         media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
       <link
-        href="splashcreens/ipadpro2_splash.png"
+        href="splashscreens/ipadpro2_splash.png"
         media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
