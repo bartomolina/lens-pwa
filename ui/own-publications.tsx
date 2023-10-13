@@ -1,7 +1,7 @@
 import { PostFragment, ProfileFragment } from "@lens-protocol/client";
 import { useState } from "react";
 
-import { useProfilePublications } from "@/hooks/use-profile-publications";
+import { useProfilePublications } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
 import { CreatePost } from "@/ui/create-post";
 import { Publications } from "@/ui/publications";

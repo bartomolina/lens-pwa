@@ -7,11 +7,26 @@ import { WagmiConfig } from "wagmi";
 
 import { wagmiConfig } from "@/lib/wagmi-wc-client";
 import { Notification, NotificationProvider } from "@/ui/common";
+import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
 
 const queryClient = new QueryClient();
 
 export function Client({ children }: { children: React.ReactNode }) {
   const [mounted, isMounted] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener(
+      "touchmove",
+      function (event) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (event.scale !== 1) {
+          event.preventDefault();
+        }
+      },
+      { passive: false }
+    );
+  });
 
   useEffect(() => isMounted(true), [isMounted]);
 
@@ -21,6 +36,7 @@ export function Client({ children }: { children: React.ReactNode }) {
         <NotificationProvider>
           <App theme="ios">
             <Notification />
+            <AddToHomeScreen />
             {children}
           </App>
         </NotificationProvider>
