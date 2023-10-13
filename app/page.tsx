@@ -12,7 +12,7 @@ import { useProfile } from "@/hooks";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profile, isLoading, isFetching } = useProfile();
+  const { data: profile, isFetching } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
@@ -25,10 +25,9 @@ export default function Home() {
 
   return (
     <Page>
-      <div>isLoading: {isLoading.toString()}</div>
       <div>profileId: {profile?.id}</div>
       <div>isConnected: {isConnected.toString()}</div>
-      {!isLoading && (!profile || !isConnected) && (
+      {!isFetching && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
