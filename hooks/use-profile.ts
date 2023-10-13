@@ -16,7 +16,7 @@ export const useProfile = () => {
         }
       }
       // eslint-disable-next-line unicorn/no-null
-      return { id: "false" };
+      return null;
     },
   });
 };

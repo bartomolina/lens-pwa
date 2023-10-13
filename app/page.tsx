@@ -3,12 +3,10 @@
 import { disconnect } from "@wagmi/core";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 import { useProfile } from "@/hooks";
-// import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
+import { JWT_TOKEN } from "@/lib/constants";
 import { Login } from "@/ui/login";
 
 export default function Home() {
@@ -22,13 +20,13 @@ export default function Home() {
   } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (profile && isConnected && isInitialLoading) {
-      router.push("/explore");
-    }
-  }, [router, profile, isConnected, isInitialLoading]);
+  // useEffect(() => {
+  //   if (profile && isConnected && isInitialLoading) {
+  //     router.push("/explore");
+  //   }
+  // }, [router, profile, isConnected, isInitialLoading]);
 
   return (
     <Page>
@@ -38,6 +36,7 @@ export default function Home() {
       <div>isFetched: {isFetched.toString()}</div>
       <div>isInitialLoading: {isInitialLoading.toString()}</div>
       <div>isConnected: {isConnected.toString()}</div> */}
+      <div>JTW: {localStorage.getItem(JWT_TOKEN)}</div>
       <div>profile: {profile?.id}</div>
       <div>isInitialLoading: {isInitialLoading.toString()}</div>
       <div>isConnected: {isConnected.toString()}</div>
