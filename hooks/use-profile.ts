@@ -6,19 +6,18 @@ export const useProfile = () => {
   return useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      alert("test:fetching");
+      console.log("test:fetching");
       const forProfileId = await lensClient.authentication.getProfileId();
-      alert("test:fetched");
+      console.log("test:fetched");
 
       if (forProfileId) {
-        alert(`test:exist ${forProfileId}`);
+        console.log(`test:exist ${forProfileId}`);
         const profile = await lensClient.profile.fetch({ forProfileId });
-        alert("test:returning");
+        console.log("test:returning");
         return profile;
-      } else if (forProfileId === null) {
-        alert("test:does not exist");
-        return forProfileId;
       }
+      // eslint-disable-next-line unicorn/no-null
+      return null;
     },
   });
 };

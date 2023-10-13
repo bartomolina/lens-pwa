@@ -12,7 +12,14 @@ import { useProfile } from "@/hooks";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profile, isInitialLoading } = useProfile();
+  const {
+    data: profile,
+    isInitialLoading,
+    isFetching,
+    fetchStatus,
+    isFetched,
+    isLoading,
+  } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
@@ -21,11 +28,18 @@ export default function Home() {
     if (profile && isConnected && !isInitialLoading) {
       router.push("/explore");
     }
-  }, [router, profile, isConnected]);
+  }, [router, profile, isConnected, isInitialLoading]);
 
   return (
     <Page>
-      {!isInitialLoading && (!profile || !isConnected) ? (
+      <div>isLoading: {isLoading.toString()}</div>
+      <div>isFetching: {isFetching.toString()}</div>
+      <div>fetchStatus: {fetchStatus.toString()}</div>
+      <div>isFetched: {isFetched.toString()}</div>
+      <div>isInitialLoading: {isInitialLoading.toString()}</div>
+      <div>isConnected: {isConnected.toString()}</div>
+      <div>profile: {profile?.id}</div>
+      {!isInitialLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
@@ -45,12 +59,6 @@ export default function Home() {
           </List>
           {/* <AddToHomeScreen /> */}
           {isConnected && <Login />}
-        </>
-      ) : (
-        <>
-          <div>isInitialLoading: {isInitialLoading.toString()}</div>
-          <div>profile: {profile?.id}</div>
-          <div>isConnected: {isConnected.toString()}</div>
         </>
       )}
     </Page>
