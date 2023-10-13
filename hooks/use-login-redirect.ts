@@ -6,19 +6,19 @@ import { useProfile } from "@/hooks";
 
 export function useLoginRedirect() {
   const router = useRouter();
-  const { data: profile, isInitialLoading } = useProfile();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: profile, refetch, isLoading } = useProfile();
   const { isConnected, isConnecting } = useAccount();
 
   useEffect(() => {
-    if (!isConnecting && !isInitialLoading) {
+    if (!isConnecting && !isLoading) {
       if (!isConnected || !profile) {
         router.push("/");
       } else {
         setIsLoggedIn(true);
       }
     }
-  }, [router, isConnecting, isInitialLoading, isConnected, profile]);
+  }, [router, isConnecting, isLoading, isConnected, profile]);
 
-  return isLoggedIn;
+  return { isLoggedIn, refetch };
 }

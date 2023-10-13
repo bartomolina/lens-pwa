@@ -1,5 +1,13 @@
+import { AnyPublicationFragment, PaginatedResult } from "@lens-protocol/client";
 import { CameraPlus, Plus } from "@phosphor-icons/react";
 import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "@tanstack/react-query";
+import {
+  Dialog,
+  DialogButton,
   Fab,
   Icon,
   Link,
@@ -10,36 +18,32 @@ import {
   Popup,
 } from "konsta/react";
 import Image from "next/image";
-import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useRef,
-  useState,
-} from "react";
+import { MutableRefObject, useRef, useState } from "react";
 
+import { useProfile } from "@/hooks";
 import { useCreatePublication } from "@/hooks/use-create-publication";
 
 import { Button } from "./common";
 
 interface CreatePostProps {
-  setPopupOpened: Dispatch<SetStateAction<boolean>>;
-  popupOpened: boolean;
-  refetch: () => void;
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<
+    QueryObserverResult<PaginatedResult<AnyPublicationFragment>, unknown>
+  >;
 }
 
-export function CreatePost({
-  setPopupOpened,
-  popupOpened,
-  refetch,
-}: CreatePostProps) {
+export function CreatePost({ refetch }: CreatePostProps) {
+  const { data: profile } = useProfile();
+  const [popupOpened, setPopupOpened] = useState(false);
+  const [managerDialog, setManagerDialog] = useState(false);
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
   const { mutate: createPost, isLoading } = useCreatePublication({
     onSuccess: async () => {
-      await refetch();
       console.log("create post: post created");
+      await refetch();
       setPopupOpened(false);
       clearForm();
     },
@@ -76,7 +80,20 @@ export function CreatePost({
       <Fab
         className="fixed z-20 right-4-safe bottom-28-safe"
         icon={<Plus />}
-        onClick={() => setPopupOpened(true)}
+        onClick={() =>
+          profile?.lensManager ? setPopupOpened(true) : setManagerDialog(true)
+        }
+      />
+      <Dialog
+        opened={managerDialog}
+        onBackdropClick={() => setManagerDialog(false)}
+        title="Manager is disabled"
+        content="Before posting, you need to enable the Profile Manager in Settings"
+        buttons={
+          <DialogButton onClick={() => setManagerDialog(false)}>
+            Ok
+          </DialogButton>
+        }
       />
       <Popup opened={popupOpened} onBackdropClick={() => setPopupOpened(false)}>
         <Page>

@@ -1,7 +1,6 @@
 "use client";
 
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
-import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
 import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
@@ -10,14 +9,13 @@ import { Button, NotificationContext } from "@/ui/common";
 import { Navigation } from "@/ui/layout/navigation";
 
 export default function Settings() {
-  const router = useRouter();
-  const isLoggedIn = useLoginRedirect();
-  const { data: profile, refetch } = useProfile();
+  const { isLoggedIn, refetch: refetchProfile } = useLoginRedirect();
+  const { data: profile, refetch, isFetching } = useProfile();
   const notification = useContext(NotificationContext);
   const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
-    onSuccess: () => {
+    onSuccess: async () => {
       notification.show("Profile manager updated");
-      refetch();
+      await refetch();
     },
     onError: (error) => {
       notification.show(`Error updating the profile manager: ${error.message}`);
@@ -34,7 +32,7 @@ export default function Settings() {
             <ListButton
               onClick={() => {
                 logout();
-                router.push("/");
+                refetchProfile();
               }}
             >
               Log out
@@ -46,13 +44,13 @@ export default function Settings() {
                   : "Enable profile manager"
               }
               textLoading={
-                profile?.lensManager
+                !isFetching && profile?.lensManager
                   ? "Disabling profile manager"
                   : "Enabling profile manager"
               }
               isLoading={isLoading}
               onClick={() => {
-                profile?.lensManager
+                !isFetching && profile?.lensManager
                   ? enableProfileManager(false)
                   : enableProfileManager(true);
               }}

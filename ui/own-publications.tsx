@@ -1,5 +1,4 @@
 import { PostFragment, ProfileFragment } from "@lens-protocol/client";
-import { useState } from "react";
 
 import { useProfilePublications } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
@@ -17,7 +16,6 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
     isInitialLoading,
     error,
   } = useProfilePublications({ profile });
-  const [popupOpened, setPopupOpened] = useState(false);
 
   if (isInitialLoading) return <Loading />;
   if (error instanceof Error) return <ErrorMessage message={error.message} />;
@@ -25,17 +23,9 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
   return (
     <>
       {publications && (
-        <Publications
-          publications={publications.items as PostFragment[]}
-          setPopupOpened={setPopupOpened}
-          popupOpened={popupOpened}
-        />
+        <Publications publications={publications.items as PostFragment[]} />
       )}
-      <CreatePost
-        setPopupOpened={setPopupOpened}
-        popupOpened={popupOpened}
-        refetch={refetch}
-      />
+      <CreatePost refetch={refetch} />
     </>
   );
 }

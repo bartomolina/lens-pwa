@@ -1,7 +1,6 @@
 "use client";
 
 import { Navbar, Page } from "konsta/react";
-import { useState } from "react";
 
 import { useExplorePublications, useLoginRedirect } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
@@ -10,14 +9,13 @@ import { Navigation } from "@/ui/layout/navigation";
 import { Publications } from "@/ui/publications";
 
 export default function ExplorePage() {
-  const isLoggedIn = useLoginRedirect();
+  const { isLoggedIn } = useLoginRedirect();
   const {
     data: publications,
     refetch,
     isInitialLoading,
     error,
   } = useExplorePublications();
-  const [popupOpened, setPopupOpened] = useState(false);
 
   return (
     <Page>
@@ -30,17 +28,9 @@ export default function ExplorePage() {
           ) : (
             <>
               {publications && (
-                <Publications
-                  publications={publications.items}
-                  setPopupOpened={setPopupOpened}
-                  popupOpened={popupOpened}
-                />
+                <Publications publications={publications.items} />
               )}
-              <CreatePost
-                setPopupOpened={setPopupOpened}
-                popupOpened={popupOpened}
-                refetch={refetch}
-              />
+              <CreatePost refetch={refetch} />
             </>
           )}
           <Navigation activeTab="explore" />

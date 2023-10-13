@@ -1,5 +1,10 @@
+import { ProfileFragment } from "@lens-protocol/client";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "@tanstack/react-query";
 import { BlockTitle, List, ListInput, ListItem, Preloader } from "konsta/react";
-import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
@@ -10,13 +15,20 @@ interface CreateProfileForm {
   handle: string;
 }
 
-export function Login() {
-  const router = useRouter();
+interface LoginProps {
+  refetchProfile: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<ProfileFragment | null, unknown>>;
+}
+
+export function Login({ refetchProfile }: LoginProps) {
   const notification = useContext(NotificationContext);
   const [loadingProfile, setLoadingProfile] = useState("");
   const { data: profiles, refetch } = useProfiles();
   const { mutate: login } = useLogin({
-    onSuccess: () => router.push("/explore"),
+    onSuccess: async () => {
+      await refetchProfile();
+    },
     onError: () => {
       setLoadingProfile("");
     },
@@ -93,8 +105,10 @@ export function Login() {
                 key={profile.id}
                 link
                 onClick={() => {
-                  setLoadingProfile(profile.id);
-                  login(profile.id);
+                  if (!loadingProfile) {
+                    setLoadingProfile(profile.id);
+                    login(profile.id);
+                  }
                 }}
                 header={`${profile.id} (#${Number.parseInt(profile.id, 16)})`}
                 title={profile.handle}

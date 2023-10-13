@@ -12,20 +12,20 @@ import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profile, isInitialLoading } = useProfile();
+  const { data: profile, refetch, isLoading } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isInitialLoading && profile && isConnected) {
+    if (!isLoading && profile && isConnected) {
       router.push("/explore");
     }
-  }, [router, profile, isConnected, isInitialLoading]);
+  }, [router, profile, isConnected, isLoading]);
 
   return (
     <Page>
-      {!isInitialLoading && (!profile || !isConnected) && (
+      {!isLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <AddToHomeScreen />
@@ -44,7 +44,7 @@ export default function Home() {
               </ListButton>
             )}
           </List>
-          {isConnected && <Login />}
+          {isConnected && <Login refetchProfile={refetch} />}
         </>
       )}
     </Page>

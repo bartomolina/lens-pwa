@@ -7,7 +7,7 @@ import { Navigation } from "@/ui/layout/navigation";
 import { OwnPublications } from "@/ui/own-publications";
 
 export default function Me() {
-  const isLoggedIn = useLoginRedirect();
+  const { isLoggedIn } = useLoginRedirect();
   const { data: profile } = useProfile();
 
   return (
