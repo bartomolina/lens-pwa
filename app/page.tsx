@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 import { useProfile } from "@/hooks";
-import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
+// import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
 import { Login } from "@/ui/login";
 
 export default function Home() {
