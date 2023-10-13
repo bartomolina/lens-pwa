@@ -8,7 +8,13 @@ import { WagmiConfig } from "wagmi";
 import { wagmiConfig } from "@/lib/wagmi-wc-client";
 import { Notification, NotificationProvider } from "@/ui/common";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export function Client({ children }: { children: React.ReactNode }) {
   const [mounted, isMounted] = useState(false);
