@@ -27,7 +27,6 @@ export default function Home() {
     <Page>
       {!isLoading && (!profile || !isConnected) && (
         <>
-          <AddToHomeScreen />
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
           <List strongIos insetIos>
@@ -44,6 +43,7 @@ export default function Home() {
               </ListButton>
             )}
           </List>
+          <AddToHomeScreen />
           {isConnected && <Login />}
         </>
       )}

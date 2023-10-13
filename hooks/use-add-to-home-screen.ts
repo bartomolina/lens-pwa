@@ -31,7 +31,7 @@ export function useAddToHomescreenPrompt(): [
   useEffect(() => {
     alert("test:setting");
     const ready = (e: IBeforeInstallPromptEvent) => {
-      e.preventDefault();
+      // e.preventDefault();
       setPromptEvent(e);
     };
 
