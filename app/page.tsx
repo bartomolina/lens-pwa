@@ -43,7 +43,7 @@ export default function Home() {
               </ListButton>
             )}
           </List>
-          <AddToHomeScreen />
+          {/* <AddToHomeScreen /> */}
           {isConnected && <Login />}
         </>
       )}
