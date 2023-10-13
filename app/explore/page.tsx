@@ -1,40 +1,31 @@
 "use client";
 
 import { Navbar, Page } from "konsta/react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useState } from "react";
 
-import { useExplorePublications } from "@/hooks";
+import { useExplorePublications, useLoginRedirect } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
 import { CreatePost } from "@/ui/create-post";
 import { Navigation } from "@/ui/layout/navigation";
 import { Publications } from "@/ui/publications";
 
 export default function ExplorePage() {
-  const router = useRouter();
-  const { isConnected, isConnecting } = useAccount();
+  const isLoggedIn = useLoginRedirect();
   const {
     data: publications,
     refetch,
-    isLoading,
+    isInitialLoading,
     error,
   } = useExplorePublications();
   const [popupOpened, setPopupOpened] = useState(false);
 
-  useEffect(() => {
-    if (!isConnecting && !isConnected) {
-      router.push("/");
-    }
-  }, [router, isConnecting, isConnected]);
-
   return (
     <Page>
-      {isConnected && (
+      {isLoggedIn && (
         <>
           <Navbar title="Explore" />
           {error instanceof Error && <ErrorMessage message={error.message} />}
-          {isLoading ? (
+          {isInitialLoading ? (
             <Loading />
           ) : (
             <>

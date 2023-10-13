@@ -14,12 +14,12 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
   const {
     data: publications,
     refetch,
-    isLoading,
+    isInitialLoading,
     error,
   } = useProfilePublications({ profile });
   const [popupOpened, setPopupOpened] = useState(false);
 
-  if (isLoading) return <Loading />;
+  if (isInitialLoading) return <Loading />;
   if (error instanceof Error) return <ErrorMessage message={error.message} />;
 
   return (

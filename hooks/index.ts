@@ -3,6 +3,7 @@ export { useCreateProfile } from "./use-create-profile";
 export { useCreatePublication } from "./use-create-publication";
 export { useExplorePublications } from "./use-explore-publications";
 export { useLogin } from "./use-login";
+export { useLoginRedirect } from "./use-login-redirect";
 export { useProfile } from "./use-profile";
 export { useProfilePublications } from "./use-profile-publications";
 export { useProfiles } from "./use-profiles";

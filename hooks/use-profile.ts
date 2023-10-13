@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { lensClient } from "@/lib/lens-client";
+import { lensClient, logout } from "@/lib/lens-client";
 
 export const useProfile = () => {
   return useQuery({
@@ -8,17 +8,12 @@ export const useProfile = () => {
     queryFn: async () => {
       try {
         const forProfileId = await lensClient.authentication.getProfileId();
-
-        alert(`test:profileId:${forProfileId}`);
-
         if (forProfileId) {
           const profile = await lensClient.profile.fetch({ forProfileId });
-          alert(`test:profile.id:${profile?.id}`);
           return profile;
         }
       } catch {
-        alert("test:error");
-        // logout();
+        logout();
       }
       // eslint-disable-next-line unicorn/no-null
       return null;

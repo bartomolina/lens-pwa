@@ -2,17 +2,16 @@
 
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
-import { useAccount } from "wagmi";
+import { useContext } from "react";
 
-import { useProfile, useUpdateProfileManager } from "@/hooks";
+import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
 import { Button, NotificationContext } from "@/ui/common";
 import { Navigation } from "@/ui/layout/navigation";
 
 export default function Settings() {
   const router = useRouter();
-  const { isConnected, isConnecting } = useAccount();
+  const isLoggedIn = useLoginRedirect();
   const { data: profile, refetch } = useProfile();
   const notification = useContext(NotificationContext);
   const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
@@ -25,15 +24,9 @@ export default function Settings() {
     },
   });
 
-  useEffect(() => {
-    if (!isConnecting && !isConnected) {
-      router.push("/");
-    }
-  }, [router, isConnecting, isConnected]);
-
   return (
     <Page>
-      {isConnected && (
+      {isLoggedIn && (
         <>
           <Navbar title="Settings" />
           <BlockTitle>Profile</BlockTitle>
