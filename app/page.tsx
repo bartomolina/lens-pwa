@@ -48,9 +48,9 @@ export default function Home() {
         </>
       ) : (
         <>
-          <div>isLoading: {isLoading}</div>
+          <div>isLoading: {isLoading.toString()}</div>
           <div>profile: {profile?.id}</div>
-          <div>isConnected: {isConnected}</div>
+          <div>isConnected: {isConnected.toString()}</div>
         </>
       )}
     </Page>
