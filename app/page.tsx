@@ -25,10 +25,10 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (profile && isConnected && !isInitialLoading) {
+    if (profile && isConnected && isFetched) {
       router.push("/explore");
     }
-  }, [router, profile, isConnected, isInitialLoading]);
+  }, [router, profile, isConnected, isFetched]);
 
   return (
     <Page>
@@ -39,7 +39,7 @@ export default function Home() {
       <div>isInitialLoading: {isInitialLoading.toString()}</div>
       <div>isConnected: {isConnected.toString()}</div>
       <div>profile: {profile?.id}</div>
-      {!isInitialLoading && (!profile || !isConnected) && (
+      {isFetched && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
