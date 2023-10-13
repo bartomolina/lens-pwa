@@ -25,6 +25,9 @@ export default function Home() {
 
   return (
     <Page>
+      <div>isLoading: {isLoading.toString()}</div>
+      <div>profileId: {profile?.id}</div>
+      <div>isConnected: {isConnected.toString()}</div>
       {!isLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
