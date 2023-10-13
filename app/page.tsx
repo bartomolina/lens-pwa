@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <Page>
-      {!isLoading && (!profile || !isConnected) && (
+      {!isLoading && (!profile || !isConnected) ? (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
@@ -45,6 +45,12 @@ export default function Home() {
           </List>
           {/* <AddToHomeScreen /> */}
           {isConnected && <Login />}
+        </>
+      ) : (
+        <>
+        <div>isLoading: {isLoading}</div>
+        <div>profile: {profile?.id}</div>
+        <div>isConnected: isConnecteddiv>
         </>
       )}
     </Page>
