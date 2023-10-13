@@ -39,6 +39,8 @@ export default function Home() {
       <div>isInitialLoading: {isInitialLoading.toString()}</div>
       <div>isConnected: {isConnected.toString()}</div> */}
       <div>profile: {profile?.id}</div>
+      <div>isInitialLoading: {isInitialLoading}</div>
+      <div>isConnected: {isConnected}</div>
       {!isInitialLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
