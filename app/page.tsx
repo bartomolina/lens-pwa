@@ -27,6 +27,7 @@ export default function Home() {
     <Page>
       <div>profileId: {profile?.id}</div>
       <div>isConnected: {isConnected.toString()}</div>
+      <div>isFetching: {isFetching.toString()}</div>
       {!isFetching && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
