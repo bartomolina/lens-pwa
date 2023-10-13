@@ -40,7 +40,7 @@ export default function Home() {
       <div>profile: {profile?.id}</div>
       <div>isInitialLoading: {isInitialLoading.toString()}</div>
       <div>isConnected: {isConnected.toString()}</div>
-      {!isInitialLoading && (!profile || !isConnected) && (
+      {false && !isInitialLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>

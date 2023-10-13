@@ -6,10 +6,9 @@ export const useProfile = () => {
   return useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const isAuthenticated = await lensClient.authentication.isAuthenticated();
-      if (isAuthenticated) {
-        alert("test:is authenticated");
+      try {
         const forProfileId = await lensClient.authentication.getProfileId();
+
         alert(`test:profileId:${forProfileId}`);
 
         if (forProfileId) {
@@ -17,8 +16,10 @@ export const useProfile = () => {
           alert(`test:profile.id:${profile?.id}`);
           return profile;
         }
+      } catch {
+        alert("test:error");
+        // logout();
       }
-      alert("test:error");
       // eslint-disable-next-line unicorn/no-null
       return null;
     },
