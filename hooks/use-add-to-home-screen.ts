@@ -29,8 +29,9 @@ export function useAddToHomescreenPrompt(): [
   };
 
   useEffect(() => {
+    alert("test:setting");
     const ready = (e: IBeforeInstallPromptEvent) => {
-      // e.preventDefault();
+      e.preventDefault();
       setPromptEvent(e);
     };
 
@@ -45,6 +46,7 @@ export function useAddToHomescreenPrompt(): [
         ready as EventListenerOrEventListenerObject
       );
     };
+    alert("test:set");
   }, []);
 
   return [prompt, promptToInstall];

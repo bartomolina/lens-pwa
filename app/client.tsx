@@ -28,7 +28,10 @@ export function Client({ children }: { children: React.ReactNode }) {
     );
   });
 
-  useEffect(() => isMounted(true), [isMounted]);
+  useEffect(() => {
+    alert("test:ismounted");
+    isMounted(true), [isMounted];
+  });
 
   return mounted ? (
     <QueryClientProvider client={queryClient}>
