@@ -14,6 +14,7 @@ export function AddToHomeScreen() {
 
   useEffect(() => {
     if (prompt) {
+      alert("test:promptvisible");
       setVisible(true);
     }
   }, [prompt]);
