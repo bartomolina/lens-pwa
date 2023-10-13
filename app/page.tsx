@@ -15,31 +15,31 @@ export default function Home() {
   const {
     data: profile,
     isInitialLoading,
-    isFetching,
-    fetchStatus,
-    isFetched,
-    isLoading,
+    // isFetching,
+    // fetchStatus,
+    // isFetched,
+    // isLoading,
   } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
 
   useEffect(() => {
-    if (profile && isConnected && isFetched) {
+    if (profile && isConnected && isInitialLoading) {
       router.push("/explore");
     }
-  }, [router, profile, isConnected, isFetched]);
+  }, [router, profile, isConnected, isInitialLoading]);
 
   return (
     <Page>
-      <div>isLoading: {isLoading.toString()}</div>
+      {/* <div>isLoading: {isLoading.toString()}</div>
       <div>isFetching: {isFetching.toString()}</div>
       <div>fetchStatus: {fetchStatus.toString()}</div>
       <div>isFetched: {isFetched.toString()}</div>
       <div>isInitialLoading: {isInitialLoading.toString()}</div>
-      <div>isConnected: {isConnected.toString()}</div>
+      <div>isConnected: {isConnected.toString()}</div> */}
       <div>profile: {profile?.id}</div>
-      {isFetched && (!profile || !isConnected) && (
+      {!isInitialLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
