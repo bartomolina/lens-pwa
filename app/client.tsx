@@ -28,7 +28,6 @@ export function Client({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    alert("test:ismounted");
     isMounted(true);
   }, [isMounted]);
 
