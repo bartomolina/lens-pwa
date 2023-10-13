@@ -7,7 +7,6 @@ import { WagmiConfig } from "wagmi";
 
 import { wagmiConfig } from "@/lib/wagmi-wc-client";
 import { Notification, NotificationProvider } from "@/ui/common";
-import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
 
 const queryClient = new QueryClient();
 
@@ -26,12 +25,12 @@ export function Client({ children }: { children: React.ReactNode }) {
       },
       { passive: false }
     );
-  });
+  }, []);
 
   useEffect(() => {
     alert("test:ismounted");
-    isMounted(true), [isMounted];
-  });
+    isMounted(true);
+  }, [isMounted]);
 
   return mounted ? (
     <QueryClientProvider client={queryClient}>
@@ -39,7 +38,6 @@ export function Client({ children }: { children: React.ReactNode }) {
         <NotificationProvider>
           <App theme="ios">
             <Notification />
-            <AddToHomeScreen />
             {children}
           </App>
         </NotificationProvider>
