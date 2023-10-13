@@ -12,23 +12,20 @@ import { useProfile } from "@/hooks";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profile, isFetching } = useProfile();
+  const { data: profile, isLoading } = useProfile();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
   const router = useRouter();
 
   useEffect(() => {
-    if (profile && isConnected && !isFetching) {
+    if (profile && isConnected && !isLoading) {
       router.push("/explore");
     }
-  }, [router, profile, isConnected, isFetching]);
+  }, [router, profile, isConnected]);
 
   return (
     <Page>
-      <div>profileId: {profile?.id}</div>
-      <div>isConnected: {isConnected.toString()}</div>
-      <div>isFetching: {isFetching.toString()}</div>
-      {!isFetching && (!profile || !isConnected) && (
+      {!isLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
           <BlockTitle>Wallet</BlockTitle>
