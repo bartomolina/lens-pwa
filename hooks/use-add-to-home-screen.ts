@@ -35,6 +35,8 @@ export function useAddToHomescreenPrompt(): [
       setPromptEvent(e);
     };
 
+    alert("test:adding listener");
+
     window.addEventListener(
       "beforeinstallprompt",
       ready as EventListenerOrEventListenerObject
