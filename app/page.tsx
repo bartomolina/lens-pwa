@@ -48,7 +48,7 @@ export default function Home() {
         </>
       ) : (
         <>
-          <div>isLoading: {isLoading.toString()}</div>
+          <div>isInitialLoading: {isInitialLoading.toString()}</div>
           <div>profile: {profile?.id}</div>
           <div>isConnected: {isConnected.toString()}</div>
         </>
