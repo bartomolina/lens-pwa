@@ -28,7 +28,7 @@ export function Client({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_PUSHER_INSTANCEID) {
+    if (false) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const beamsClient = new PusherPushNotifications.Client({
