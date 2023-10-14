@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IBeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -9,16 +9,13 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export function useAddToHomescreenPrompt(): [
+export function useAddToHomescreenAndroidPrompt(): [
   IBeforeInstallPromptEvent | undefined,
-  () => void,
-  boolean,
-  Dispatch<SetStateAction<boolean>>
+  () => void
 ] {
   const [prompt, setPromptEvent] = useState<
     IBeforeInstallPromptEvent | undefined
   >();
-  const [showiOSPrompt, setShowiOSPrompt] = useState(false);
 
   const promptToInstall = () => {
     if (prompt) {
@@ -50,19 +47,5 @@ export function useAddToHomescreenPrompt(): [
     };
   }, []);
 
-  useEffect(() => {
-    const isIos = () => {
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
-    };
-
-    const isInStandaloneMode = () =>
-      "standalone" in window.navigator && window.navigator.standalone;
-
-    if (isIos() && !isInStandaloneMode()) {
-      setShowiOSPrompt(true);
-    }
-  }, []);
-
-  return [prompt, promptToInstall, showiOSPrompt, setShowiOSPrompt];
+  return [prompt, promptToInstall];
 }

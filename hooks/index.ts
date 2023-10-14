@@ -1,4 +1,5 @@
-export { useAddToHomescreenPrompt } from "./use-add-to-home-screen";
+export { useAddToHomescreenAndroidPrompt } from "./use-add-to-home-screen-android";
+export { useAddToHomescreeniOSPrompt } from "./use-add-to-home-screen-ios";
 export { useCreateProfile } from "./use-create-profile";
 export { useCreatePublication } from "./use-create-publication";
 export { useExplorePublications } from "./use-explore-publications";

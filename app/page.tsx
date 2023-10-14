@@ -8,7 +8,8 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 import { useProfile } from "@/hooks";
-import { AddToHomeScreen } from "@/ui/layout/add-to-home-screen";
+import { AddToHomeScreenAndroid } from "@/ui/layout/add-to-home-screen-android";
+import { AddToHomeScreeniOS } from "@/ui/layout/add-to-home-screen-ios";
 import { Login } from "@/ui/login";
 
 export default function Home() {
@@ -28,7 +29,8 @@ export default function Home() {
       {!isLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
-          <AddToHomeScreen />
+          <AddToHomeScreenAndroid />
+          <AddToHomeScreeniOS />
           <BlockTitle>Wallet</BlockTitle>
           <List strongIos insetIos>
             <ListButton onClick={() => open()}>

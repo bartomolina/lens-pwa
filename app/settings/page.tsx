@@ -1,7 +1,7 @@
 "use client";
 
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 
 import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
@@ -22,6 +22,24 @@ export default function Settings() {
     },
   });
 
+  const text = useMemo(() => {
+    if (!isFetching) {
+      return profile?.lensManager
+        ? "Disable profile manager"
+        : "Enable profile manager";
+    }
+    return "";
+  }, [isFetching, profile?.lensManager]);
+
+  const textLoading = useMemo(() => {
+    if (!isFetching) {
+      return profile?.lensManager
+        ? "Disabling profile manager"
+        : "Enabling profile manager";
+    }
+    return "";
+  }, [isFetching, profile?.lensManager]);
+
   return (
     <Page>
       {isLoggedIn && (
@@ -38,21 +56,15 @@ export default function Settings() {
               Log out
             </ListButton>
             <Button
-              text={
-                profile?.lensManager
-                  ? "Disable profile manager"
-                  : "Enable profile manager"
-              }
-              textLoading={
-                !isFetching && profile?.lensManager
-                  ? "Disabling profile manager"
-                  : "Enabling profile manager"
-              }
+              text={text}
+              textLoading={textLoading}
               isLoading={isLoading}
               onClick={() => {
-                !isFetching && profile?.lensManager
-                  ? enableProfileManager(false)
-                  : enableProfileManager(true);
+                if (!isFetching) {
+                  profile?.lensManager
+                    ? enableProfileManager(false)
+                    : enableProfileManager(true);
+                }
               }}
             />
           </List>
