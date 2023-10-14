@@ -103,8 +103,10 @@ export default function RootLayout({
           media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
           rel="apple-touch-startup-image"
         />
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+        <script
+          src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+          defer
+        ></script>
       </head>
       <body className={inter.className}>
         <Client>{children}</Client>

@@ -28,30 +28,32 @@ export function Client({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_PUSHER_INSTANCEID) {
-      alert(`instanceid: ${process.env.NEXT_PUBLIC_PUSHER_INSTANCEID}`);
-      try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const beamsClient = new PusherPushNotifications.Client({
-          instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCEID,
-        });
-        alert(`deviceid: ${beamsClient._deviceId}`);
-
-        beamsClient
-          .start()
-          .then(() => beamsClient.addDeviceInterest("general"))
-          .then(() => console.log("Successfully registered and subscribed!"))
-          .catch(console.error);
-      } catch (error) {
-        alert(error);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     isMounted(true);
   }, [isMounted]);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    OneSignalDeferred.push(function (OneSignal) {
+      OneSignal.init({
+        appId: "30f8aa36-37f7-4662-ba4c-71aa8077aee8",
+        safari_web_id:
+          "web.onesignal.auto.012c2ba4-f65b-47d9-b245-c87f55979016",
+        notifyButton: {
+          enable: true,
+        },
+        allowLocalhostAsSecureOrigin: true,
+      });
+    });
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      window.OneSignalDeferred = undefined;
+    };
+  }, []);
 
   return mounted ? (
     <QueryClientProvider client={queryClient}>
