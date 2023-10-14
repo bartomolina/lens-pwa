@@ -40,6 +40,8 @@ export function Client({ children }: { children: React.ReactNode }) {
     OneSignalDeferred.push(function (OneSignal) {
       OneSignal.init({
         appId: process.env.NEXT_PUBLIC_ONESIGNAL_APPID,
+        safari_web_id:
+          "web.onesignal.auto.5a2165c8-9d94-4308-bfd9-99a8484077b6",
         notifyButton: {
           enable: true,
         },
