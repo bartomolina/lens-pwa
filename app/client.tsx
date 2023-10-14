@@ -28,17 +28,19 @@ export function Client({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const beamsClient = new PusherPushNotifications.Client({
-      instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCEID,
-    });
+    if (process.env.NEXT_PUBLIC_PUSHER_INSTANCEID) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const beamsClient = new PusherPushNotifications.Client({
+        instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCEID,
+      });
 
-    beamsClient
-      .start()
-      .then(() => beamsClient.addDeviceInterest("hello"))
-      .then(() => console.log("Successfully registered and subscribed!"))
-      .catch(console.error);
+      beamsClient
+        .start()
+        .then(() => beamsClient.addDeviceInterest("hello"))
+        .then(() => console.log("Successfully registered and subscribed!"))
+        .catch(console.error);
+    }
   }, []);
 
   useEffect(() => {

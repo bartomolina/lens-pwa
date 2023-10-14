@@ -103,7 +103,10 @@ export default function RootLayout({
           media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
           rel="apple-touch-startup-image"
         />
-        <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+        <script
+          defer
+          src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"
+        ></script>
       </head>
       <body className={inter.className}>
         <Client>{children}</Client>
