@@ -28,6 +28,7 @@ export default function Home() {
       {!isLoading && (!profile || !isConnected) && (
         <>
           <Navbar title="Login" />
+          test
           <AddToHomeScreen />
           <BlockTitle>Wallet</BlockTitle>
           <List strongIos insetIos>
