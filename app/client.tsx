@@ -39,9 +39,7 @@ export function Client({ children }: { children: React.ReactNode }) {
     // @ts-ignore
     OneSignalDeferred.push(function (OneSignal) {
       OneSignal.init({
-        appId: "30f8aa36-37f7-4662-ba4c-71aa8077aee8",
-        safari_web_id:
-          "web.onesignal.auto.012c2ba4-f65b-47d9-b245-c87f55979016",
+        appId: process.env.NEXT_PUBLIC_ONESIGNAL_APPID,
         notifyButton: {
           enable: true,
         },
