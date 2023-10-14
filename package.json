@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^9.7.1",
     "@irys/sdk": "^0.0.3",
     "@lens-protocol/client": "2.0.0-alpha.7",
     "@lens-protocol/metadata": "0.1.0-alpha.29",
