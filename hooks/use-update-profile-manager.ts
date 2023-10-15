@@ -17,16 +17,11 @@ export const useUpdateProfileManager = ({
   return useMutation({
     mutationFn: async (enabled: boolean) => {
       console.log("use update profile manager");
-      console.log("test:signer", signer);
       if (signer) {
-        console.log("test:updating manager");
-
         const updateProfileManagerResult =
           await lensClient.profile.createChangeProfileManagersTypedData({
             approveLensManager: enabled,
           });
-
-        console.log("test:", updateProfileManagerResult);
 
         if (
           "reason" in updateProfileManagerResult &&
