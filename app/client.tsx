@@ -60,7 +60,7 @@ export function Client({ children }: { children: React.ReactNode }) {
       <PrivyProvider
         appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID as string}
         config={{
-          loginMethods: ["wallet", "email", "google", "twitter"],
+          loginMethods: ["wallet", "email"],
           embeddedWallets: {
             createOnLogin: "users-without-wallets",
             noPromptOnSignature: true,

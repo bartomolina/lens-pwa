@@ -1,7 +1,7 @@
 export const APP_NAME = "Lens";
 export const APP_DEFAULT_TITLE = "Lens";
 export const APP_DESCRIPTION = "This is a Lens PWA built for mobile access";
-export const APP_URL = "https://lens-pwa-zeta.vercel.app/";
+export const APP_URL = "https://lens.pwas.io/";
 
 export const LENS_API = "https://api-v2-mumbai.lens.dev/";
 export const LENS_MEDIA_SNAPSHOT_URL =
