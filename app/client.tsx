@@ -47,7 +47,17 @@ export function Client({ children }: { children: React.ReactNode }) {
         },
         allowLocalhostAsSecureOrigin: true,
       });
-      OneSignal.Slidedown.promptPush();
+      OneSignal.Slidedown.promptPush()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((result: any) => {
+          alert(`test:ok:${result}`);
+          console.log("test:ok:console:", result);
+        })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .catch((error: any) => {
+          alert(`test:error:${error}`);
+          console.log("test:error:console:", error);
+        });
     });
     return () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
