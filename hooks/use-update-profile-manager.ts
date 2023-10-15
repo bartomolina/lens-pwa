@@ -23,6 +23,8 @@ export const useUpdateProfileManager = ({
             approveLensManager: enabled,
           });
 
+        console.log("test:", updateProfileManagerResult);
+
         if (
           "reason" in updateProfileManagerResult &&
           typeof updateProfileManagerResult.reason === "string"
