@@ -60,14 +60,13 @@ export function Client({ children }: { children: React.ReactNode }) {
       <PrivyProvider
         appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID as string}
         config={{
-          loginMethods: ["sms"],
+          loginMethods: ["wallet", "email", "google", "twitter"],
           embeddedWallets: {
             createOnLogin: "users-without-wallets",
             noPromptOnSignature: true,
           },
           appearance: {
             theme: "light",
-            accentColor: "#676FFF",
             logo: `${APP_URL}icons/icon-192x192.png`,
           },
           defaultChain: polygonMumbai,
