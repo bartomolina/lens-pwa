@@ -1,5 +1,5 @@
+import { usePrivy } from "@privy-io/react-auth";
 import { useMutation } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
 
 import { lensClient } from "@/lib/lens-client";
 
@@ -9,16 +9,16 @@ interface LoginOptions {
 }
 
 export const useCreateProfile = ({ onSuccess, onError }: LoginOptions = {}) => {
-  const { address: to } = useAccount();
+  const { user } = usePrivy();
 
   return useMutation({
     mutationFn: async (handle: string) => {
       console.log("use create profile with handle:", handle);
 
-      if (to) {
+      if (user?.wallet?.address) {
         const createProfileResult = await lensClient.profile.create({
           handle,
-          to,
+          to: user?.wallet?.address,
         });
 
         if (

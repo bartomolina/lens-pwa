@@ -1,12 +1,15 @@
 "use client";
 
+import { PrivyProvider } from "@privy-io/react-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { App } from "konsta/react";
 import { useEffect, useState } from "react";
-import { WagmiConfig } from "wagmi";
+import { polygonMumbai } from "viem/chains";
 
-import { wagmiConfig } from "@/lib/wagmi-wc-client";
+import { APP_URL } from "@/lib/constants";
 import { Notification, NotificationProvider } from "@/ui/common";
+
+import { AlchemyAAProvider } from "./alchemy-aa";
 
 const queryClient = new QueryClient();
 
@@ -28,10 +31,6 @@ export function Client({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    isMounted(true);
-  }, [isMounted]);
-
-  useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -43,15 +42,7 @@ export function Client({ children }: { children: React.ReactNode }) {
         safari_web_id:
           "web.onesignal.auto.5a2165c8-9d94-4308-bfd9-99a8484077b6",
       });
-      OneSignal.Slidedown.promptPush()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((result: any) => {
-          console.log("test:ok:console:", result);
-        })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .catch((error: any) => {
-          console.log("test:error:console:", error);
-        });
+      OneSignal.Slidedown.promptPush();
     });
     return () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -60,16 +51,37 @@ export function Client({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  useEffect(() => {
+    isMounted(true);
+  }, [isMounted]);
+
   return mounted ? (
     <QueryClientProvider client={queryClient}>
-      <WagmiConfig config={wagmiConfig}>
+      <PrivyProvider
+        appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID as string}
+        config={{
+          loginMethods: ["sms"],
+          embeddedWallets: {
+            createOnLogin: "users-without-wallets",
+            noPromptOnSignature: true,
+          },
+          appearance: {
+            theme: "light",
+            accentColor: "#676FFF",
+            logo: `${APP_URL}icons/icon-192x192.png`,
+          },
+          defaultChain: polygonMumbai,
+        }}
+      >
         <NotificationProvider>
           <App theme="ios">
-            <Notification />
-            {children}
+            <AlchemyAAProvider>
+              <Notification />
+              {children}
+            </AlchemyAAProvider>
           </App>
         </NotificationProvider>
-      </WagmiConfig>
+      </PrivyProvider>
     </QueryClientProvider>
   ) : (
     <></>

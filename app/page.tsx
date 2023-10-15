@@ -1,11 +1,9 @@
 "use client";
 
-import { disconnect } from "@wagmi/core";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { usePrivy } from "@privy-io/react-auth";
 import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAccount } from "wagmi";
 
 import { useProfile } from "@/hooks";
 import { AddToHomeScreenAndroid } from "@/ui/layout/add-to-home-screen-android";
@@ -13,42 +11,33 @@ import { AddToHomeScreeniOS } from "@/ui/layout/add-to-home-screen-ios";
 import { Login } from "@/ui/login";
 
 export default function Home() {
-  const { data: profile, refetch, isLoading } = useProfile();
-  const { isConnected } = useAccount();
-  const { open } = useWeb3Modal();
   const router = useRouter();
+  const { refetch } = useProfile();
+  const { login, logout, authenticated } = usePrivy();
+  const { data: profile, isLoading } = useProfile();
 
   useEffect(() => {
-    if (!isLoading && profile && isConnected) {
+    if (!isLoading && profile && authenticated) {
       router.push("/explore");
     }
-  }, [router, profile, isConnected, isLoading]);
+  }, [router, profile, authenticated, isLoading]);
 
   return (
     <Page>
-      {!isLoading && (!profile || !isConnected) && (
-        <>
-          <Navbar title="Login" />
-          <AddToHomeScreenAndroid />
-          <AddToHomeScreeniOS />
-          <BlockTitle>Wallet</BlockTitle>
-          <List strongIos insetIos>
-            <ListButton onClick={() => open()}>
-              {isConnected ? "Account" : "Connect"}
-            </ListButton>
-            {isConnected && (
-              <ListButton
-                onClick={() => {
-                  disconnect();
-                }}
-              >
-                Disconnect
-              </ListButton>
-            )}
-          </List>
-          {isConnected && <Login refetchProfile={refetch} />}
-        </>
-      )}
+      {/* {!isLoading && (!profile || !isConnected) && ( */}
+      <>
+        <Navbar title="Login" />
+        <AddToHomeScreenAndroid />
+        <AddToHomeScreeniOS />
+        <BlockTitle>Account</BlockTitle>
+        <List strongIos insetIos>
+          <ListButton onClick={() => (authenticated ? logout() : login())}>
+            {authenticated ? "Disconnect" : "Connect"}
+          </ListButton>
+        </List>
+        {authenticated && <Login refetchProfile={refetch} />}
+      </>
+      {/* )} */}
     </Page>
   );
 }

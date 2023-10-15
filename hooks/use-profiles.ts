@@ -1,19 +1,19 @@
+import { usePrivy } from "@privy-io/react-auth";
 import { useQuery } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
 
 import { lensClient } from "@/lib/lens-client";
 
 export const useProfiles = () => {
-  const { address } = useAccount();
+  const { user } = usePrivy();
 
   return useQuery({
-    enabled: address != undefined,
-    queryKey: ["profiles", address],
+    enabled: user?.wallet?.address != undefined,
+    queryKey: ["profiles", user?.wallet?.address],
     queryFn: async () => {
-      if (address) {
+      if (user?.wallet?.address) {
         const profiles = await lensClient.profile.fetchAll({
           where: {
-            ownedBy: [address],
+            ownedBy: [user?.wallet?.address],
           },
         });
         console.log("use owned profiles:", profiles);

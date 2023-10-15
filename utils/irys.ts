@@ -1,12 +1,13 @@
 import { Readable } from "node:stream";
 
+import { SmartAccountSigner } from "@alchemy/aa-core";
 import { WebIrys } from "@irys/sdk";
-import { signTypedData } from "@wagmi/core";
 
 import { IRYS_NETWORK } from "@/lib/constants";
 
 export const upload = async (
   address: `0x${string}`,
+  signer: SmartAccountSigner,
   data: string | Buffer | Readable,
   fileType?: string
 ) => {
@@ -16,7 +17,7 @@ export const upload = async (
   client._signTypedData = async (domain, types, message) => {
     message["Transaction hash"] =
       "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
-    const result = await signTypedData({
+    const result = await signer.signTypedData({
       domain,
       message,
       types,

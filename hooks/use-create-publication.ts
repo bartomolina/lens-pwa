@@ -1,10 +1,10 @@
 import { image, MediaImageMimeType, textOnly } from "@lens-protocol/metadata";
+import { usePrivy } from "@privy-io/react-auth";
 import { useMutation } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
+import { useContext } from "react";
 
-import { ARWEAVE_GATEWAY } from "@/lib/constants";
+import { AlchemyAAContext } from "@/app/alchemy-aa";
 import { lensClient } from "@/lib/lens-client";
-import { upload } from "@/utils/irys";
 
 interface CreatePublicationOptions {
   onSuccess?: () => void;
@@ -13,18 +13,18 @@ interface CreatePublicationOptions {
 export const useCreatePublication = ({
   onSuccess,
 }: CreatePublicationOptions) => {
-  const { address } = useAccount();
+  const { user } = usePrivy();
+  const { signer } = useContext(AlchemyAAContext);
 
   return useMutation({
     mutationFn: async ({ content, file }: { content: string; file?: File }) => {
-      if (address) {
+      if (user?.wallet?.address && signer) {
         let metadata;
         if (file) {
           const formData = new FormData();
-
           formData.append("file", file);
 
-          const res = await fetch("/api/upload", {
+          const res = await fetch("/api/uploadFile", {
             method: "POST",
             body: formData,
           });
@@ -44,17 +44,30 @@ export const useCreatePublication = ({
           });
         }
 
-        const metadataFile = await upload(address, JSON.stringify(metadata));
+        // TODO: replace IPFS json upload with Irys once it's AA compatible
 
-        const contentURI = metadataFile
-          ? `${ARWEAVE_GATEWAY}${metadataFile.id}`
-          : "";
+        // const metadataFile = await upload(address, JSON.stringify(metadata));
 
-        const postResult = await lensClient.publication.postOnMomoka({
-          contentURI,
+        // if (!metadataFile.id) return;
+
+        // const contentURI = `${ARWEAVE_GATEWAY}${metadataFile.id}`;
+        // const postResult = await lensClient.publication.postOnMomoka({
+        //   contentURI,
+        // });
+
+        const formData = new FormData();
+        formData.set("message", JSON.stringify(metadata));
+
+        const res = await fetch("/api/uploadJSON", {
+          method: "POST",
+          body: formData,
         });
 
-        console.log(postResult);
+        const resData = await res.json();
+
+        const postResult = await lensClient.publication.postOnMomoka({
+          contentURI: `ipfs://${resData.IpfsHash}`,
+        });
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
           throw new Error(postResult.reason);

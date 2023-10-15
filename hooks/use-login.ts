@@ -1,6 +1,5 @@
+import { usePrivy } from "@privy-io/react-auth";
 import { useMutation } from "@tanstack/react-query";
-import { signMessage } from "@wagmi/core";
-import { useAccount } from "wagmi";
 
 import { useProfile } from "@/hooks";
 import { lensClient } from "@/lib/lens-client";
@@ -12,7 +11,7 @@ interface LoginOptions {
 
 export const useLogin = ({ onSuccess, onError }: LoginOptions) => {
   const { data: currentProfile } = useProfile();
-  const { address: signedBy }: { address: string | undefined } = useAccount();
+  const { user, signMessage } = usePrivy();
 
   return useMutation({
     mutationFn: async (profileId: string) => {
@@ -21,15 +20,13 @@ export const useLogin = ({ onSuccess, onError }: LoginOptions) => {
         return;
       }
 
-      if (signedBy) {
+      if (user?.wallet?.address) {
         const { id, text } = await lensClient.authentication.generateChallenge({
           for: profileId,
-          signedBy,
+          signedBy: user?.wallet?.address,
         });
 
-        const signature = await signMessage({
-          message: text,
-        });
+        const signature = await signMessage(text);
 
         await lensClient.authentication.authenticate({ id, signature });
 
