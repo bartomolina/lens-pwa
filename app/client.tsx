@@ -35,9 +35,11 @@ export function Client({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.OneSignalDeferred = window.OneSignalDeferred || [];
+    alert("test:pushing1");
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     OneSignalDeferred.push(function (OneSignal) {
+      alert("test:pushing2");
       OneSignal.init({
         appId: process.env.NEXT_PUBLIC_ONESIGNAL_APPID,
         safari_web_id:
@@ -47,6 +49,7 @@ export function Client({ children }: { children: React.ReactNode }) {
         },
         allowLocalhostAsSecureOrigin: true,
       });
+      alert("test:pushing3");
       OneSignal.Slidedown.promptPush()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((result: any) => {
