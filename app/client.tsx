@@ -35,30 +35,21 @@ export function Client({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    alert("test:pushing1");
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     OneSignalDeferred.push(function (OneSignal) {
-      alert("test:pushing2");
       OneSignal.init({
         appId: process.env.NEXT_PUBLIC_ONESIGNAL_APPID,
         safari_web_id:
           "web.onesignal.auto.5a2165c8-9d94-4308-bfd9-99a8484077b6",
-        notifyButton: {
-          enable: true,
-        },
-        allowLocalhostAsSecureOrigin: true,
       });
-      alert("test:pushing3");
       OneSignal.Slidedown.promptPush()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((result: any) => {
-          alert(`test:ok:${result}`);
           console.log("test:ok:console:", result);
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((error: any) => {
-          alert(`test:error:${error}`);
           console.log("test:error:console:", error);
         });
     });
