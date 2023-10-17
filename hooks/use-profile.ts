@@ -10,6 +10,7 @@ export const useProfile = () => {
         const forProfileId = await lensClient.authentication.getProfileId();
         if (forProfileId) {
           const profile = await lensClient.profile.fetch({ forProfileId });
+          console.log("hook:profile:result:", profile);
           return profile;
         }
       } catch {

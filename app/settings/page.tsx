@@ -1,6 +1,7 @@
 "use client";
 
 import { BlockTitle, List, ListButton, Page } from "konsta/react";
+import { useRouter } from "next/navigation";
 import { useContext, useMemo } from "react";
 
 import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
@@ -9,7 +10,8 @@ import { Button, NotificationContext } from "@/ui/common";
 import { NavbarWithDebug, Navigation } from "@/ui/layout";
 
 export default function Settings() {
-  const { isLoggedIn, refetch: refetchProfile } = useLoginRedirect();
+  const router = useRouter();
+  const { isLoggedIn } = useLoginRedirect();
   const { data: profile, refetch, isFetching } = useProfile();
   const notification = useContext(NotificationContext);
   const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
@@ -50,7 +52,7 @@ export default function Settings() {
             <ListButton
               onClick={() => {
                 logout();
-                refetchProfile();
+                router.push("/");
               }}
             >
               Log out
@@ -59,12 +61,11 @@ export default function Settings() {
               text={text}
               textLoading={textLoading}
               isLoading={isLoading}
+              isFetching={isFetching}
               onClick={() => {
-                if (!isFetching) {
-                  profile?.lensManager
-                    ? enableProfileManager(false)
-                    : enableProfileManager(true);
-                }
+                profile?.lensManager
+                  ? enableProfileManager(false)
+                  : enableProfileManager(true);
               }}
             />
           </List>

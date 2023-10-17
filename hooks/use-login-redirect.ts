@@ -8,9 +8,15 @@ export function useLoginRedirect() {
   const router = useRouter();
   const { authenticated } = usePrivy();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { data: profile, refetch, isLoading } = useProfile();
+  const { data: profile, isLoading } = useProfile();
 
   useEffect(() => {
+    console.log(
+      "hook:loginRedirect:authenticated:",
+      authenticated,
+      ":profile:",
+      profile
+    );
     if (!authenticated || !profile) {
       router.push("/");
     } else {
@@ -18,5 +24,5 @@ export function useLoginRedirect() {
     }
   }, [router, authenticated, isLoading, profile]);
 
-  return { isLoggedIn, refetch };
+  return { isLoggedIn };
 }

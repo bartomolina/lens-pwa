@@ -90,9 +90,9 @@ export const useCreatePublication = ({
             "hook:createPublication:posting to lens:result:",
             postResult
           );
-        } catch (e) {
-          console.log("hook:createPublication:posting to lens:error:", e);
-          throw e;
+        } catch (error) {
+          console.log("hook:createPublication:posting to lens:error:", error);
+          throw error;
         }
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
