@@ -63,10 +63,12 @@ export const useCreatePublication = ({
         const formData = new FormData();
         formData.set("message", JSON.stringify(metadata));
 
+        alert(`test:uploadingjson:start`);
         const res = await fetch("/api/uploadJSON", {
           method: "POST",
           body: formData,
         });
+        alert(`test:uploadingjson:end`);
 
         const resData = await res.json();
 
