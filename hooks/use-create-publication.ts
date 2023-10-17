@@ -75,7 +75,7 @@ export const useCreatePublication = ({
 
         const resData = await res.json();
 
-        alert(`test:posting${resData.IpfsHash}`);
+        alert(`test:posting${resData.IpfsHash}##`);
         const postResult = await lensClient.publication.postOnMomoka({
           contentURI: `ipfs://${resData.IpfsHash}`,
         });
