@@ -18,17 +18,17 @@ export const useCreatePublication = ({
 
   return useMutation({
     mutationFn: async ({ content, file }: { content: string; file?: File }) => {
-      console.log("test:createpublication");
+      alert("test:createpublication");
       if (!file && content.length === 0) {
         return;
       }
-      console.log("test:creatingpublication");
+      alert("test:creatingpublication");
 
       if (user?.wallet?.address && signer) {
-        console.log("test:creatingpublication1");
+        alert("test:creatingpublication1");
         let metadata;
         if (file) {
-          console.log("test:creatingpublication2");
+          alert("test:creatingpublication2");
           const formData = new FormData();
           formData.append("file", file);
 
