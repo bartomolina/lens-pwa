@@ -81,13 +81,19 @@ export const useCreatePublication = ({
         );
 
         console.log("hook:createPublication:posting to lens:start");
-        const postResult = await lensClient.publication.postOnMomoka({
-          contentURI: `ipfs://${resData.IpfsHash}`,
-        });
-        console.log(
-          "hook:createPublication:posting to lens:result:",
-          postResult
-        );
+        let postResult;
+        try {
+          postResult = await lensClient.publication.postOnMomoka({
+            contentURI: `ipfs://${resData.IpfsHash}`,
+          });
+          console.log(
+            "hook:createPublication:posting to lens:result:",
+            postResult
+          );
+        } catch (e) {
+          console.log("hook:createPublication:posting to lens:error:", e);
+          throw e;
+        }
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
           throw new Error(postResult.reason);
