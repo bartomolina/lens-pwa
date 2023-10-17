@@ -24,20 +24,20 @@ export default function Home() {
 
   return (
     <Page>
-      {/* {!isLoading && (!profile || !isConnected) && ( */}
-      <>
-        <Navbar title="Login" />
-        <AddToHomeScreenAndroid />
-        <AddToHomeScreeniOS />
-        <BlockTitle>Account</BlockTitle>
-        <List strongIos insetIos>
-          <ListButton onClick={() => (authenticated ? logout() : login())}>
-            {authenticated ? "Disconnect" : "Connect"}
-          </ListButton>
-        </List>
-        {authenticated && <Login refetchProfile={refetch} />}
-      </>
-      {/* )} */}
+      {!isLoading && !profile && (
+        <>
+          <Navbar title="Login" />
+          <AddToHomeScreenAndroid />
+          <AddToHomeScreeniOS />
+          <BlockTitle>Account</BlockTitle>
+          <List strongIos insetIos>
+            <ListButton onClick={() => (authenticated ? logout() : login())}>
+              {authenticated ? "Disconnect" : "Connect"}
+            </ListButton>
+          </List>
+          {authenticated && <Login refetchProfile={refetch} />}
+        </>
+      )}
     </Page>
   );
 }

@@ -72,7 +72,9 @@ export function CreatePost({ refetch }: CreatePostProps) {
   const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await createPost({ content, file });
+    if (file || content.length > 0) {
+      createPost({ content, file });
+    }
   };
 
   return (
