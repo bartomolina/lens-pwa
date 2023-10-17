@@ -62,16 +62,20 @@ export const useCreatePublication = ({
         const formData = new FormData();
         formData.set("message", JSON.stringify(metadata));
 
+        alert("test:uploading json");
         const res = await fetch("/api/uploadJSON", {
           method: "POST",
           body: formData,
         });
+        alert("test:uploaded json");
 
         const resData = await res.json();
 
+        alert("test:posting");
         const postResult = await lensClient.publication.postOnMomoka({
           contentURI: `ipfs://${resData.IpfsHash}`,
         });
+        alert("test:posted");
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
           throw new Error(postResult.reason);
