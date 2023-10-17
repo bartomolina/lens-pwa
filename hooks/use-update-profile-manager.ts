@@ -16,7 +16,7 @@ export const useUpdateProfileManager = ({
   const { signer } = useContext(AlchemyAAContext);
   return useMutation({
     mutationFn: async (enabled: boolean) => {
-      console.log("use update profile manager");
+      console.log("hook:updateProfileManager:start:", enabled);
       if (signer) {
         const updateProfileManagerResult =
           await lensClient.profile.createChangeProfileManagersTypedData({
@@ -64,7 +64,7 @@ export const useUpdateProfileManager = ({
           });
         }
 
-        console.log("use update profile manager:", onchainRelayResult);
+        console.log("hook:updateProfileManager:result:", onchainRelayResult);
       }
     },
     onSuccess,

@@ -1,11 +1,11 @@
 "use client";
 
-import { Navbar, Page } from "konsta/react";
+import { Page } from "konsta/react";
 
 import { useExplorePublications, useLoginRedirect } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
 import { CreatePost } from "@/ui/create-post";
-import { Navigation } from "@/ui/layout/navigation";
+import { NavbarWithDebug, Navigation } from "@/ui/layout";
 import { Publications } from "@/ui/publications";
 
 export default function ExplorePage() {
@@ -21,7 +21,7 @@ export default function ExplorePage() {
     <Page>
       {isLoggedIn && (
         <>
-          <Navbar title="Explore" />
+          <NavbarWithDebug title="Explore" />
           {error instanceof Error && <ErrorMessage message={error.message} />}
           {isInitialLoading ? (
             <Loading />

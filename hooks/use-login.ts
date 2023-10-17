@@ -15,8 +15,8 @@ export const useLogin = ({ onSuccess, onError }: LoginOptions) => {
 
   return useMutation({
     mutationFn: async (profileId: string) => {
+      console.log("hook:login:start:", profileId);
       if (currentProfile) {
-        console.log("use login: already logged in");
         return;
       }
 
@@ -30,7 +30,7 @@ export const useLogin = ({ onSuccess, onError }: LoginOptions) => {
 
         await lensClient.authentication.authenticate({ id, signature });
 
-        console.log("use login: logged in", profileId);
+        console.log("hook:login:result:authenticated");
       }
     },
     onSuccess,

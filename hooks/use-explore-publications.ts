@@ -16,7 +16,7 @@ export const useExplorePublications = () => {
         },
         orderBy: ExplorePublicationsOrderByType.Latest,
       });
-      console.log("use explore publications:", publications);
+      console.log("hook:explorePublications:result:", publications);
 
       return publications;
     },

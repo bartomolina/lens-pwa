@@ -18,6 +18,7 @@ export const useCreatePublication = ({
 
   return useMutation({
     mutationFn: async ({ content, file }: { content: string; file?: File }) => {
+      console.log("hook:createPublication:start:", content);
       if (!file && content.length === 0) {
         return;
       }
@@ -25,7 +26,7 @@ export const useCreatePublication = ({
       if (user?.wallet?.address && signer) {
         let metadata;
         if (file) {
-          alert("test:creatingpublication");
+          console.log("hook:createPublication:uploading image:", file.name);
           const formData = new FormData();
           formData.append("file", file);
 
@@ -35,6 +36,10 @@ export const useCreatePublication = ({
           });
 
           const resData = await res.json();
+          console.log(
+            "hook:createPublication:uploading image:result:",
+            resData
+          );
 
           metadata = image({
             image: {
@@ -60,23 +65,29 @@ export const useCreatePublication = ({
         //   contentURI,
         // });
 
+        console.log("hook:createPublication:uploading metadata:", metadata);
         const formData = new FormData();
         formData.set("message", JSON.stringify(metadata));
 
-        alert("test:uploading json");
         const res = await fetch("/api/uploadJSON", {
           method: "POST",
           body: formData,
         });
-        alert("test:uploaded json");
 
         const resData = await res.json();
+        console.log(
+          "hook:createPublication:uploading metadata:result:",
+          resData
+        );
 
-        alert(`test:posting${resData.IpfsHash}##`);
+        console.log("hook:createPublication:posting to lens:start");
         const postResult = await lensClient.publication.postOnMomoka({
           contentURI: `ipfs://${resData.IpfsHash}`,
         });
-        alert("test:posted");
+        console.log(
+          "hook:createPublication:posting to lens:result:",
+          postResult
+        );
 
         if ("reason" in postResult && typeof postResult.reason === "string") {
           throw new Error(postResult.reason);
@@ -88,7 +99,7 @@ export const useCreatePublication = ({
           });
         }
 
-        console.log("use create publication:", postResult);
+        console.log("hook:createPublication:result:", postResult);
       }
     },
     onSuccess,

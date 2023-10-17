@@ -10,10 +10,8 @@ import {
   DialogButton,
   Fab,
   Icon,
-  Link,
   List,
   ListInput,
-  Navbar,
   Page,
   Popup,
 } from "konsta/react";
@@ -22,6 +20,7 @@ import { MutableRefObject, useRef, useState } from "react";
 
 import { useProfile } from "@/hooks";
 import { useCreatePublication } from "@/hooks/use-create-publication";
+import { NavbarWithDebug } from "@/ui/layout";
 
 import { Button } from "./common";
 
@@ -42,7 +41,6 @@ export function CreatePost({ refetch }: CreatePostProps) {
   const [preview, setPreview] = useState<string>();
   const { mutate: createPost, isLoading } = useCreatePublication({
     onSuccess: async () => {
-      console.log("create post: post created");
       await refetch();
       setPopupOpened(false);
       clearForm();
@@ -99,13 +97,9 @@ export function CreatePost({ refetch }: CreatePostProps) {
       />
       <Popup opened={popupOpened} onBackdropClick={() => setPopupOpened(false)}>
         <Page>
-          <Navbar
+          <NavbarWithDebug
             title="New post"
-            right={
-              <Link navbar onClick={() => setPopupOpened(false)}>
-                Close
-              </Link>
-            }
+            closeAction={() => setPopupOpened(false)}
           />
           <List strongIos insetIos>
             <form onSubmit={handleCreatePost}>

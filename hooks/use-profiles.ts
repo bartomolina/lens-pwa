@@ -16,7 +16,7 @@ export const useProfiles = () => {
             ownedBy: [user?.wallet?.address],
           },
         });
-        console.log("use owned profiles:", profiles);
+        console.log("hook:profiles:result:", profiles);
 
         return profiles;
       }

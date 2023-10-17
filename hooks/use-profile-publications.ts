@@ -19,7 +19,7 @@ export const useProfilePublications = ({
           publicationTypes: [PublicationType.Post],
         },
       });
-      console.log("use profile publications:", publications);
+      console.log("hook:profilePublications:result:", publications);
 
       return publications;
     },

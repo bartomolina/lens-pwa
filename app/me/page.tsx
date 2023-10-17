@@ -1,9 +1,9 @@
 "use client";
 
-import { Navbar, Page } from "konsta/react";
+import { Page } from "konsta/react";
 
 import { useLoginRedirect, useProfile } from "@/hooks";
-import { Navigation } from "@/ui/layout/navigation";
+import { NavbarWithDebug, Navigation } from "@/ui/layout";
 import { OwnPublications } from "@/ui/own-publications";
 
 export default function Me() {
@@ -14,7 +14,7 @@ export default function Me() {
     <Page>
       {isLoggedIn && (
         <>
-          <Navbar title="Me" />
+          <NavbarWithDebug title="Me" />
           {profile && <OwnPublications profile={profile} />}
           <Navigation activeTab="me" />
         </>

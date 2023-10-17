@@ -1,4 +1,5 @@
 export async function POST(req: Request) {
+  console.log("api:uploadFile:start");
   const formData = await req.formData();
   const file = formData.get("file") as Blob | null;
   if (!file) {
@@ -21,5 +22,6 @@ export async function POST(req: Request) {
     body: data,
   });
   const resData = await res.json();
+  console.log("api:uploadFile:result:", resData);
   return Response.json(resData);
 }

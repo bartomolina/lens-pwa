@@ -1,12 +1,12 @@
 "use client";
 
-import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
+import { BlockTitle, List, ListButton, Page } from "konsta/react";
 import { useContext, useMemo } from "react";
 
 import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
 import { Button, NotificationContext } from "@/ui/common";
-import { Navigation } from "@/ui/layout/navigation";
+import { NavbarWithDebug, Navigation } from "@/ui/layout";
 
 export default function Settings() {
   const { isLoggedIn, refetch: refetchProfile } = useLoginRedirect();
@@ -44,7 +44,7 @@ export default function Settings() {
     <Page>
       {isLoggedIn && (
         <>
-          <Navbar title="Settings" />
+          <NavbarWithDebug title="Settings" />
           <BlockTitle>Profile</BlockTitle>
           <List strongIos insetIos>
             <ListButton

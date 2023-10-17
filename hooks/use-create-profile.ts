@@ -13,7 +13,7 @@ export const useCreateProfile = ({ onSuccess, onError }: LoginOptions = {}) => {
 
   return useMutation({
     mutationFn: async (handle: string) => {
-      console.log("use create profile with handle:", handle);
+      console.log("hook:createProfile:start:", handle);
 
       if (user?.wallet?.address) {
         const createProfileResult = await lensClient.profile.create({
@@ -37,7 +37,7 @@ export const useCreateProfile = ({ onSuccess, onError }: LoginOptions = {}) => {
           });
         }
 
-        console.log("use create profile with handle:", createProfileResult);
+        console.log("hook:createProfile:result:", createProfileResult);
       }
     },
     onSuccess,

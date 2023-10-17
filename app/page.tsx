@@ -1,13 +1,16 @@
 "use client";
 
 import { usePrivy } from "@privy-io/react-auth";
-import { BlockTitle, List, ListButton, Navbar, Page } from "konsta/react";
+import { BlockTitle, List, ListButton, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { useProfile } from "@/hooks";
-import { AddToHomeScreenAndroid } from "@/ui/layout/add-to-home-screen-android";
-import { AddToHomeScreeniOS } from "@/ui/layout/add-to-home-screen-ios";
+import {
+  AddToHomeScreenAndroid,
+  AddToHomeScreeniOS,
+  NavbarWithDebug,
+} from "@/ui/layout";
 import { Login } from "@/ui/login";
 
 export default function Home() {
@@ -26,7 +29,7 @@ export default function Home() {
     <Page>
       {!isLoading && !profile && (
         <>
-          <Navbar title="Login" />
+          <NavbarWithDebug title="Login" />
           <AddToHomeScreenAndroid />
           <AddToHomeScreeniOS />
           <BlockTitle>Account</BlockTitle>
