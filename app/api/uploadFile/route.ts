@@ -20,8 +20,6 @@ export async function POST(req: Request) {
     },
     body: data,
   });
-  console.log("test:posted1", res);
   const resData = await res.json();
-  console.log("test:posted2", resData);
   return Response.json(resData);
 }
