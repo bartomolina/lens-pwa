@@ -101,7 +101,7 @@ export function CreatePost({ refetch }: CreatePostProps) {
             title="New post"
             closeAction={() => setPopupOpened(false)}
           />
-          <List strongIos insetIos>
+          <List strong inset>
             <form onSubmit={handleCreatePost}>
               <ListInput
                 type="textarea"

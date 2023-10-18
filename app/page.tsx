@@ -33,7 +33,7 @@ export default function Home() {
           <AddToHomeScreenAndroid />
           <AddToHomeScreeniOS />
           <BlockTitle>Account</BlockTitle>
-          <List strongIos insetIos>
+          <List strong inset>
             <ListButton onClick={() => (authenticated ? logout() : login())}>
               {authenticated ? "Disconnect" : "Connect"}
             </ListButton>

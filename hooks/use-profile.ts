@@ -6,6 +6,7 @@ export const useProfile = () => {
   return useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
+      console.log("hook:profile:start");
       try {
         const forProfileId = await lensClient.authentication.getProfileId();
         if (forProfileId) {
@@ -13,7 +14,8 @@ export const useProfile = () => {
           console.log("hook:profile:result:", profile);
           return profile;
         }
-      } catch {
+      } catch (error) {
+        console.log("hook:profile:error:", error);
         logout();
       }
       // eslint-disable-next-line unicorn/no-null

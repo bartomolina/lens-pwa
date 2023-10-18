@@ -5,6 +5,7 @@ import { useContext } from "react";
 
 import { AlchemyAAContext } from "@/app/alchemy-aa";
 import { lensClient } from "@/lib/lens-client";
+import { NotificationContext } from "@/ui/common";
 
 interface CreatePublicationOptions {
   onSuccess?: () => void;
@@ -13,6 +14,7 @@ interface CreatePublicationOptions {
 export const useCreatePublication = ({
   onSuccess,
 }: CreatePublicationOptions) => {
+  const notification = useContext(NotificationContext);
   const { user } = usePrivy();
   const { signer } = useContext(AlchemyAAContext);
 
@@ -92,6 +94,9 @@ export const useCreatePublication = ({
           );
         } catch (error) {
           console.log("hook:createPublication:posting to lens:error:", error);
+          notification.show(
+            "There was an error processing your post (possibly a timeout). Try again later"
+          );
           throw error;
         }
 

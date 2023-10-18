@@ -57,7 +57,7 @@ export function Login({ refetchProfile }: LoginProps) {
         Create profile with handle
         <div className="text-right text-xs font-light">Mumbai - Lens V2</div>
       </BlockTitle>
-      <List strongIos insetIos>
+      <List strong inset>
         <form onSubmit={handleSubmit(handleCreateProfile)}>
           <Controller
             control={control}
@@ -99,7 +99,7 @@ export function Login({ refetchProfile }: LoginProps) {
               Mumbai - Lens V2
             </div>
           </BlockTitle>
-          <List strongIos insetIos>
+          <List strong inset>
             {profiles.items.map((profile) => (
               <ListItem
                 key={profile.id}

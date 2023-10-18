@@ -12,19 +12,19 @@ export function Navigation({ activeTab }: { activeTab: string }) {
       <TabbarLink
         active={activeTab === "explore"}
         onClick={() => router.push("/explore")}
-        icon={<Icon ios={<Globe size={28} />} />}
+        icon={<Icon ios={<Globe size={28} />} material={<Globe size={28} />} />}
         label={"Explore"}
       />
       <TabbarLink
         active={activeTab === "me"}
         onClick={() => router.push("/me")}
-        icon={<Icon ios={<User size={28} />} />}
+        icon={<Icon ios={<User size={28} />} material={<User size={28} />} />}
         label={"Me"}
       />
       <TabbarLink
         active={activeTab === "settings"}
         onClick={() => router.push("/settings")}
-        icon={<Icon ios={<Gear size={28} />} />}
+        icon={<Icon ios={<Gear size={28} />} material={<Gear size={28} />} />}
         label={"Settings"}
       />
     </Tabbar>

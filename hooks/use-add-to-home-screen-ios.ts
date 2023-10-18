@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
+import { isiOS } from "@/utils/ios";
+
 export function useAddToHomescreeniOSPrompt(): [
   boolean,
   Dispatch<SetStateAction<boolean>>
@@ -7,15 +9,10 @@ export function useAddToHomescreeniOSPrompt(): [
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
-    const isIos = () => {
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
-    };
-
     const isInStandaloneMode = () =>
       "standalone" in window.navigator && window.navigator.standalone;
 
-    if (isIos() && !isInStandaloneMode()) {
+    if (isiOS() && !isInStandaloneMode()) {
       setShowPrompt(true);
     }
   }, []);
