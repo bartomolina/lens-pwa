@@ -28,7 +28,10 @@ export default function ExplorePage() {
           ) : (
             <>
               {publications && (
-                <Publications publications={publications.items} />
+                <Publications
+                  publications={publications.items}
+                  refetch={refetch}
+                />
               )}
               <CreatePost refetch={refetch} />
             </>

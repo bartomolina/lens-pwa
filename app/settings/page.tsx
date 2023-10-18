@@ -108,12 +108,12 @@ export default function Settings() {
             <ListItem
               header="EOA"
               title={user?.wallet?.address}
-              titleWrapClassName="font-mono text-sm"
+              titleWrapClassName="font-mono text-xs"
             />
             <ListItem
               header="Alchemy's Account Abstraction"
               title={AAAddress}
-              titleWrapClassName="font-mono text-sm"
+              titleWrapClassName="font-mono text-xs"
             />
           </List>
           <Navigation activeTab="settings" />

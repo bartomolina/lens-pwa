@@ -23,7 +23,10 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
   return (
     <>
       {publications && (
-        <Publications publications={publications.items as PostFragment[]} />
+        <Publications
+          publications={publications.items as PostFragment[]}
+          refetch={refetch}
+        />
       )}
       <CreatePost refetch={refetch} />
     </>
