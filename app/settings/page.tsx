@@ -15,7 +15,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 
 import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
 import { logout } from "@/lib/lens-client";
-import { Button, NotificationContext } from "@/ui/common";
+import { Button, NotificationContext, NotificationType } from "@/ui/common";
 import { NavbarWithDebug, Navigation } from "@/ui/layout";
 
 import { AlchemyAAContext } from "../alchemy-aa";
@@ -35,7 +35,10 @@ export default function Settings() {
       await refetch();
     },
     onError: (error) => {
-      notification.show(`Error updating the profile manager: ${error.message}`);
+      notification.show(
+        `Error updating the profile manager: ${error.message}`,
+        NotificationType.ERROR
+      );
     },
   });
 

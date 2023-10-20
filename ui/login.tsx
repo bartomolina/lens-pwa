@@ -9,7 +9,7 @@ import { useContext, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { useCreateProfile, useLogin, useProfiles } from "@/hooks";
-import { Button, NotificationContext } from "@/ui/common";
+import { Button, NotificationContext, NotificationType } from "@/ui/common";
 
 interface CreateProfileForm {
   handle: string;
@@ -39,7 +39,10 @@ export function Login({ refetchProfile }: LoginProps) {
       refetch();
     },
     onError: (error) => {
-      notification.show(`Error creating profile: ${error.message}`);
+      notification.show(
+        `Error creating profile: ${error.message}`,
+        NotificationType.ERROR
+      );
     },
   });
   const {

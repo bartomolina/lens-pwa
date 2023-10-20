@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { AlchemyAAContext } from "@/app/alchemy-aa";
 import { useProfile } from "@/hooks";
 import { lensClient } from "@/lib/lens-client";
-import { NotificationContext } from "@/ui/common";
+import { NotificationContext, NotificationType } from "@/ui/common";
 
 interface LoginOptions {
   onSuccess?: () => void;
@@ -43,7 +43,10 @@ export const useLogin = ({ onSuccess, onError }: LoginOptions) => {
           console.log("hook:login:result:authenticated");
         } catch (error) {
           console.log("hook:login:result:error:", error);
-          notification.show("There was an error logging in");
+          notification.show(
+            "There was an error logging in",
+            NotificationType.ERROR
+          );
           throw error;
         }
       }

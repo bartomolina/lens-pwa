@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 import { AlchemyAAContext } from "@/app/alchemy-aa";
 import { lensClient } from "@/lib/lens-client";
-import { NotificationContext } from "@/ui/common";
+import { NotificationContext, NotificationType } from "@/ui/common";
 
 interface CreatePublicationOptions {
   onSuccess?: () => void;
@@ -28,28 +28,37 @@ export const useCreatePublication = ({
       if (user?.wallet?.address && signer) {
         let metadata;
         if (file) {
-          console.log("hook:createPublication:uploading image:", file.name);
-          const formData = new FormData();
-          formData.append("file", file);
+          try {
+            console.log("hook:createPublication:uploading image:", file.name);
+            const formData = new FormData();
+            formData.append("file", file);
 
-          const res = await fetch("/api/uploadFile", {
-            method: "POST",
-            body: formData,
-          });
+            const res = await fetch("/api/uploadFile", {
+              method: "POST",
+              body: formData,
+            });
 
-          const resData = await res.json();
-          console.log(
-            "hook:createPublication:uploading image:result:",
-            resData
-          );
+            const resData = await res.json();
+            console.log(
+              "hook:createPublication:uploading image:result:",
+              resData
+            );
 
-          metadata = image({
-            image: {
-              item: `ipfs://${resData.IpfsHash}`,
-              type: file.type as MediaImageMimeType,
-            },
-            content: content.length > 0 ? content : undefined,
-          });
+            metadata = image({
+              image: {
+                item: `ipfs://${resData.IpfsHash}`,
+                type: file.type as MediaImageMimeType,
+              },
+              content: content.length > 0 ? content : undefined,
+            });
+          } catch (error) {
+            console.log("hook:createPublication:uploading image:error:", error);
+            notification.show(
+              "There was an error uploading the image (possibly a timeout). Try again later",
+              NotificationType.ERROR
+            );
+            throw error;
+          }
         } else {
           metadata = textOnly({
             content,
@@ -95,7 +104,8 @@ export const useCreatePublication = ({
         } catch (error) {
           console.log("hook:createPublication:posting to lens:error:", error);
           notification.show(
-            "There was an error processing your post (possibly a timeout). Try again later"
+            "There was an error processing your post (possibly a timeout). Try again later",
+            NotificationType.ERROR
           );
           throw error;
         }

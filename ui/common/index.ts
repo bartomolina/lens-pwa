@@ -5,4 +5,5 @@ export { Notification } from "./notification";
 export {
   NotificationContext,
   NotificationProvider,
+  NotificationType,
 } from "./notification-provider";
