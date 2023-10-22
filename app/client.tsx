@@ -7,11 +7,10 @@ import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 import { polygonMumbai } from "viem/chains";
 
+import { AlchemyAAProvider } from "@/app/alchemy-aa";
 import { APP_URL } from "@/lib/constants";
 import { Notification, NotificationProvider } from "@/ui/common";
 import { isiOS } from "@/utils/ios";
-
-import { AlchemyAAProvider } from "@/app/alchemy-aa";
 
 const queryClient = new QueryClient();
 

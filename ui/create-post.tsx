@@ -20,9 +20,8 @@ import { MutableRefObject, useRef, useState } from "react";
 
 import { useProfile } from "@/hooks";
 import { useCreatePublication } from "@/hooks/use-create-publication";
-import { NavbarWithDebug } from "@/ui/layout";
-
 import { Button } from "@/ui/common";
+import { NavbarWithDebug } from "@/ui/layout";
 
 interface CreatePostProps {
   refetch: <TPageData>(
