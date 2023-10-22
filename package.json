@@ -14,7 +14,7 @@
     "@alchemy/aa-core": "^0.1.0",
     "@irys/sdk": "^0.0.3",
     "@lens-protocol/client": "2.0.0-alpha.7",
-    "@lens-protocol/metadata": "0.1.0-alpha.29",
+    "@lens-protocol/metadata": "0.1.0-alpha.30",
     "@phosphor-icons/react": "^2.0.13",
     "@privy-io/react-auth": "^1.43.3",
     "@tanstack/react-query": "4.36.1",

@@ -19,10 +19,10 @@ dependencies:
     version: 0.0.3(arweave@1.11.9)
   '@lens-protocol/client':
     specifier: 2.0.0-alpha.7
-    version: 2.0.0-alpha.7(@lens-protocol/metadata@0.1.0-alpha.29)(ethers@5.5.1)
+    version: 2.0.0-alpha.7(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)
   '@lens-protocol/metadata':
-    specifier: 0.1.0-alpha.29
-    version: 0.1.0-alpha.29(zod@3.22.3)
+    specifier: 0.1.0-alpha.30
+    version: 0.1.0-alpha.30(zod@3.22.3)
   '@phosphor-icons/react':
     specifier: ^2.0.13
     version: 2.0.13(react-dom@18.2.0)(react@18.2.0)
@@ -1350,7 +1350,7 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@lens-protocol/client@2.0.0-alpha.7(@lens-protocol/metadata@0.1.0-alpha.29)(ethers@5.5.1):
+  /@lens-protocol/client@2.0.0-alpha.7(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1):
     resolution: {integrity: sha512-PikCleabJYkn90RNoWqj6IgI7bOJi25bjEja3bn2Opi0r5vWAGJ/kGRfWd/tVjqd0eDYpyDK3UYLZk0gx9KpSw==}
     engines: {node: ^18.15.0}
     peerDependencies:
@@ -1362,8 +1362,8 @@ packages:
       '@ethersproject/hash': 5.7.0
       '@ethersproject/providers': 5.7.2
       '@ethersproject/wallet': 5.7.0
-      '@lens-protocol/gated-content': 0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.29)(ethers@5.5.1)(zod@3.22.3)
-      '@lens-protocol/metadata': 0.1.0-alpha.29(zod@3.22.3)
+      '@lens-protocol/gated-content': 0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)(zod@3.22.3)
+      '@lens-protocol/metadata': 0.1.0-alpha.30(zod@3.22.3)
       '@lens-protocol/shared-kernel': 0.11.0-alpha.0(ethers@5.5.1)
       '@lens-protocol/storage': 0.7.4(ethers@5.5.1)
       graphql: 16.8.1
@@ -1382,7 +1382,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lens-protocol/gated-content@0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.29)(ethers@5.5.1)(zod@3.22.3):
+  /@lens-protocol/gated-content@0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)(zod@3.22.3):
     resolution: {integrity: sha512-6R025sOXGm0LuZvVoz8ZF8D9McD+UBc+xxpd4rNrM7yPSPLAobcOYoW+ZysFJBJXxeje7/Ul9DhJlBZUKB6YPg==}
     peerDependencies:
       '@ethersproject/address': ^5.7.0
@@ -1400,7 +1400,7 @@ packages:
       '@ethersproject/hash': 5.7.0
       '@ethersproject/providers': 5.7.2
       '@ethersproject/wallet': 5.7.0
-      '@lens-protocol/metadata': 0.1.0-alpha.29(zod@3.22.3)
+      '@lens-protocol/metadata': 0.1.0-alpha.30(zod@3.22.3)
       '@lens-protocol/shared-kernel': 0.11.0-alpha.0(ethers@5.5.1)
       '@lens-protocol/storage': 0.7.4(ethers@5.5.1)
       '@lit-protocol/constants': 2.1.62
@@ -1422,8 +1422,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lens-protocol/metadata@0.1.0-alpha.29(zod@3.22.3):
-    resolution: {integrity: sha512-yfbdN3t+NwcON5oE64/DsndQTMDdHVBxJwB8SVF0BQJLpiEoo7lNB87RpH8z5XzZsQZZFutw3oFZHsO5/7ignQ==}
+  /@lens-protocol/metadata@0.1.0-alpha.30(zod@3.22.3):
+    resolution: {integrity: sha512-zYdd/H9Hnl5qdIBLE8rDELhWL7HpTs/g9fAjk3gwxFReJQiyfQJHjCVB1s7yEwlzSYdxhQNvB2jhY3JUO9+DaQ==}
     engines: {node: ^v18.12.1}
     peerDependencies:
       zod: ^3.22.0

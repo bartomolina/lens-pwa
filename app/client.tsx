@@ -11,7 +11,7 @@ import { APP_URL } from "@/lib/constants";
 import { Notification, NotificationProvider } from "@/ui/common";
 import { isiOS } from "@/utils/ios";
 
-import { AlchemyAAProvider } from "./alchemy-aa";
+import { AlchemyAAProvider } from "@/app/alchemy-aa";
 
 const queryClient = new QueryClient();
 

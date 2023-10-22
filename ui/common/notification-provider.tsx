@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 export enum NotificationType {
   SUCCESS = "SUCCESS",
@@ -13,11 +13,15 @@ type NotificationContextType = {
   notificationType?: NotificationType;
 };
 
-export const NotificationContext = createContext<NotificationContextType>({
-  show: () => {},
-  open: false,
+const initialState = {
   message: "",
+  open: false,
   notificationType: NotificationType.SUCCESS,
+};
+
+export const NotificationContext = createContext<NotificationContextType>({
+  ...initialState,
+  show: () => {},
 });
 
 export function NotificationProvider({
@@ -25,23 +29,39 @@ export function NotificationProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [message, setMessage] = useState("");
-  const [open, isOpen] = useState(false);
+  const [message, setMessage] = useState(initialState.message);
+  const [open, setOpen] = useState(initialState.open);
   const [notificationType, setNotificationType] = useState(
-    NotificationType.SUCCESS
+    initialState.notificationType
   );
+
+  const show = useCallback(
+    (_message: string, _notificationType?: NotificationType) => {
+      _notificationType && setNotificationType(_notificationType);
+      setMessage(_message);
+      setOpen(true);
+    },
+    []
+  );
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (open) {
+      timeoutId = setTimeout(() => {
+        setOpen(false);
+      }, 5000);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [open]);
 
   return (
     <NotificationContext.Provider
       value={{
-        show: (_message: string, _notificationType?: NotificationType) => {
-          _notificationType && setNotificationType(_notificationType);
-          setMessage(message);
-          isOpen(true);
-          setTimeout(() => {
-            isOpen(false);
-          }, 5000);
-        },
+        show,
         open,
         message,
         notificationType,

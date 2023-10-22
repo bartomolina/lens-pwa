@@ -22,7 +22,7 @@ import { useProfile } from "@/hooks";
 import { useCreatePublication } from "@/hooks/use-create-publication";
 import { NavbarWithDebug } from "@/ui/layout";
 
-import { Button } from "./common";
+import { Button } from "@/ui/common";
 
 interface CreatePostProps {
   refetch: <TPageData>(
