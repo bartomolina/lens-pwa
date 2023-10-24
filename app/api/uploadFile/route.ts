@@ -1,9 +1,13 @@
+import { NextResponse } from "next/server";
+
+import { env } from "@/env.mjs";
+
 export async function POST(req: Request) {
   console.log("api:uploadFile:start");
   const formData = await req.formData();
   const file = formData.get("file") as Blob | null;
   if (!file) {
-    return Response.json({ success: false });
+    return NextResponse.json({ success: false });
   }
 
   const options = {
@@ -17,11 +21,11 @@ export async function POST(req: Request) {
   const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${process.env.PINATA_JWT}`,
+      Authorization: `Bearer ${env.PINATA_JWT}`,
     },
     body: data,
   });
   const resData = await res.json();
   console.log("api:uploadFile:result:", resData);
-  return Response.json(resData);
+  return NextResponse.json(resData);
 }

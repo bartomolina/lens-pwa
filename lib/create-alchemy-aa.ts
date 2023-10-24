@@ -8,6 +8,8 @@ import { ConnectedWallet } from "@privy-io/react-auth";
 import { createWalletClient, custom } from "viem";
 import { polygonMumbai } from "viem/chains";
 
+import { env } from "@/env.mjs";
+
 export type AlchemyAAResult = {
   signer: SmartAccountSigner | undefined;
   provider: AlchemyProvider | undefined;
@@ -31,7 +33,7 @@ export const createAlchemyAA = async (
     );
 
     const provider = new AlchemyProvider({
-      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+      apiKey: env.NEXT_PUBLIC_ALCHEMY_API_KEY,
       chain: polygonMumbai,
       entryPointAddress: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
     }).connect(

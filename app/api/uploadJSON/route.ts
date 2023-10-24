@@ -1,20 +1,24 @@
+import { NextResponse } from "next/server";
+
+import { env } from "@/env.mjs";
+
 export async function POST(req: Request) {
   console.log("api:uploadJSON:start");
   const formData = await req.formData();
   const json = formData.get("message");
   if (!json) {
-    return Response.json({ success: false });
+    return NextResponse.json({ success: false });
   }
 
   const res = await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PINATA_JWT}`,
+      Authorization: `Bearer ${env.PINATA_JWT}`,
     },
     body: json,
   });
   const resData = await res.json();
   console.log("api:uploadJSON:result:", resData);
-  return Response.json(resData);
+  return NextResponse.json(resData);
 }

@@ -1,9 +1,10 @@
-import { useDebugger } from "@/hooks";
 import { Bug } from "@phosphor-icons/react";
 import { Console } from "console-feed";
 import { Message as MessageComponent } from "console-feed/lib/definitions/Component";
 import { Link, Navbar, Page, Popup } from "konsta/react";
 import React from "react";
+
+import { useDebugger } from "@/hooks";
 
 interface DebuggerIconProps {
   setPopupOpened: React.Dispatch<React.SetStateAction<boolean>>;

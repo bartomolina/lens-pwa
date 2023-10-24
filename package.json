@@ -17,6 +17,7 @@
     "@lens-protocol/metadata": "0.1.0-alpha.30",
     "@phosphor-icons/react": "^2.0.13",
     "@privy-io/react-auth": "^1.43.3",
+    "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "4.36.1",
     "console-feed": "^3.5.0",
     "konsta": "^3.1.0",
@@ -29,7 +30,8 @@
     "react-simple-pull-to-refresh": "^1.3.3",
     "remark-gfm": "^4.0.0",
     "tailwindcss": "3.3.2",
-    "viem": "^1.16.5"
+    "viem": "^1.16.5",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",

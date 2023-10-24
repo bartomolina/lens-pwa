@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { polygonMumbai } from "viem/chains";
 
 import { AlchemyAAProvider } from "@/app/alchemy-aa";
+import { env } from "@/env.mjs";
 import { APP_URL } from "@/lib/constants";
 import { Notification, NotificationProvider } from "@/ui/common";
 import { isiOS } from "@/utils/ios";
@@ -26,7 +27,7 @@ export function Client({ children }: { children: React.ReactNode }) {
     // @ts-ignore
     OneSignalDeferred.push(function (OneSignal) {
       OneSignal.init({
-        appId: process.env.NEXT_PUBLIC_ONESIGNAL_APPID,
+        appId: env.NEXT_PUBLIC_ONESIGNAL_APPID,
         safari_web_id:
           "web.onesignal.auto.5a2165c8-9d94-4308-bfd9-99a8484077b6",
       });
@@ -65,7 +66,7 @@ export function Client({ children }: { children: React.ReactNode }) {
   return mounted ? (
     <QueryClientProvider client={queryClient}>
       <PrivyProvider
-        appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID as string}
+        appId={env.NEXT_PUBLIC_PRIVY_APP_ID}
         config={{
           loginMethods: ["wallet", "email"],
           embeddedWallets: {
@@ -81,6 +82,7 @@ export function Client({ children }: { children: React.ReactNode }) {
       >
         <NotificationProvider>
           <App theme={theme}>
+            test
             <AlchemyAAProvider>
               <ThemeProvider attribute="class" enableSystem={false}>
                 <Notification />

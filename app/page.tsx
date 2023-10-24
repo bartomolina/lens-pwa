@@ -27,6 +27,7 @@ export default function Home() {
 
   return (
     <Page>
+      test
       {!isLoading && !profile && (
         <>
           <NavbarWithDebug title="Login" />

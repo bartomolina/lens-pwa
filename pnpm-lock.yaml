@@ -7,13 +7,13 @@ settings:
 dependencies:
   '@alchemy/aa-accounts':
     specifier: ^0.1.0
-    version: 0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.3)
+    version: 0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.4)
   '@alchemy/aa-alchemy':
     specifier: ^0.1.0
-    version: 0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.3)
+    version: 0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.4)
   '@alchemy/aa-core':
     specifier: ^0.1.0
-    version: 0.1.0(typescript@5.2.2)(zod@3.22.3)
+    version: 0.1.0(typescript@5.2.2)(zod@3.22.4)
   '@irys/sdk':
     specifier: ^0.0.3
     version: 0.0.3(arweave@1.11.9)
@@ -22,13 +22,16 @@ dependencies:
     version: 2.0.0-alpha.7(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)
   '@lens-protocol/metadata':
     specifier: 0.1.0-alpha.30
-    version: 0.1.0-alpha.30(zod@3.22.3)
+    version: 0.1.0-alpha.30(zod@3.22.4)
   '@phosphor-icons/react':
     specifier: ^2.0.13
     version: 2.0.13(react-dom@18.2.0)(react@18.2.0)
   '@privy-io/react-auth':
     specifier: ^1.43.3
     version: 1.43.3(@babel/core@7.23.2)(@types/react@18.2.6)(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0)
+  '@t3-oss/env-nextjs':
+    specifier: ^0.7.1
+    version: 0.7.1(typescript@5.2.2)(zod@3.22.4)
   '@tanstack/react-query':
     specifier: 4.36.1
     version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -67,7 +70,10 @@ dependencies:
     version: 3.3.2
   viem:
     specifier: ^1.16.5
-    version: 1.16.5(typescript@5.2.2)(zod@3.22.3)
+    version: 1.16.5(typescript@5.2.2)(zod@3.22.4)
+  zod:
+    specifier: ^3.22.4
+    version: 3.22.4
 
 devDependencies:
   '@tailwindcss/typography':
@@ -124,13 +130,13 @@ packages:
     resolution: {integrity: sha512-UK0bHA7hh9cR39V+4gl2/NnBBjoXIxkuWAPCaY4X7fbH4L/azIi7ilWOCjMUYfpJgraLUAqkRi2BqrjME8Rynw==}
     dev: false
 
-  /@alchemy/aa-accounts@0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.3):
+  /@alchemy/aa-accounts@0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-IvhK3xyR5QVtfrjVgjpCkUcwt+MJ3djy+5dX+PoRmUHS6KpgbbMPbfiKZ2zOGwnOl65cB8WxPryomn23J3tQjA==}
     peerDependencies:
       '@alchemy/aa-core': ^0.1.0-alpha.1
     dependencies:
-      '@alchemy/aa-core': 0.1.0(typescript@5.2.2)(zod@3.22.3)
-      viem: 1.16.5(typescript@5.2.2)(zod@3.22.3)
+      '@alchemy/aa-core': 0.1.0(typescript@5.2.2)(zod@3.22.4)
+      viem: 1.16.5(typescript@5.2.2)(zod@3.22.4)
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -138,13 +144,13 @@ packages:
       - zod
     dev: false
 
-  /@alchemy/aa-alchemy@0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.3):
+  /@alchemy/aa-alchemy@0.1.0(@alchemy/aa-core@0.1.0)(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-MKobFVorlgmBFkYjGPtoeigFLhctAhEBdlXEe5o9FfGG/5zJtKwMiNY3GyKjkzYfAqbZ8QRZ6ruwAFBeoQWeJw==}
     peerDependencies:
       '@alchemy/aa-core': ^0.1.0-alpha.1
     dependencies:
-      '@alchemy/aa-core': 0.1.0(typescript@5.2.2)(zod@3.22.3)
-      viem: 1.16.5(typescript@5.2.2)(zod@3.22.3)
+      '@alchemy/aa-core': 0.1.0(typescript@5.2.2)(zod@3.22.4)
+      viem: 1.16.5(typescript@5.2.2)(zod@3.22.4)
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -152,12 +158,12 @@ packages:
       - zod
     dev: false
 
-  /@alchemy/aa-core@0.1.0(typescript@5.2.2)(zod@3.22.3):
+  /@alchemy/aa-core@0.1.0(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-LZeadxy9hgXdnvpXZ5DC0qD8PsCvxLtw5P3+2bIAeOJ9lEzM0kWPQSR7to+XHwe8FcmtOZCgOdvF6vpJtOnmNg==}
     dependencies:
-      abitype: 0.8.7(typescript@5.2.2)(zod@3.22.3)
+      abitype: 0.8.7(typescript@5.2.2)(zod@3.22.4)
       eventemitter3: 5.0.1
-      viem: 1.16.5(typescript@5.2.2)(zod@3.22.3)
+      viem: 1.16.5(typescript@5.2.2)(zod@3.22.4)
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -1362,8 +1368,8 @@ packages:
       '@ethersproject/hash': 5.7.0
       '@ethersproject/providers': 5.7.2
       '@ethersproject/wallet': 5.7.0
-      '@lens-protocol/gated-content': 0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)(zod@3.22.3)
-      '@lens-protocol/metadata': 0.1.0-alpha.30(zod@3.22.3)
+      '@lens-protocol/gated-content': 0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)(zod@3.22.4)
+      '@lens-protocol/metadata': 0.1.0-alpha.30(zod@3.22.4)
       '@lens-protocol/shared-kernel': 0.11.0-alpha.0(ethers@5.5.1)
       '@lens-protocol/storage': 0.7.4(ethers@5.5.1)
       graphql: 16.8.1
@@ -1371,7 +1377,7 @@ packages:
       graphql-tag: 2.12.6(graphql@16.8.1)
       jwt-decode: 3.1.2
       tslib: 2.6.2
-      zod: 3.22.3
+      zod: 3.22.4
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - '@walletconnect/modal'
@@ -1382,7 +1388,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lens-protocol/gated-content@0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)(zod@3.22.3):
+  /@lens-protocol/gated-content@0.3.3-alpha.4(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@0.1.0-alpha.30)(ethers@5.5.1)(zod@3.22.4):
     resolution: {integrity: sha512-6R025sOXGm0LuZvVoz8ZF8D9McD+UBc+xxpd4rNrM7yPSPLAobcOYoW+ZysFJBJXxeje7/Ul9DhJlBZUKB6YPg==}
     peerDependencies:
       '@ethersproject/address': ^5.7.0
@@ -1400,7 +1406,7 @@ packages:
       '@ethersproject/hash': 5.7.0
       '@ethersproject/providers': 5.7.2
       '@ethersproject/wallet': 5.7.0
-      '@lens-protocol/metadata': 0.1.0-alpha.30(zod@3.22.3)
+      '@lens-protocol/metadata': 0.1.0-alpha.30(zod@3.22.4)
       '@lens-protocol/shared-kernel': 0.11.0-alpha.0(ethers@5.5.1)
       '@lens-protocol/storage': 0.7.4(ethers@5.5.1)
       '@lit-protocol/constants': 2.1.62
@@ -1411,7 +1417,7 @@ packages:
       siwe: 1.1.6(ethers@5.5.1)
       traverse: 0.6.7
       tslib: 2.6.2
-      zod: 3.22.3
+      zod: 3.22.4
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - '@walletconnect/modal'
@@ -1422,7 +1428,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lens-protocol/metadata@0.1.0-alpha.30(zod@3.22.3):
+  /@lens-protocol/metadata@0.1.0-alpha.30(zod@3.22.4):
     resolution: {integrity: sha512-zYdd/H9Hnl5qdIBLE8rDELhWL7HpTs/g9fAjk3gwxFReJQiyfQJHjCVB1s7yEwlzSYdxhQNvB2jhY3JUO9+DaQ==}
     engines: {node: ^v18.12.1}
     peerDependencies:
@@ -1432,7 +1438,7 @@ packages:
         optional: true
     dependencies:
       uuid: 9.0.1
-      zod: 3.22.3
+      zod: 3.22.4
     dev: false
 
   /@lens-protocol/shared-kernel@0.10.0(ethers@5.5.1):
@@ -1470,7 +1476,7 @@ packages:
     dependencies:
       '@lens-protocol/shared-kernel': 0.10.0(ethers@5.5.1)
       tslib: 2.6.2
-      zod: 3.22.3
+      zod: 3.22.4
     transitivePeerDependencies:
       - ethers
     dev: false
@@ -2315,6 +2321,33 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@t3-oss/env-core@0.7.1(typescript@5.2.2)(zod@3.22.4):
+    resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
+    peerDependencies:
+      typescript: '>=4.7.2'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.2.2
+      zod: 3.22.4
+    dev: false
+
+  /@t3-oss/env-nextjs@0.7.1(typescript@5.2.2)(zod@3.22.4):
+    resolution: {integrity: sha512-tQDbNLGCOvKGi+JoGuJ/CJInJI7/kLWJqtgGppAKS7ZFLdVOqZYR/uRjxlXOWPnxmUKF8VswOAsq7fXUpNZDhA==}
+    peerDependencies:
+      typescript: '>=4.7.2'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@t3-oss/env-core': 0.7.1(typescript@5.2.2)(zod@3.22.4)
+      typescript: 5.2.2
+      zod: 3.22.4
+    dev: false
+
   /@tailwindcss/typography@0.5.10(tailwindcss@3.3.2):
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
     peerDependencies:
@@ -2940,7 +2973,7 @@ packages:
       through: 2.3.8
     dev: false
 
-  /abitype@0.8.7(typescript@5.2.2)(zod@3.22.3):
+  /abitype@0.8.7(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-wQ7hV8Yg/yKmGyFpqrNZufCxbszDe5es4AZGYPBitocfSqXtjrTG9JMWFcc4N30ukl2ve48aBTwt7NJxVQdU3w==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -2950,10 +2983,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.2.2
-      zod: 3.22.3
+      zod: 3.22.4
     dev: false
 
-  /abitype@0.9.8(typescript@5.2.2)(zod@3.22.3):
+  /abitype@0.9.8(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -2965,7 +2998,7 @@ packages:
         optional: true
     dependencies:
       typescript: 5.2.2
-      zod: 3.22.3
+      zod: 3.22.4
     dev: false
 
   /abort-controller@3.0.0:
@@ -8435,7 +8468,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /viem@1.16.5(typescript@5.2.2)(zod@3.22.3):
+  /viem@1.16.5(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-D8aE6cp/5w6PDtOOkJjkN+FtLyfsNWkfE78N4yTgCt4BG7KsBsePp4O68r1IaTVTVa41anebiZAy9kNEIwAXiw==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -8448,7 +8481,7 @@ packages:
       '@noble/hashes': 1.3.2
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
-      abitype: 0.9.8(typescript@5.2.2)(zod@3.22.3)
+      abitype: 0.9.8(typescript@5.2.2)(zod@3.22.4)
       isows: 1.0.3(ws@8.13.0)
       typescript: 5.2.2
       ws: 8.13.0
@@ -8872,8 +8905,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod@3.22.3:
-    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
   /zwitch@2.0.4:
