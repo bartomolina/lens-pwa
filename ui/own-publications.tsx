@@ -17,6 +17,7 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
     data: publications,
     loading,
     hasMore,
+    prev,
     next,
     error,
   } = usePublications({
@@ -32,10 +33,11 @@ export function OwnPublications({ profile }: OwnPublicationsProps) {
         <Publications
           publications={publications}
           hasMore={hasMore}
+          prev={prev}
           next={next}
         />
       )}
-      <CreatePost />
+      <CreatePost prev={prev} />
     </>
   );
 }

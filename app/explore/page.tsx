@@ -15,6 +15,7 @@ export default function ExplorePage() {
     data: publications,
     loading,
     hasMore,
+    prev,
     next,
     error,
   } = useExplorePublications();
@@ -33,10 +34,11 @@ export default function ExplorePage() {
                 <Publications
                   publications={publications}
                   hasMore={hasMore}
+                  prev={prev}
                   next={next}
                 />
               )}
-              <CreatePost />
+              <CreatePost prev={prev} />
             </>
           )}
           <Navigation activeTab="explore" />
