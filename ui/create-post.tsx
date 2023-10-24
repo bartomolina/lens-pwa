@@ -1,10 +1,11 @@
-import { AnyPublicationFragment, PaginatedResult } from "@lens-protocol/client";
-import { CameraPlus, Plus } from "@phosphor-icons/react";
+import { image, MediaImageMimeType, textOnly } from "@lens-protocol/metadata";
 import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from "@tanstack/react-query";
+  SessionType,
+  useCreatePost,
+  useSession,
+} from "@lens-protocol/react-web";
+import { CameraPlus, Plus } from "@phosphor-icons/react";
+import { useWallets } from "@privy-io/react-auth";
 import {
   Dialog,
   DialogButton,
@@ -16,35 +17,30 @@ import {
   Popup,
 } from "konsta/react";
 import Image from "next/image";
-import { MutableRefObject, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import { useProfile } from "@/hooks";
-import { useCreatePublication } from "@/hooks/use-create-publication";
-import { Button } from "@/ui/common";
+import { Button, NotificationContext, NotificationType } from "@/ui/common";
 import { NavbarWithDebug } from "@/ui/layout";
+import { upload as irysUpload } from "@/utils/irys";
+import { upload as pinataUpload } from "@/utils/pinata";
 
-interface CreatePostProps {
-  refetch: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-  ) => Promise<
-    QueryObserverResult<PaginatedResult<AnyPublicationFragment>, unknown>
-  >;
-}
-
-export function CreatePost({ refetch }: CreatePostProps) {
-  const { data: profile } = useProfile();
+export function CreatePost() {
+  const { data: session } = useSession();
   const [popupOpened, setPopupOpened] = useState(false);
   const [managerDialog, setManagerDialog] = useState(false);
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
-  const { mutate: createPost, isLoading } = useCreatePublication({
-    onSuccess: async () => {
-      await refetch();
-      setPopupOpened(false);
-      clearForm();
-    },
-  });
+  const { execute: createPost, loading, called, error } = useCreatePost();
+  const [uploadingFiles, setUploadingFiles] = useState(false);
+  const notification = useContext(NotificationContext);
+  const { wallets } = useWallets();
   const ref = useRef() as MutableRefObject<HTMLInputElement>;
 
   const clearForm = () => {
@@ -69,10 +65,57 @@ export function CreatePost({ refetch }: CreatePostProps) {
   const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isLoading && (file || content.length > 0)) {
-      createPost({ content, file });
+    if (!loading && !uploadingFiles && (file || content.length > 0)) {
+      let metadataURI;
+      try {
+        setUploadingFiles(true);
+        let metadata;
+        if (file) {
+          const imageURI = await pinataUpload(file);
+          metadata = image({
+            image: {
+              item: imageURI,
+              type: file.type as MediaImageMimeType,
+            },
+            content: content.length > 0 ? content : undefined,
+          });
+        } else {
+          metadata = textOnly({
+            content,
+          });
+        }
+        metadataURI = await irysUpload(wallets[0], JSON.stringify(metadata));
+      } catch (error) {
+        console.error("createPost:error:", error);
+        notification.show(`Error uploading files`, NotificationType.ERROR);
+      } finally {
+        setUploadingFiles(false);
+      }
+
+      if (metadataURI) {
+        try {
+          await createPost({ metadata: metadataURI });
+        } catch (error) {
+          console.error("createPost:error:", error);
+          notification.show(`Error posting`, NotificationType.ERROR);
+        }
+      }
     }
   };
+
+  useEffect(() => {
+    if (!loading && called) {
+      if (error) {
+        notification.show(
+          `Error posting: ${error.message}`,
+          NotificationType.ERROR
+        );
+      } else {
+        setPopupOpened(false);
+        clearForm();
+      }
+    }
+  }, [loading, called, error, notification]);
 
   return (
     <>
@@ -80,7 +123,9 @@ export function CreatePost({ refetch }: CreatePostProps) {
         className="fixed z-20 right-4-safe bottom-28-safe"
         icon={<Plus />}
         onClick={() =>
-          profile?.lensManager ? setPopupOpened(true) : setManagerDialog(true)
+          session?.type === SessionType.WithProfile && session.profile.signless
+            ? setPopupOpened(true)
+            : setManagerDialog(true)
         }
       />
       <Dialog
@@ -136,7 +181,7 @@ export function CreatePost({ refetch }: CreatePostProps) {
                 text="Post"
                 textLoading="Posting"
                 type="submit"
-                isLoading={isLoading}
+                isLoading={loading || uploadingFiles}
               />
             </form>
           </List>

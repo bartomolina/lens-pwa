@@ -13,6 +13,7 @@
     "unicorn/text-encoding-identifier-case": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/switch-case-braces": "off",
+    "unicorn/numeric-separators-style": "off",
     "import/named": "off"
   }
 }

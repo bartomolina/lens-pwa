@@ -1,40 +1,33 @@
-import {
-  AnyPublicationFragment,
-  PaginatedResult,
-  PostFragment,
-  QuoteFragment,
-} from "@lens-protocol/client";
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from "@tanstack/react-query";
-import PullToRefresh from "react-simple-pull-to-refresh";
+import { AnyPublication } from "@lens-protocol/react-web";
+import InfiniteScroll from "react-infinite-scroller";
 
 import { Loading } from "@/ui/common";
 import { Publication as PublicationCard } from "@/ui/publication";
 
 interface PulibcationsProps {
-  publications: (PostFragment | QuoteFragment)[];
-  refetch: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-  ) => Promise<
-    QueryObserverResult<PaginatedResult<AnyPublicationFragment>, unknown>
-  >;
+  publications: AnyPublication[];
+  hasMore: boolean;
+  next: () => void;
 }
 
-export function Publications({ publications, refetch }: PulibcationsProps) {
+export function Publications({
+  publications,
+  hasMore,
+  next,
+}: PulibcationsProps) {
   return (
-    <PullToRefresh
-      onRefresh={refetch}
-      refreshingContent={<Loading />}
-      pullingContent={""}
-    >
-      <div className="mb-28">
+    <div className="mb-28">
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={next}
+        hasMore={hasMore}
+        loader={<Loading key={0} />}
+        useWindow={false}
+      >
         {publications?.map((publication) => (
           <PublicationCard key={publication.id} publication={publication} />
         ))}
-      </div>
-    </PullToRefresh>
+      </InfiniteScroll>
+    </div>
   );
 }

@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  SessionType,
+  useLogout,
+  useSession,
+  useUpdateProfileManagers,
+} from "@lens-protocol/react-web";
 import { usePrivy } from "@privy-io/react-auth";
 import {
   BlockTitle,
@@ -9,60 +15,57 @@ import {
   Page,
   Toggle,
 } from "konsta/react";
-import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo } from "react";
 
-import { useLoginRedirect, useProfile, useUpdateProfileManager } from "@/hooks";
-import { logout } from "@/lib/lens-client";
+import { useLoginRedirect } from "@/hooks";
 import { Button, NotificationContext, NotificationType } from "@/ui/common";
 import { NavbarWithDebug, Navigation } from "@/ui/layout";
 
-import { AlchemyAAContext } from "../alchemy-aa";
-
 export default function Settings() {
-  const router = useRouter();
   const { user } = usePrivy();
-  const { provider } = useContext(AlchemyAAContext);
-  const [AAAddress, setAAAddress] = useState("");
   const { theme, setTheme } = useTheme();
   const { isLoggedIn } = useLoginRedirect();
-  const { data: profile, refetch, isFetching } = useProfile();
+  const { data: session, loading: loadingSession } = useSession();
+  const { execute: logout } = useLogout();
   const notification = useContext(NotificationContext);
-  const { mutate: enableProfileManager, isLoading } = useUpdateProfileManager({
-    onSuccess: async () => {
-      notification.show("Profile manager updated");
-      await refetch();
-    },
-    onError: (error) => {
-      notification.show(
-        `Error updating the profile manager: ${error.message}`,
-        NotificationType.ERROR
-      );
-    },
-  });
+  const {
+    execute: updateProfileManagers,
+    loading: updatingManager,
+    called,
+    error,
+  } = useUpdateProfileManagers();
+
+  const signlessText = useMemo<
+    { text: string; loading: string } | undefined
+  >(() => {
+    if (
+      !loadingSession &&
+      session?.authenticated &&
+      session.type == SessionType.WithProfile
+    ) {
+      return session.profile.signless
+        ? {
+            text: "Disable signless transactions",
+            loading: "Disabling signless transactions",
+          }
+        : {
+            text: "Enable signless transactions",
+            loading: "Enabling signless transactions",
+          };
+    }
+  }, [loadingSession, session]);
 
   useEffect(() => {
-    provider?.getAddress().then((address) => setAAAddress(address));
-  });
-
-  const text = useMemo(() => {
-    if (!isFetching) {
-      return profile?.lensManager
-        ? "Disable profile manager"
-        : "Enable profile manager";
+    if (!updatingManager && called) {
+      error
+        ? notification.show(
+            `Error updating the profile manager: ${error.message}`,
+            NotificationType.ERROR
+          )
+        : notification.show("Profile manager updated");
     }
-    return "";
-  }, [isFetching, profile?.lensManager]);
-
-  const textLoading = useMemo(() => {
-    if (!isFetching) {
-      return profile?.lensManager
-        ? "Disabling profile manager"
-        : "Enabling profile manager";
-    }
-    return "";
-  }, [isFetching, profile?.lensManager]);
+  }, [updatingManager, called, error, notification]);
 
   return (
     <Page>
@@ -71,23 +74,17 @@ export default function Settings() {
           <NavbarWithDebug title="Settings" />
           <BlockTitle>Profile</BlockTitle>
           <List strong inset>
-            <ListButton
-              onClick={() => {
-                logout();
-                router.push("/");
-              }}
-            >
-              Log out
-            </ListButton>
+            <ListButton onClick={() => logout()}>Log out</ListButton>
             <Button
-              text={text}
-              textLoading={textLoading}
-              isLoading={isLoading}
-              isFetching={isFetching}
+              text={signlessText?.text}
+              textLoading={signlessText?.loading}
+              isLoading={updatingManager}
+              isFetching={loadingSession}
               onClick={() => {
-                profile?.lensManager
-                  ? enableProfileManager(false)
-                  : enableProfileManager(true);
+                session?.type == SessionType.WithProfile &&
+                !session.profile.signless
+                  ? updateProfileManagers({ approveSignless: true })
+                  : updateProfileManagers({ approveSignless: false });
               }}
             />
           </List>
@@ -109,13 +106,8 @@ export default function Settings() {
           <BlockTitle>Wallet</BlockTitle>
           <List strong inset>
             <ListItem
-              header="EOA"
+              header="Address"
               title={user?.wallet?.address}
-              titleWrapClassName="font-mono text-xs"
-            />
-            <ListItem
-              header="Alchemy's Account Abstraction"
-              title={AAAddress}
               titleWrapClassName="font-mono text-xs"
             />
           </List>

@@ -1,34 +1,41 @@
-import { PostFragment, ProfileFragment } from "@lens-protocol/client";
+import {
+  Profile,
+  PublicationType,
+  usePublications,
+} from "@lens-protocol/react-web";
 
-import { useProfilePublications } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
 import { CreatePost } from "@/ui/create-post";
 import { Publications } from "@/ui/publications";
 
 interface OwnPublicationsProps {
-  profile: ProfileFragment;
+  profile: Profile;
 }
 
 export function OwnPublications({ profile }: OwnPublicationsProps) {
   const {
     data: publications,
-    refetch,
-    isInitialLoading,
+    loading,
+    hasMore,
+    next,
     error,
-  } = useProfilePublications({ profile });
+  } = usePublications({
+    where: { from: [profile.id], publicationTypes: [PublicationType.Post] },
+  });
 
-  if (isInitialLoading) return <Loading />;
-  if (error instanceof Error) return <ErrorMessage message={error.message} />;
+  if (loading) return <Loading />;
+  if (error) return <ErrorMessage message={error.message} />;
 
   return (
     <>
       {publications && (
         <Publications
-          publications={publications.items as PostFragment[]}
-          refetch={refetch}
+          publications={publications}
+          hasMore={hasMore}
+          next={next}
         />
       )}
-      <CreatePost refetch={refetch} />
+      <CreatePost />
     </>
   );
 }

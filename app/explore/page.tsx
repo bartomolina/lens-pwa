@@ -1,8 +1,9 @@
 "use client";
 
+import { useExplorePublications } from "@lens-protocol/react-web";
 import { Page } from "konsta/react";
 
-import { useExplorePublications, useLoginRedirect } from "@/hooks";
+import { useLoginRedirect } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
 import { CreatePost } from "@/ui/create-post";
 import { NavbarWithDebug, Navigation } from "@/ui/layout";
@@ -12,8 +13,9 @@ export default function ExplorePage() {
   const { isLoggedIn } = useLoginRedirect();
   const {
     data: publications,
-    refetch,
-    isInitialLoading,
+    loading,
+    hasMore,
+    next,
     error,
   } = useExplorePublications();
 
@@ -23,17 +25,18 @@ export default function ExplorePage() {
         <>
           <NavbarWithDebug title="Explore" />
           {error instanceof Error && <ErrorMessage message={error.message} />}
-          {isInitialLoading ? (
+          {loading ? (
             <Loading />
           ) : (
             <>
               {publications && (
                 <Publications
-                  publications={publications.items}
-                  refetch={refetch}
+                  publications={publications}
+                  hasMore={hasMore}
+                  next={next}
                 />
               )}
-              <CreatePost refetch={refetch} />
+              <CreatePost />
             </>
           )}
           <Navigation activeTab="explore" />

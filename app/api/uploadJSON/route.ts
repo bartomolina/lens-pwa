@@ -6,6 +6,11 @@ export async function POST(req: Request) {
   console.log("api:uploadJSON:start");
   const formData = await req.formData();
   const json = formData.get("message");
+
+  if (!env.PINATA_JWT || env.PINATA_JWT.length === 0) {
+    return NextResponse.json({ success: false, message: "Pinata JWT not set" });
+  }
+
   if (!json) {
     return NextResponse.json({ success: false });
   }

@@ -8,6 +8,6 @@ export const LENS_MEDIA_SNAPSHOT_URL =
   "https://ik.imagekit.io/lens/media-snapshot";
 export const IPFS_GATEWAY = "https://gateway.pinata.cloud/ipfs/";
 export const ARWEAVE_GATEWAY = "https://arweave.net/";
-export const IRYS_NETWORK = "https://devnet.irys.xyz";
+export const IRYS_NETWORK = "https://node2.irys.xyz";
 
 export const JWT_TOKEN = "lens.development.credentials";

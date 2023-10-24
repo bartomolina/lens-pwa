@@ -1,28 +1,25 @@
+import { useSession } from "@lens-protocol/react-web";
 import { usePrivy } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { useProfile } from "@/hooks";
-
 export function useLoginRedirect() {
   const router = useRouter();
-  const { authenticated } = usePrivy();
+  const { authenticated, ready } = usePrivy();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { data: profile, isLoading } = useProfile();
+  const { data: session, loading } = useSession();
 
   useEffect(() => {
-    console.log(
-      "hook:loginRedirect:authenticated:",
-      authenticated,
-      ":profile:",
-      profile
-    );
-    if (!authenticated || !profile) {
+    if (
+      (ready && !authenticated) ||
+      (!loading && (!session || !session.authenticated))
+    ) {
+      console.log("hook:loginRedirect:redirecting:session:", session);
       router.push("/");
     } else {
       setIsLoggedIn(true);
     }
-  }, [router, authenticated, isLoading, profile]);
+  }, [router, ready, authenticated, loading, session]);
 
   return { isLoggedIn };
 }

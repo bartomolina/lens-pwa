@@ -6,6 +6,11 @@ export async function POST(req: Request) {
   console.log("api:uploadFile:start");
   const formData = await req.formData();
   const file = formData.get("file") as Blob | null;
+
+  if (!env.PINATA_JWT || env.PINATA_JWT.length === 0) {
+    return NextResponse.json({ success: false, message: "Pinata JWT not set" });
+  }
+
   if (!file) {
     return NextResponse.json({ success: false });
   }

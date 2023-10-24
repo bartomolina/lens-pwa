@@ -1,40 +1,27 @@
 import { Readable } from "node:stream";
 
-import { SmartAccountSigner } from "@alchemy/aa-core";
 import { WebIrys } from "@irys/sdk";
+import { ConnectedWallet } from "@privy-io/react-auth";
 
-import { IRYS_NETWORK } from "@/lib/constants";
+import { ARWEAVE_GATEWAY, IRYS_NETWORK } from "@/lib/constants";
+
+export const getEthersProvider = async (wallet: ConnectedWallet) => {
+  await wallet.switchChain(80001);
+  return await wallet.getEthersProvider();
+};
 
 export const upload = async (
-  address: `0x${string}`,
-  signer: SmartAccountSigner,
+  wallet: ConnectedWallet,
   data: string | Buffer | Readable,
   fileType?: string
 ) => {
-  const client = {};
-
-  // @ts-expect-error injected
-  client._signTypedData = async (domain, types, message) => {
-    message["Transaction hash"] =
-      "0x" + Buffer.from(message["Transaction hash"]).toString("hex");
-    const result = await signer.signTypedData({
-      domain,
-      message,
-      types,
-      primaryType: "Bundlr",
-    });
-
-    return result;
-  };
-  // @ts-expect-error injected
-  client.getAddress = async () => address;
-  // @ts-expect-error injected
-  client.getSigner = () => client;
+  console.log("irys:uploading document");
+  const provider = await getEthersProvider(wallet);
 
   const irys = new WebIrys({
     url: IRYS_NETWORK,
     token: "matic",
-    wallet: { name: "ethersv5", provider: client },
+    wallet: { name: "ethersv5", provider },
   });
 
   await irys.ready();
@@ -44,5 +31,8 @@ export const upload = async (
         tags: [{ name: "Content-Type", value: fileType }],
       }
     : {};
-  return await irys.upload(data, metadata);
+
+  const result = await irys.upload(data, metadata);
+  console.log("irys:document uploaded:", result);
+  return `${ARWEAVE_GATEWAY}${result.id}`;
 };

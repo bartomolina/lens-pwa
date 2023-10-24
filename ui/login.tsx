@@ -1,14 +1,9 @@
-import { ProfileFragment } from "@lens-protocol/client";
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from "@tanstack/react-query";
+import { useLogin, useProfiles } from "@lens-protocol/react-web";
 import { BlockTitle, List, ListInput, ListItem, Preloader } from "konsta/react";
 import { useContext, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { useCreateProfile, useLogin, useProfiles } from "@/hooks";
+import { useCreateProfile } from "@/hooks";
 import { Button, NotificationContext, NotificationType } from "@/ui/common";
 
 interface CreateProfileForm {
@@ -16,27 +11,17 @@ interface CreateProfileForm {
 }
 
 interface LoginProps {
-  refetchProfile: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-  ) => Promise<QueryObserverResult<ProfileFragment | null, unknown>>;
+  address: string;
 }
 
-export function Login({ refetchProfile }: LoginProps) {
+export function Login({ address }: LoginProps) {
   const notification = useContext(NotificationContext);
   const [loadingProfile, setLoadingProfile] = useState("");
-  const { data: profiles, refetch } = useProfiles();
-  const { mutate: login } = useLogin({
-    onSuccess: async () => {
-      await refetchProfile();
-    },
-    onError: () => {
-      setLoadingProfile("");
-    },
-  });
+  const { data: profiles } = useProfiles({ where: { ownedBy: [address] } });
+  const { execute: login, loading } = useLogin();
   const { mutate: createProfile, isLoading } = useCreateProfile({
     onSuccess: () => {
       notification.show("Profile created");
-      refetch();
     },
     onError: (error) => {
       notification.show(
@@ -94,7 +79,7 @@ export function Login({ refetchProfile }: LoginProps) {
           />
         </form>
       </List>
-      {profiles?.items && profiles?.items.length > 0 && (
+      {profiles && profiles.length > 0 && (
         <>
           <BlockTitle>
             Profile login
@@ -103,20 +88,20 @@ export function Login({ refetchProfile }: LoginProps) {
             </div>
           </BlockTitle>
           <List strong inset>
-            {profiles.items.map((profile) => (
+            {profiles.map((profile) => (
               <ListItem
                 key={profile.id}
                 link
                 onClick={() => {
-                  if (!loadingProfile) {
+                  if (!loading) {
                     setLoadingProfile(profile.id);
-                    login(profile.id);
+                    login({ address, profileId: profile.id });
                   }
                 }}
                 header={`${profile.id} (#${Number.parseInt(profile.id, 16)})`}
-                title={profile.handle}
+                title={profile.handle?.fullHandle}
                 after={
-                  loadingProfile === profile.id ? (
+                  loading && loadingProfile === profile.id ? (
                     <Preloader size="w-5 h-5" />
                   ) : (
                     "Log in"

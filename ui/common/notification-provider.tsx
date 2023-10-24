@@ -10,7 +10,7 @@ type NotificationContextType = {
   show: (_message: string, _notificationType?: NotificationType) => void;
   open: boolean;
   message: string;
-  notificationType?: NotificationType;
+  notificationType: NotificationType;
 };
 
 const initialState = {
@@ -36,7 +36,10 @@ export function NotificationProvider({
   );
 
   const show = useCallback(
-    (_message: string, _notificationType?: NotificationType) => {
+    (
+      _message: string,
+      _notificationType: NotificationType = initialState.notificationType
+    ) => {
       _notificationType && setNotificationType(_notificationType);
       setMessage(_message);
       setOpen(true);

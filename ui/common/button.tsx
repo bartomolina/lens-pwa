@@ -3,8 +3,8 @@ import * as React from "react";
 
 interface ButtonProps {
   type?: string;
-  text: string;
-  textLoading?: string;
+  text: string | undefined;
+  textLoading?: string | undefined;
   isLoading?: boolean;
   isFetching?: boolean;
   onClick?: () => void;

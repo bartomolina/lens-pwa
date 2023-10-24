@@ -1,11 +1,12 @@
 "use client";
 
-import { usePrivy } from "@privy-io/react-auth";
+import { useSession } from "@lens-protocol/react-web";
+import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { BlockTitle, List, ListButton, Page } from "konsta/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-import { useProfile } from "@/hooks";
+import { env } from "@/env.mjs";
 import {
   AddToHomeScreenAndroid,
   AddToHomeScreeniOS,
@@ -15,31 +16,39 @@ import { Login } from "@/ui/login";
 
 export default function Home() {
   const router = useRouter();
-  const { refetch } = useProfile();
-  const { login, logout, authenticated } = usePrivy();
-  const { data: profile, isLoading } = useProfile();
+  const { login, logout, authenticated, ready } = usePrivy();
+  const { wallets } = useWallets();
+  const { data: session, loading } = useSession();
+
+  const primaryWallet = wallets && wallets[0] ? wallets[0] : undefined;
 
   useEffect(() => {
-    if (!isLoading && profile && authenticated) {
+    if (ready && authenticated && session?.authenticated) {
       router.push("/explore");
     }
-  }, [router, profile, authenticated, isLoading]);
+  }, [router, ready, authenticated, session]);
 
   return (
     <Page>
-      test
-      {!isLoading && !profile && (
+      {!loading && !session?.authenticated && (
         <>
           <NavbarWithDebug title="Login" />
-          <AddToHomeScreenAndroid />
-          <AddToHomeScreeniOS />
+          {env.NEXT_PUBLIC_ONESIGNAL_APPID &&
+            env.NEXT_PUBLIC_ONESIGNAL_APPID.length > 0 && (
+              <>
+                <AddToHomeScreenAndroid />
+                <AddToHomeScreeniOS />
+              </>
+            )}
           <BlockTitle>Account</BlockTitle>
           <List strong inset>
             <ListButton onClick={() => (authenticated ? logout() : login())}>
               {authenticated ? "Disconnect" : "Connect"}
             </ListButton>
           </List>
-          {authenticated && <Login refetchProfile={refetch} />}
+          {authenticated && primaryWallet && (
+            <Login address={primaryWallet.address} />
+          )}
         </>
       )}
     </Page>
