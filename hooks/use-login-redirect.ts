@@ -2,6 +2,7 @@ import { useSession } from "@lens-protocol/react-web";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
 import { bindings as privyBindings } from "@/lib/lens-privy-bindings";
 
 export function useLoginRedirect() {

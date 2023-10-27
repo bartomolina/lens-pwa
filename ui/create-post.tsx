@@ -24,11 +24,11 @@ import {
   useState,
 } from "react";
 
+import { useLoginRedirect } from "@/hooks";
 import { Button, NotificationContext, NotificationType } from "@/ui/common";
 import { NavbarWithDebug } from "@/ui/layout";
 import { upload as irysUpload } from "@/utils/irys";
 import { upload as pinataUpload } from "@/utils/pinata";
-import { useLoginRedirect } from "@/hooks";
 
 interface CreatePostProps {
   prev: () => Promise<void>;
