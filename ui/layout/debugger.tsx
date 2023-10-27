@@ -1,10 +1,9 @@
 import { Bug } from "@phosphor-icons/react";
-import { Console } from "console-feed";
+import { Console, Hook, Unhook } from "console-feed";
 import { Message as MessageComponent } from "console-feed/lib/definitions/Component";
+import { Message as MessageConsole } from "console-feed/lib/definitions/Console";
 import { Link, Navbar, Page, Popup } from "konsta/react";
-import React from "react";
-
-import { useDebugger } from "@/hooks";
+import React, { useEffect, useState } from "react";
 
 interface DebuggerIconProps {
   setPopupOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +22,18 @@ export function DebuggerLogs({
   popupOpened,
   setPopupOpened,
 }: DebuggerLogsProps) {
-  const logs = useDebugger();
+  const [logs, setLogs] = useState<MessageConsole[]>([]);
+
+  useEffect(() => {
+    const hookedConsole = Hook(
+      window.console,
+      (log) => setLogs((currLogs) => [...currLogs, log]),
+      false
+    );
+    return () => {
+      Unhook(hookedConsole);
+    };
+  }, []);
 
   return (
     <Popup opened={popupOpened} onBackdropClick={() => setPopupOpened(false)}>

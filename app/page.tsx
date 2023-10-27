@@ -23,34 +23,41 @@ export default function Home() {
   const primaryWallet = wallets && wallets[0] ? wallets[0] : undefined;
 
   useEffect(() => {
-    if (ready && authenticated && session?.authenticated) {
-      router.push("/explore");
+    if (
+      ready &&
+      authenticated &&
+      primaryWallet &&
+      !loading &&
+      session?.authenticated
+    ) {
+      primaryWallet ? router.push("/explore") : logout();
     }
-  }, [router, ready, authenticated, session]);
+  }, [router, ready, authenticated, primaryWallet, loading, session, logout]);
 
   return (
     <Page>
-      {!loading && !session?.authenticated && (
-        <>
-          <NavbarWithDebug title="Login" />
-          {env.NEXT_PUBLIC_ONESIGNAL_APPID &&
-            env.NEXT_PUBLIC_ONESIGNAL_APPID.length > 0 && (
-              <>
-                <AddToHomeScreenAndroid />
-                <AddToHomeScreeniOS />
-              </>
+      {(ready && (!authenticated || !primaryWallet)) ||
+        (!loading && !session?.authenticated && (
+          <>
+            <NavbarWithDebug title="Login" />
+            {env.NEXT_PUBLIC_ONESIGNAL_APPID &&
+              env.NEXT_PUBLIC_ONESIGNAL_APPID.length > 0 && (
+                <>
+                  <AddToHomeScreenAndroid />
+                  <AddToHomeScreeniOS />
+                </>
+              )}
+            <BlockTitle>Account</BlockTitle>
+            <List strong inset>
+              <ListButton onClick={() => (authenticated ? logout() : login())}>
+                {authenticated ? "Disconnect" : "Connect"}
+              </ListButton>
+            </List>
+            {authenticated && primaryWallet && (
+              <Login address={primaryWallet.address} />
             )}
-          <BlockTitle>Account</BlockTitle>
-          <List strong inset>
-            <ListButton onClick={() => (authenticated ? logout() : login())}>
-              {authenticated ? "Disconnect" : "Connect"}
-            </ListButton>
-          </List>
-          {authenticated && primaryWallet && (
-            <Login address={primaryWallet.address} />
-          )}
-        </>
-      )}
+          </>
+        ))}
     </Page>
   );
 }
