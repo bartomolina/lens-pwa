@@ -2,11 +2,12 @@ import { Readable } from "node:stream";
 
 import { WebIrys } from "@irys/sdk";
 import { ConnectedWallet } from "@privy-io/react-auth";
+import { polygonMumbai } from "viem/chains";
 
 import { ARWEAVE_GATEWAY, IRYS_NETWORK } from "@/lib/constants";
 
 export const getEthersProvider = async (wallet: ConnectedWallet) => {
-  await wallet.switchChain(80001);
+  await wallet.switchChain(polygonMumbai.id);
   return await wallet.getEthersProvider();
 };
 

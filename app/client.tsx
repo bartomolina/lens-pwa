@@ -15,6 +15,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { App } from "konsta/react";
 import { ThemeProvider } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
+import { polygonMumbai } from "viem/chains";
 
 import { env } from "@/env.mjs";
 import { APP_URL } from "@/lib/constants";
@@ -80,6 +81,7 @@ export function Client({ children }: { children: React.ReactNode }) {
             theme: "light",
             logo: `${APP_URL}icons/icon-192x192.png`,
           },
+          defaultChain: polygonMumbai,
         }}
       >
         <LensProvider config={lensConfig}>
@@ -101,13 +103,15 @@ export function Client({ children }: { children: React.ReactNode }) {
 
 function PrivyBind({ children }: { children: React.ReactNode }) {
   const { wallets } = useWallets();
-  const { authenticated, ready } = usePrivy();
+  const { authenticated, ready, user } = usePrivy();
 
-  const primaryWallet = wallets && wallets[0] ? wallets[0] : undefined;
+  const connectedWallet = wallets.find(
+    (wallet) => wallet.address === user?.wallet?.address
+  );
 
   const updateBindings = useCallback(async (wallet: ConnectedWallet) => {
     try {
-      await wallet.switchChain(80001);
+      await wallet.switchChain(polygonMumbai.id);
       const provider = await wallet.getEthersProvider();
       const signer = provider.getSigner();
       privyBindings.update({
@@ -120,10 +124,10 @@ function PrivyBind({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (ready && authenticated && primaryWallet) {
-      updateBindings(primaryWallet);
+    if (ready && authenticated && connectedWallet) {
+      updateBindings(connectedWallet);
     }
-  }, [ready, authenticated, primaryWallet, updateBindings]);
+  }, [ready, authenticated, connectedWallet, updateBindings]);
 
   return <>{children}</>;
 }

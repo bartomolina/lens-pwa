@@ -16,9 +16,10 @@ export default function ExplorePage() {
     loading,
     hasMore,
     prev,
-    next,
     error,
   } = useExplorePublications();
+
+  console.log("explore:publications:", publications);
 
   return (
     <Page>
@@ -35,7 +36,9 @@ export default function ExplorePage() {
                   publications={publications}
                   hasMore={hasMore}
                   prev={prev}
-                  next={next}
+                  next={async () => {
+                    undefined;
+                  }}
                 />
               )}
               <CreatePost prev={prev} />

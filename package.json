@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@irys/sdk": "^0.0.3",
-    "@lens-protocol/client": "2.0.0-alpha.15",
-    "@lens-protocol/metadata": "0.1.0-alpha.30",
-    "@lens-protocol/react-web": "2.0.0-alpha.13",
+    "@lens-protocol/client": "2.0.0-alpha.17",
+    "@lens-protocol/metadata": "1.0.0",
+    "@lens-protocol/react-web": "2.0.0-alpha.15",
     "@phosphor-icons/react": "^2.0.13",
-    "@privy-io/react-auth": "^1.43.3",
+    "@privy-io/react-auth": "^1.45.2",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "4.36.1",
     "console-feed": "^3.5.0",
@@ -30,6 +30,7 @@
     "react-simple-pull-to-refresh": "^1.3.3",
     "remark-gfm": "^4.0.0",
     "tailwindcss": "3.3.2",
+    "viem": "^1.17.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {

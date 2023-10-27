@@ -5,7 +5,6 @@ import {
   useSession,
 } from "@lens-protocol/react-web";
 import { CameraPlus, Plus } from "@phosphor-icons/react";
-import { useWallets } from "@privy-io/react-auth";
 import {
   Dialog,
   DialogButton,
@@ -29,6 +28,7 @@ import { Button, NotificationContext, NotificationType } from "@/ui/common";
 import { NavbarWithDebug } from "@/ui/layout";
 import { upload as irysUpload } from "@/utils/irys";
 import { upload as pinataUpload } from "@/utils/pinata";
+import { useLoginRedirect } from "@/hooks";
 
 interface CreatePostProps {
   prev: () => Promise<void>;
@@ -44,7 +44,7 @@ export function CreatePost({ prev }: CreatePostProps) {
   const { execute: createPost, loading, called, error } = useCreatePost();
   const [uploadingFiles, setUploadingFiles] = useState(false);
   const notification = useContext(NotificationContext);
-  const { wallets } = useWallets();
+  const { ensureWallet } = useLoginRedirect();
   const ref = useRef() as MutableRefObject<HTMLInputElement>;
 
   const clearForm = () => {
@@ -69,6 +69,9 @@ export function CreatePost({ prev }: CreatePostProps) {
   const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const connectedWallet = await ensureWallet();
+    if (!connectedWallet) return;
+
     if (!loading && !uploadingFiles && (file || content.length > 0)) {
       let metadataURI;
       try {
@@ -88,7 +91,10 @@ export function CreatePost({ prev }: CreatePostProps) {
             content,
           });
         }
-        metadataURI = await irysUpload(wallets[0], JSON.stringify(metadata));
+        metadataURI = await irysUpload(
+          connectedWallet,
+          JSON.stringify(metadata)
+        );
       } catch (error) {
         console.error("createPost:error:", error);
         notification.show(`Error uploading files`, NotificationType.ERROR);

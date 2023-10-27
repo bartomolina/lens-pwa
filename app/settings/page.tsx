@@ -6,7 +6,7 @@ import {
   useSession,
   useUpdateProfileManagers,
 } from "@lens-protocol/react-web";
-import { usePrivy } from "@privy-io/react-auth";
+import { ConnectedWallet, usePrivy } from "@privy-io/react-auth";
 import {
   BlockTitle,
   List,
@@ -16,7 +16,7 @@ import {
   Toggle,
 } from "konsta/react";
 import { useTheme } from "next-themes";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 import { useLoginRedirect } from "@/hooks";
 import { Button, NotificationContext, NotificationType } from "@/ui/common";
@@ -25,7 +25,10 @@ import { NavbarWithDebug, Navigation } from "@/ui/layout";
 export default function Settings() {
   const { user } = usePrivy();
   const { theme, setTheme } = useTheme();
-  const { isLoggedIn } = useLoginRedirect();
+  const { isLoggedIn, ensureWallet } = useLoginRedirect();
+  const [connectedWallet, setConnectedWallet] = useState<
+    ConnectedWallet | undefined
+  >();
   const { data: session, loading: loadingSession } = useSession();
   const { execute: logout } = useLogout();
   const notification = useContext(NotificationContext);
@@ -56,6 +59,14 @@ export default function Settings() {
     }
   }, [loadingSession, session]);
 
+  const updateManager = async () => {
+    if (await ensureWallet()) {
+      session?.type == SessionType.WithProfile && !session.profile.signless
+        ? updateProfileManagers({ approveSignless: true })
+        : updateProfileManagers({ approveSignless: false });
+    }
+  };
+
   useEffect(() => {
     if (!updatingManager && called) {
       error
@@ -66,6 +77,10 @@ export default function Settings() {
         : notification.show("Profile manager updated");
     }
   }, [updatingManager, called, error, notification]);
+
+  useEffect(() => {
+    ensureWallet().then(setConnectedWallet);
+  }, [ensureWallet]);
 
   return (
     <Page>
@@ -80,12 +95,7 @@ export default function Settings() {
               textLoading={signlessText?.loading}
               isLoading={updatingManager}
               isFetching={loadingSession}
-              onClick={() => {
-                session?.type == SessionType.WithProfile &&
-                !session.profile.signless
-                  ? updateProfileManagers({ approveSignless: true })
-                  : updateProfileManagers({ approveSignless: false });
-              }}
+              onClick={updateManager}
             />
           </List>
           <BlockTitle>Theme</BlockTitle>
@@ -106,8 +116,13 @@ export default function Settings() {
           <BlockTitle>Wallet</BlockTitle>
           <List strong inset>
             <ListItem
-              header="Address"
+              header="User Wallet Address"
               title={user?.wallet?.address}
+              titleWrapClassName="font-mono text-xs"
+            />
+            <ListItem
+              header="Connected Wallet"
+              title={connectedWallet?.address}
               titleWrapClassName="font-mono text-xs"
             />
           </List>
