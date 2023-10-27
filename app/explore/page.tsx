@@ -2,6 +2,7 @@
 
 import { useExplorePublications } from "@lens-protocol/react-web";
 import { Page } from "konsta/react";
+import { useEffect } from "react";
 
 import { useLoginRedirect } from "@/hooks";
 import { ErrorMessage, Loading } from "@/ui/common";
@@ -11,15 +12,11 @@ import { Publications } from "@/ui/publications";
 
 export default function ExplorePage() {
   const { isLoggedIn } = useLoginRedirect();
-  const {
-    data: publications,
-    loading,
-    hasMore,
-    prev,
-    error,
-  } = useExplorePublications();
+  const { data: publications, loading, prev, error } = useExplorePublications();
 
-  console.log("explore:publications:", publications);
+  useEffect(() => {
+    console.log("explore:publications:", publications);
+  }, [publications]);
 
   return (
     <Page>
@@ -32,16 +29,9 @@ export default function ExplorePage() {
           ) : (
             <>
               {publications && (
-                <Publications
-                  publications={publications}
-                  hasMore={hasMore}
-                  prev={prev}
-                  next={async () => {
-                    undefined;
-                  }}
-                />
+                <Publications publications={publications} prev={prev} />
               )}
-              <CreatePost prev={prev} />
+              <CreatePost />
             </>
           )}
           <Navigation activeTab="explore" />

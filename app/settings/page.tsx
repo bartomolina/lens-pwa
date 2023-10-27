@@ -6,7 +6,7 @@ import {
   useSession,
   useUpdateProfileManagers,
 } from "@lens-protocol/react-web";
-import { ConnectedWallet, usePrivy } from "@privy-io/react-auth";
+import { ConnectedWallet, usePrivy, useWallets } from "@privy-io/react-auth";
 import {
   BlockTitle,
   List,
@@ -24,6 +24,7 @@ import { NavbarWithDebug, Navigation } from "@/ui/layout";
 
 export default function Settings() {
   const { user } = usePrivy();
+  const { wallets } = useWallets();
   const { theme, setTheme } = useTheme();
   const { isLoggedIn, ensureWallet } = useLoginRedirect();
   const [connectedWallet, setConnectedWallet] = useState<
@@ -79,8 +80,15 @@ export default function Settings() {
   }, [updatingManager, called, error, notification]);
 
   useEffect(() => {
-    ensureWallet().then(setConnectedWallet);
-  }, [ensureWallet]);
+    const wallet = wallets.find(
+      (wallet) => wallet.address === user?.wallet?.address
+    );
+    setConnectedWallet(wallet);
+  }, [wallets, user]);
+
+  useEffect(() => {
+    console.log("settings:user:", user);
+  }, [user]);
 
   return (
     <Page>

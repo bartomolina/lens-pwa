@@ -30,11 +30,7 @@ import { NavbarWithDebug } from "@/ui/layout";
 import { upload as irysUpload } from "@/utils/irys";
 import { upload as pinataUpload } from "@/utils/pinata";
 
-interface CreatePostProps {
-  prev: () => Promise<void>;
-}
-
-export function CreatePost({ prev }: CreatePostProps) {
+export function CreatePost() {
   const { data: session } = useSession();
   const [popupOpened, setPopupOpened] = useState(false);
   const [managerDialog, setManagerDialog] = useState(false);
@@ -112,7 +108,7 @@ export function CreatePost({ prev }: CreatePostProps) {
             );
           } else {
             await result.unwrap().waitForCompletion();
-            await prev();
+            window.location.reload();
           }
         } catch (error) {
           console.error("createPost:error:", error);
