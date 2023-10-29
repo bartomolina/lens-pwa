@@ -69,6 +69,7 @@ export default function Settings() {
   };
 
   useEffect(() => {
+    console.log("test:", updatingManager, ":called:", called);
     if (!updatingManager && called) {
       error
         ? notification.show(
