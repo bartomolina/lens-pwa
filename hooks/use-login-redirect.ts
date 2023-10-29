@@ -1,4 +1,4 @@
-import { useSession } from "@lens-protocol/react-web";
+import { useLogout,useSession } from "@lens-protocol/react-web";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { bindings as privyBindings } from "@/lib/lens-privy-bindings";
 export function useLoginRedirect() {
   const router = useRouter();
   const { authenticated, ready, logout, user } = usePrivy();
+  const { execute: lensLogout } = useLogout();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: session, loading } = useSession();
   const { wallets } = useWallets();
@@ -27,6 +28,7 @@ export function useLoginRedirect() {
     );
     if (!connectedWallet || !privyBindings.set) {
       await logout();
+      await lensLogout();
       router.push("/");
     } else {
       return connectedWallet;
