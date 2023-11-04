@@ -1,4 +1,4 @@
-import { useLogout,useSession } from "@lens-protocol/react-web";
+import { useLogout, useSession } from "@lens-protocol/react-web";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,11 +14,13 @@ export function useLoginRedirect() {
   const { wallets } = useWallets();
 
   useEffect(() => {
-    if ((ready && !authenticated) || (!loading && !session?.authenticated)) {
-      console.log("hook:loginRedirect:redirecting:session:", session);
-      router.push("/");
-    } else {
-      setIsLoggedIn(true);
+    if (ready && !loading) {
+      if (authenticated && session?.authenticated) {
+        setIsLoggedIn(true);
+      } else {
+        console.log("hook:loginRedirect:redirecting:session:", session);
+        router.push("/");
+      }
     }
   }, [router, ready, authenticated, loading, session]);
 
