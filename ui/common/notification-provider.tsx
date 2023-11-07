@@ -74,5 +74,3 @@ export function NotificationProvider({
     </NotificationContext.Provider>
   );
 }
-
-export default NotificationContext;
